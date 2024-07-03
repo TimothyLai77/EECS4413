@@ -1,0 +1,2 @@
+placeholder file to commit the folder
+this is where the sequelize stuff will go
