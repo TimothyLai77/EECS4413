@@ -7,8 +7,7 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: password
     ports:
-      - 3036:3036
-    network
+      - 3307:3306
 
   adminer:
     image: adminer

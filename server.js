@@ -6,9 +6,10 @@ const { Sequelize } = require('sequelize');
 
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
-const sequelize = new Sequelize('db', 'root', 'password', {
-    host: 'db',
-    dialect: 'mariadb'
+const sequelize = new Sequelize('app', 'root', 'password', {
+    host: 'localhost',
+    dialect: 'mariadb',
+    port: 3307
 });
 
 async function connectToDb(){
