@@ -4,9 +4,9 @@ class User extends Model { }
 
 User.init(
     {
-        // Model attributes are defined here
         userId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             allowNull: false,
         },
         firstName: {
