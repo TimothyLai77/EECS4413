@@ -24,6 +24,26 @@ async function prepareApp() {
     inventoryController(app);
     await connectToDb(modelList);
 
+
+    // await User.create({
+    //     userId: "1",
+    //     firstName: "tim",
+    //     lastName: "lai",
+    //     email: "a@gmail.com",
+    //     creditCardNumber: "1123",
+    //     creditCardExpiry: "05/21",
+    //     cvv: 123,
+    //     billingAddress: "b address",
+    //     shippingAddress: "s address"
+    // });
+
+    // const myUser = await User.findByPk("1");
+    // myUser.email = "new email yo";
+    // await myUser.save();
+    // console.log(myUser.email);
+
+
+
     app.listen(PORT, () => {
         console.log("express started");
     })
