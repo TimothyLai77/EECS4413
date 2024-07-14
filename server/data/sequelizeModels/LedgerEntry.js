@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes, Model, DATEONLY } = require('sequelize');
 const { appDatabase } = require('../../modules/db');
-class Ledger extends Model { }
+class LedgerEntry extends Model { }
 
-Ledger.init(
+LedgerEntry.init(
     {
         transactionId: {
             type: DataTypes.STRING,
@@ -23,9 +23,9 @@ Ledger.init(
     },
     {
         sequelize: appDatabase, // pass the model definition into the database connection
-        modelName: 'Ledger', // We need to choose the model name
+        modelName: 'LedgerEntry', // We need to choose the model name
     },
 );
 
 
-exports.Ledger = Ledger;
+exports.LedgerEntry = LedgerEntry;
