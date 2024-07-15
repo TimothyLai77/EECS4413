@@ -6,6 +6,8 @@ services:
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: password
+    ports:
+      - 3307:3306
 
   adminer:
     image: adminer
