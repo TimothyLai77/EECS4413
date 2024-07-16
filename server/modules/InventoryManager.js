@@ -4,10 +4,9 @@ const { Inventory } = require('../data/sequelizeModels/Inventory');
 const uniqid = require('uniqid');
 
 /**
- * Creates the Item and adds to inventory
- * @param {*} itemName 
- * @param {*} itemPrice 
- * @param {*} itemQuantity 
+ * Creates the item in the Item table, does not add to the inventory
+ * @param {*} itemName Name of the item
+ * @param {*} itemPrice price of the item
  */
 const createItemInCatalogue = async (itemName, itemPrice) => {
     // create the item in an item database
@@ -20,7 +19,12 @@ const createItemInCatalogue = async (itemName, itemPrice) => {
     //const inventoryEntry = await Inventory.create({ itemId: itemId, quantity: itemQuantity });
 };
 
-
+/**
+ * Add quantity of items to the inventory table, if the item does not exist in inventory
+ * create it and set the quantity to quantity. Else add the quantity
+ * @param {*} itemModel The actual Model of the item to add
+ * @param {*} quantity quantity to add by
+ */
 const addItemToInventory = async (itemModel, quantity) => {
     const itemIdToAdd = itemModel.itemId;
     // check for duplicate
@@ -39,5 +43,44 @@ const addItemToInventory = async (itemModel, quantity) => {
     }
 };
 
+/**
+ * Remove Item from inventory if there is enough it will remove
+ * if not enough then throw error
+ * @param {*} itemModel 
+ * @param {*} quantityToRemove 
+ */
+const removeItemFromInventory = async (itemModel, quantityToRemove) => {
+    const itemIdToRemove = itemModel.itemId;
+    // grab the inventoryEntry and see if it exists
+    const inventoryEntry = await Inventory.findByPk(itemIdToAdd);
+    if (inventoryEntry) {
+        // if the item exists and sufficient quantity exists
+        const currentQuantity = inventoryEntry.quantity;
+        if (currentQuantity >= quantityToRemove) {
+            inventoryEntry.quantity -= quantityToRemove;
+            await inventoryEntry.save();
+        } else {
+            throw new Error("Not enough items in inventory to complete action");
+        }
+    }
+};
+
+/**
+ * Remove an item from the catalogue
+ * @param {*} itemModel 
+ */
+const removeItemFromCatalogue = async (itemModel) => {
+    // check that the item exists in the catalogue
+    const itemEntry = await Item.findByPk(itemModel.itemId);
+    if (itemEntry) {
+        // itemId exists in the catalogue
+        await itemEntry.destroy();
+    } else {
+        throw new Error("Item does not exist in the catalogue");
+    }
+}
+
 exports.createItemInCatalogue = createItemInCatalogue;
 exports.addItemToInventory = addItemToInventory;
+exports.removeItemFromInventory = removeItemFromInventory;
+exports.removeItemFromCatalogue = removeItemFromCatalogue;
