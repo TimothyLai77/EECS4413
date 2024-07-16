@@ -3,10 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-
 const inventoryController = require("./server/controller/inventoryManagement");
 const { connectToDb } = require("./server/data/sequelizeModels/index");
-//todo: clean this up, idk how to get them into one statement
 
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
