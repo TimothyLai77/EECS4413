@@ -6,6 +6,7 @@ Inventory.init(
     {
         itemId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             allowNull: false
         },
         quantity: {
