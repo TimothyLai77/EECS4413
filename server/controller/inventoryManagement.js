@@ -1,18 +1,39 @@
-const { createItemInCatalogue, addItemToInventory } = require('../modules/InventoryManager');
+const {
+    createItemInCatalogue,
+    addItemToInventory,
+    removeItemFromInventory,
+    removeItemFromCatalogue,
+} = require('../modules/InventoryManager');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
+const { OutOfStockError } = require('../modules/errors');
 module.exports = (app) => {
 
     // ADD ITEM TO CATALOGUE
-    app.post("/api/items", async (req, res) => {
+    app.post("/api/items/add", async (req, res) => {
         try {
             //console.log("create item");
-            createItemInCatalogue("My Item", 69.69, 420);
+            createItemInCatalogue("item 1", 69.69);
+            createItemInCatalogue("item 2", 2.12);
+            createItemInCatalogue("item 3", 120.1);
+            createItemInCatalogue("item 4", 1000);
             res.status(200).end("an item was created");
         } catch (err) {
             res.status(500).end("Internal Server Error");
         }
     });
+
+    // remove item from the catalogue completely
+    app.post("/api/items/remove", async (req, res) => {
+        try {
+            const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
+            await removeItemFromCatalogue(i);
+            res.status(200).end();
+        } catch (err) {
+            res.status(500).end("Internal Server Error");
+        }
+    });
+
 
     // GET ALL ITEMS FROM CATALOGUE
     app.get("/api/items", async (req, res) => {
@@ -26,7 +47,7 @@ module.exports = (app) => {
         }
     });
 
-
+    // get all items from the Inventory
     app.get("/api/inventory", async (req, res) => {
         try {
             const inventory = await Inventory.findAll();
@@ -39,18 +60,46 @@ module.exports = (app) => {
     });
 
     // ADD QUANTITY OF ITEM TO AN INVENTORY
-    app.post("/api/inventory", async (req, res) => {
+    app.post("/api/inventory/add", async (req, res) => {
         try {
-            const itemIdToAdd = "item-14allk6hylynolsrj";
-            //console.log("create item");
-            const itemModel = await Item.findByPk(itemIdToAdd);
-            if (!itemModel) throw new Error("Item does not exist");
-            await addItemToInventory(itemModel, 420);
+            const itemsToAdd = ['item-14allk1tvslyoz0gqt', 'item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
+            await itemsToAdd.forEach(async (id) => {
+                const i = await Item.findByPk(id);
+                if (!i) throw new Error("Item does not exist");
+                await addItemToInventory(i, 3);
+            });
             res.status(200).end("an item was created");
         } catch (err) {
             res.status(500).end("Internal Server Error");
         }
     });
+
+    // REMOVE QUANTITY OF ITEM TO AN INVENTORY
+    app.post("/api/inventory/remove", async (req, res) => {
+        try {
+            const itemsToRemove = ['item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
+
+            await Promise.all(itemsToRemove.map(async (id) => {
+                const item = await Item.findByPk(id);
+                if (!item) throw new Error("Item does not exist");
+                await removeItemFromInventory(item, 1);
+            }));
+
+
+
+            res.status(200).end("an item was removed");
+        } catch (err) {
+            if (err instanceof OutOfStockError) {
+                res.status(400).end(err.message);
+            } else {
+                res.status(500).end("Internal Server Error");
+            }
+
+        }
+    });
+
+
+
 
 
 }

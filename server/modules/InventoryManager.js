@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
 const uniqid = require('uniqid');
+const { OutOfStockError } = require('../modules/errors')
 
 /**
  * Creates the item in the Item table, does not add to the inventory
@@ -52,17 +53,18 @@ const addItemToInventory = async (itemModel, quantity) => {
 const removeItemFromInventory = async (itemModel, quantityToRemove) => {
     const itemIdToRemove = itemModel.itemId;
     // grab the inventoryEntry and see if it exists
-    const inventoryEntry = await Inventory.findByPk(itemIdToAdd);
+    const inventoryEntry = await Inventory.findByPk(itemIdToRemove);
     if (inventoryEntry) {
         // if the item exists and sufficient quantity exists
         const currentQuantity = inventoryEntry.quantity;
-        if (currentQuantity >= quantityToRemove) {
+        if (currentQuantity < quantityToRemove) {
+            throw new OutOfStockError(`Not enough items in inventory. Current stock: ${currentQuantity}. Atttempted to remove: ${quantityToRemove}`);
+        } else {
             inventoryEntry.quantity -= quantityToRemove;
             await inventoryEntry.save();
-        } else {
-            throw new Error("Not enough items in inventory to complete action");
         }
     }
+
 };
 
 /**
