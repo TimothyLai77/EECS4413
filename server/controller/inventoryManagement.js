@@ -12,11 +12,11 @@ module.exports = (app) => {
     // ADD ITEM TO CATALOGUE
     app.post("/api/items/add", async (req, res) => {
         try {
-            //console.log("create item");
-            createItemInCatalogue("item 1", 69.69);
-            createItemInCatalogue("item 2", 2.12);
-            createItemInCatalogue("item 3", 120.1);
-            createItemInCatalogue("item 4", 1000);
+            // DEBUG/SAMPLE CODE: 
+            // createItemInCatalogue("item 1", 69.69);
+            // createItemInCatalogue("item 2", 2.12);
+            // createItemInCatalogue("item 3", 120.1);
+            // createItemInCatalogue("item 4", 1000);
             res.status(200).end("an item was created");
         } catch (err) {
             res.status(500).end("Internal Server Error");
@@ -26,7 +26,8 @@ module.exports = (app) => {
     // remove item from the catalogue completely
     app.post("/api/items/remove", async (req, res) => {
         try {
-            const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
+            // DEBUG/SAMPLE CODE: 
+            // const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
             await removeItemFromCatalogue(i);
             res.status(200).end();
         } catch (err) {
@@ -62,13 +63,16 @@ module.exports = (app) => {
     // ADD QUANTITY OF ITEM TO AN INVENTORY
     app.post("/api/inventory/add", async (req, res) => {
         try {
-            const itemsToAdd = ['item-14allk1tvslyoz0gqt', 'item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
-            await itemsToAdd.forEach(async (id) => {
-                const i = await Item.findByPk(id);
-                if (!i) throw new Error("Item does not exist");
-                await addItemToInventory(i, 3);
-            });
-            res.status(200).end("an item was created");
+            // DEBUG/SAMPLE CODE: 
+            // const itemsToAdd = ['item-14allk1tvslyoz0gqt', 'item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
+
+            // add each item to the inventory
+            // await itemsToAdd.forEach(async (id) => {
+            //     const i = await Item.findByPk(id);
+            //     if (!i) throw new Error("Item does not exist");
+            //     await addItemToInventory(i, 3);
+            // });
+            res.status(200).end("an item was added to the inventory");
         } catch (err) {
             res.status(500).end("Internal Server Error");
         }
@@ -77,15 +81,15 @@ module.exports = (app) => {
     // REMOVE QUANTITY OF ITEM TO AN INVENTORY
     app.post("/api/inventory/remove", async (req, res) => {
         try {
-            const itemsToRemove = ['item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
-
-            await Promise.all(itemsToRemove.map(async (id) => {
-                const item = await Item.findByPk(id);
-                if (!item) throw new Error("Item does not exist");
-                await removeItemFromInventory(item, 1);
-            }));
+            //const itemsToRemove = ['item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
 
 
+            // wait for all removes to finish
+            // await Promise.all(itemsToRemove.map(async (id) => {
+            //     const item = await Item.findByPk(id);
+            //     if (!item) throw new Error("Item does not exist");
+            //     await removeItemFromInventory(item, 1);
+            // }));
 
             res.status(200).end("an item was removed");
         } catch (err) {
