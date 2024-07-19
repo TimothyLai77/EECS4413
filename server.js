@@ -43,11 +43,11 @@ async function prepareApp() {
     // console.log(myUser.email);
 
     // sample code to test the password are hashed properly
-    // await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    // await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    // await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    // await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    // await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
+    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
+    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
+    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
+    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
+    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
 
     app.listen(PORT, () => {
         console.log("express started");
