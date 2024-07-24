@@ -5,9 +5,9 @@ const path = require("path");
 
 const inventoryController = require("./server/controller/inventoryManagement");
 const { connectToDb } = require("./server/data/sequelizeModels/index");
-// TODO: TESTING CODE DELETE THIS LATER, SHOULDN't BE NEEDED
-const { createNewUser } = require('./server/modules/UserManager');
 
+const { createUsersTest } = require("./server/tests/dbTest");
+const { checkout } = require('./server/modules/Checkout');
 
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
@@ -24,30 +24,18 @@ async function prepareApp() {
     inventoryController(app);
     await connectToDb();
 
+    // DEBUG TESTING
+    //await createUsersTest();
+    await checkout(null, [{
+        itemId: "item-14allk111lz0dat7m",
+        quantity: 1
+    },
+    {
+        itemId: "item-14allk111lz0dat7o",
+        quantity: 3
+    },
+    ]);
 
-    // await User.create({
-    //     userId: "1",
-    //     firstName: "tim",
-    //     lastName: "lai",
-    //     email: "a@gmail.com",
-    //     creditCardNumber: "1123",
-    //     creditCardExpiry: "05/21",
-    //     cvv: 123,
-    //     billingAddress: "b address",
-    //     shippingAddress: "s address"
-    // });
-
-    // const myUser = await User.findByPk("1");
-    // myUser.email = "new email yo";
-    // await myUser.save();
-    // console.log(myUser.email);
-
-    // sample code to test the password are hashed properly
-    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
-    await createNewUser("tim", "lai", "asdf@asdf.com", "myStrongPassword123");
 
     app.listen(PORT, () => {
         console.log("express started");
