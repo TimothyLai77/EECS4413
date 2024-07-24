@@ -1,6 +1,18 @@
 const { Sequelize, DataTypes, Model, DATEONLY } = require('sequelize');
 const { appDatabase } = require('../../modules/db')
-class User extends Model { }
+const bcrypt = require('bcrypt');
+class User extends Model {
+
+
+    static generateHash(password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync());
+    }
+
+    validatePassword = function (password) {
+        return bcrypt.compareSync(password, this.password)
+    }
+
+}
 
 User.init(
     {
@@ -45,13 +57,19 @@ User.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false,
+        },
+        password: {
+            type: DataTypes.STRING
         }
     },
     {
         sequelize: appDatabase, // pass the model definition into the database connection
         modelName: 'User', // We need to choose the model name
+        logging: false
     },
 );
+
+
 
 
 exports.User = User;
