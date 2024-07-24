@@ -1,7 +1,18 @@
 const { Sequelize, DataTypes, Model, DATEONLY } = require('sequelize');
 const { appDatabase } = require('../../modules/db')
 const bcrypt = require('bcrypt');
-class User extends Model { }
+class User extends Model {
+
+
+    static generateHash(password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync());
+    }
+
+    validatePassword = function (password) {
+        return bcrypt.compareSync(password, this.password)
+    }
+
+}
 
 User.init(
     {
@@ -54,20 +65,11 @@ User.init(
     {
         sequelize: appDatabase, // pass the model definition into the database connection
         modelName: 'User', // We need to choose the model name
-
+        logging: false
     },
 );
 
 
-// Hash generation and comparison for the users.
-// TODO: I don't know if it matters or not now, but I'm using hashSync and not the async version...
-// it does feel a little slow
-Model.generateHash = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync());
-}
 
-Model.prototype.validatePassword = function (password) {
-    return bcrypt.compareSync(password, this.password)
-}
 
 exports.User = User;
