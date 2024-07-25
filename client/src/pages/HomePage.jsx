@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
-import image from '../assets/images/dummyProduct.jpeg';
+import { getTopPicks } from '../services/productService';
 import homeImg from '../assets/images/dummyHomePage.jpeg';
 import ItemCard from '../components/common/itemCard';
 import '../assets/styles/HomePage.css';
 
-// These are dummy product.
-const topPicks = [
-  { id: 1, name: 'Product 1', price: 29.99, info:"This is the product information", image: image },
-  { id: 2, name: 'Product 2', price: 49.99, info:"This is the product information", image: image },
-  { id: 3, name: 'Product 3', price: 19.99, info:"This is the product information", image: image },
-];
+
 
 const HomePage = () => {
+    const [topPicks, setTopPicks] = useState([]);
+
+  useEffect(() => {
+    const fetchTopPicks = async () => {
+      const products = await getTopPicks();
+      setTopPicks(products);
+    };
+
+    fetchTopPicks();
+  }, []);
+
+
   return (
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
