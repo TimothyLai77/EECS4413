@@ -18,9 +18,9 @@ export const getTopPicks = async () => {
   
     // Mock data
     return [
-        { id: 1, name: 'Product 1', price: 29.99, info:"This is the product information", image: image },
-        { id: 2, name: 'Product 2', price: 49.99, info:"This is the product information", image: image },
-        { id: 3, name: 'Product 3', price: 19.99, info:"This is the product information", image: image },
+        { id: 1, name: 'Top Pick Product 1', brand:'BRAND', price: 29.99, info:"This is the product information", image: image },
+        { id: 2, name: 'Top Pick Product 2', brand:'BRAND',price: 49.99, info:"This is the product information", image: image },
+        { id: 3, name: 'Top Pick Product 3', brand:'BRAND',price: 19.99, info:"This is the product information", image: image },
       ];
   };
   

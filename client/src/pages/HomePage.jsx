@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row} from 'react-bootstrap';
 import NavigationBar from '../components/NavigationBar';
-import { getTopPicks } from '../services/productService';
+import { getTopPicks } from '../services/topPickProduct';
 import homeImg from '../assets/images/dummyHomePage.jpeg';
 import ItemCard from '../components/common/itemCard';
 import '../assets/styles/HomePage.css';
@@ -31,7 +31,7 @@ const HomePage = () => {
             src={homeImg}
             alt="Hero"
             className="img-fluid w-100"
-            style={{ height: '1000',objectFit: 'cover' }}
+            style={{ height: '800',objectFit: 'cover' }}
           />
         </div>
         <h2 className="my-4">Top Picks by Owner</h2>
