@@ -1,15 +1,18 @@
 import React,{useState,useEffect} from 'react';
 import { Container, Row } from 'react-bootstrap';
 import getProductCatalog from '../services/productCatalog';
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/common/NavigationBar';
 import ItemCard from '../components/common/itemCard';
 
 
 
 function CatalogPage() {
-
+  
+  // State to hold the list of the products
+ 
   const [products, setProducts] = useState([]);
 
+  // Fetch the product catalog when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await getProductCatalog();

@@ -3,8 +3,8 @@ import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
-import logo from '../assets/images/logo.jpeg';
-import '../assets/styles/Navbar.css';
+import logo from '../../assets/images/logo.jpeg';
+import '../../assets/styles/Navbar.css';
 import { FaSearch } from "react-icons/fa";
 const NavigationBar = ({ isLoggedIn, onLogout }) => {
     return (

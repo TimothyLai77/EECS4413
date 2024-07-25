@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row} from 'react-bootstrap';
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/common/NavigationBar';
 import { getTopPicks } from '../services/topPickProduct';
-import homeImg from '../assets/images/dummyHomePage.jpeg';
 import ItemCard from '../components/common/itemCard';
-import '../assets/styles/HomePage.css';
-
+import HomePageSlider from '../components/HomePageSlider';
 
 
 const HomePage = () => {
@@ -25,14 +23,9 @@ const HomePage = () => {
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
       <Container fluid className='customContainer'>
-        <div className="my-3 text-center customHomePage">
+        <div className="my-3 text-center">
           <h1>Company Name</h1>
-          <img
-            src={homeImg}
-            alt="Hero"
-            className="img-fluid w-100"
-            style={{ height: '800',objectFit: 'cover' }}
-          />
+          <HomePageSlider/>
         </div>
         <h2 className="my-4">Top Picks by Owner</h2>
         <Row>
