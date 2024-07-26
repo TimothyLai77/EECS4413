@@ -5,7 +5,7 @@ import CatalogPage from './pages/customerPages/CatalogPage';
 import CartPage from './pages/customerPages/CartPage';
 import LoginPage from './pages/customerPages/LoginPage'; 
 import AdminPage from './pages/adminPages/AdminPage'; 
-import AddProduct from '../src/pages/adminPages/AddProduct';
+import AddProduct from './pages/adminPages/AddProduct';
 import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => (
   <Router>
