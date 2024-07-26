@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import { Container, Row } from 'react-bootstrap';
-import getProductCatalog from '../services/productCatalog';
-import NavigationBar from '../components/common/NavigationBar';
-import ItemCard from '../components/common/itemCard';
+import getProductCatalog from '../../services/productCatalog';
+import NavigationBar from '../../components/common/NavigationBar';
+import ItemCard from '../../components/common/itemCard';
 
 
 

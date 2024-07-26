@@ -15,7 +15,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
               <Image 
                   src={logo} 
                   rounded 
-                  className="navbar-logo" // Add CSS class
+                  className="navbar-logo" 
                   alt="Company Logo"
                 />
               </Navbar.Brand>
@@ -24,6 +24,7 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 <Nav.Link href="/catalog">Product Cataloge</Nav.Link>
                 <Nav.Link href="/cart">Cart</Nav.Link>
                 <Nav.Link href="/login">Login/Register</Nav.Link>
+                <Nav.Link href="/admin">Temp admin access</Nav.Link>
               </Nav>
             </Container>
             <Form inline>
