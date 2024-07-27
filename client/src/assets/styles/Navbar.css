@@ -1,0 +1,9 @@
+
+.navbar-logo {
+    width: 50px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  

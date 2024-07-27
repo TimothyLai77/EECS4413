@@ -1,0 +1,22 @@
+.customHomePage{
+    position: relative;
+}
+img { 
+    width: 100%;
+    height: auto;
+
+  
+  }
+
+  .customContainer{
+    padding: 0 !important;
+  }
+  .hgt{
+    height: 100%;
+  }
+  .carousels{
+    height: 500px;
+  }
+  .slide, .carousel-inner,.carousel-item,.img-fluid{
+    height: 100% !important; 
+  }
