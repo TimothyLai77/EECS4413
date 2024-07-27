@@ -12,11 +12,18 @@ module.exports = (app) => {
     // ADD ITEM TO CATALOGUE
     app.post("/api/items/add", async (req, res) => {
         try {
-            // DEBUG/SAMPLE CODE: 
-            createItemInCatalogue("item 1", 69.69);
-            createItemInCatalogue("item 2", 2.12);
-            createItemInCatalogue("item 3", 120.1);
-            createItemInCatalogue("item 4", 1000);
+            let request = req.body;
+
+
+            const name = request.name;
+            const price = request.price;
+            const brand = request.brand;
+            const description = request.description;
+            // check data is valid
+            if (!name || !price || !brand || !description) throw new Error("Missing information");
+            if (typeof price !== 'number') throw new Error("price is not a number");
+            // insert into database
+            await createItemInCatalogue(name, price, brand, description);
             res.status(200).end("an item was created");
         } catch (err) {
             res.status(500).end("Internal Server Error");
