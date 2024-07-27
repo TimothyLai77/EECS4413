@@ -21,9 +21,6 @@ const createItemInCatalogue = async (itemName, itemPrice, itemBrand, itemDescrip
         image: image,
     });
     await Inventory.create({ itemId: itemId, quantity: stock });
-
-    console.log(await Item.findAll());
-    console.log(await Inventory.findAll());
 };
 
 /**
