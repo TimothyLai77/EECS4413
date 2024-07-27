@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+
 function adminNavbar() {
     return (
         <>
@@ -35,9 +36,7 @@ function adminNavbar() {
                         id={`offcanvasNavbarDropdown-expand-${expand}`}
                       >
                         <NavDropdown.Item href="/admin/updateProduct">Update product catalog</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/addProduct">
-                        Add new product
-                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/admin/addProduct">Add new product</NavDropdown.Item>
                         
                       </NavDropdown>
                     </Nav>

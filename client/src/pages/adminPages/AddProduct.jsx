@@ -30,7 +30,6 @@ function AddProduct() {
 
       // Mocking product addition for now
       await addProduct(product);
-      alert('Product added successfully!');
       setProduct({
         name: '',
         brand: '',
