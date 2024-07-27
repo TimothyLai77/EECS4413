@@ -9,22 +9,14 @@ import { useDispatch,useSelector } from 'react-redux';
 
 function CatalogPage() {
   const dispatch = useDispatch();
-  const s = useSelector(store => {
+  const products = useSelector(store => {
     return store.catalog.products
   });
-  console.log(s);
+  console.log(products);
   // State to hold the list of the products
  
-  const [products, setProducts] = useState([]);
-
   // Fetch the product catalog when the component mounts
   useEffect(() => {
-    const fetchProducts = async () => {
-      const data = await getProductCatalog();
-      setProducts(data);
-    };
-    fetchProducts();
-
     // call the redux action to fetch inventory from backend 
     dispatch(fetchInventory());
   }, []);
