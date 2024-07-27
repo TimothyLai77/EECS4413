@@ -12,11 +12,18 @@ module.exports = (app) => {
     // ADD ITEM TO CATALOGUE
     app.post("/api/items/add", async (req, res) => {
         try {
-            // DEBUG/SAMPLE CODE: 
-            // createItemInCatalogue("item 1", 69.69);
-            // createItemInCatalogue("item 2", 2.12);
-            // createItemInCatalogue("item 3", 120.1);
-            // createItemInCatalogue("item 4", 1000);
+            let request = req.body;
+
+
+            const name = request.name;
+            const price = request.price;
+            const brand = request.brand;
+            const description = request.description;
+            // check data is valid
+            if (!name || !price || !brand || !description) throw new Error("Missing information");
+            if (typeof price !== 'number') throw new Error("price is not a number");
+            // insert into database
+            await createItemInCatalogue(name, price, brand, description);
             res.status(200).end("an item was created");
         } catch (err) {
             res.status(500).end("Internal Server Error");
@@ -64,14 +71,14 @@ module.exports = (app) => {
     app.post("/api/inventory/add", async (req, res) => {
         try {
             // DEBUG/SAMPLE CODE: 
-            // const itemsToAdd = ['item-14allk1tvslyoz0gqt', 'item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
+            const itemsToAdd = ['item-14allk111lz0dat7m', 'item-14allk111lz0dat7o', 'item-14allk111lz0dat7p'];
 
             // add each item to the inventory
-            // await itemsToAdd.forEach(async (id) => {
-            //     const i = await Item.findByPk(id);
-            //     if (!i) throw new Error("Item does not exist");
-            //     await addItemToInventory(i, 3);
-            // });
+            await itemsToAdd.forEach(async (id) => {
+                const i = await Item.findByPk(id);
+                if (!i) throw new Error("Item does not exist");
+                await addItemToInventory(i, 3);
+            });
             res.status(200).end("an item was added to the inventory");
         } catch (err) {
             res.status(500).end("Internal Server Error");

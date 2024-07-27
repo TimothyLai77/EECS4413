@@ -9,13 +9,15 @@ const { OutOfStockError } = require('../modules/errors')
  * @param {*} itemName Name of the item
  * @param {*} itemPrice price of the item
  */
-const createItemInCatalogue = async (itemName, itemPrice) => {
+const createItemInCatalogue = async (itemName, itemPrice, itemBrand, itemDescription) => {
     // create the item in an item database
     const itemId = uniqid('item-');
     await Item.create({
         itemId: itemId,
         name: itemName,
-        price: itemPrice
+        price: itemPrice,
+        brand: itemBrand,
+        description: itemDescription
     });
     //const inventoryEntry = await Inventory.create({ itemId: itemId, quantity: itemQuantity });
 };
