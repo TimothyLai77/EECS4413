@@ -26,15 +26,15 @@ async function prepareApp() {
 
     // DEBUG TESTING
     //await createUsersTest();
-    await checkout(null, [{
-        itemId: "item-14allk111lz0dat7m",
-        quantity: 1
-    },
-    {
-        itemId: "item-14allk111lz0dat7o",
-        quantity: 3
-    },
-    ]);
+    // await checkout(null, [{
+    //     itemId: "item-14allk111lz0dat7m",
+    //     quantity: 1
+    // },
+    // {
+    //     itemId: "item-14allk111lz0dat7o",
+    //     quantity: 3
+    // },
+    // ]);
 
 
     app.listen(PORT, () => {

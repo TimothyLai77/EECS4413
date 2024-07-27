@@ -17,7 +17,11 @@ Item.init(
             type: DataTypes.DOUBLE,
             allowNull: false
         },
-        type: {
+        brand: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        description: {
             type: DataTypes.STRING,
             allowNull: true
         }
