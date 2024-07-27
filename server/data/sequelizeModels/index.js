@@ -22,7 +22,7 @@ const connectAndAssociate = async () => {
     Transaction.hasOne(User, { foreignKey: "userId" });
 
     // Inventory and Items
-    Inventory.hasMany(Item, { foreignKey: "itemId" });
+    Inventory.hasOne(Item, { foreignKey: "itemId" });
 
     // Transactions and Ledgers
     Transaction.hasMany(LedgerEntry, { foreignKey: "transactionId" });
