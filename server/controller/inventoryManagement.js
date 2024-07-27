@@ -62,7 +62,7 @@ module.exports = (app) => {
     // get all items from the Inventory
     app.get("/api/inventory", async (req, res) => {
         try {
-            const inventory = await Inventory.findAll();
+            const inventory = await Inventory.findAll({ include: Item });
             res.send({
                 inventory: inventory
             })
