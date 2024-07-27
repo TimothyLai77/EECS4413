@@ -4,7 +4,8 @@ import NavigationBar from '../../components/common/NavigationBar';
 import { getTopPicks } from '../../services/topPickProduct';
 import ItemCard from '../../components/common/itemCard';
 import HomePageSlider from '../../components/HomePageSlider';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../assets/styles/HomePage.css';
 
 const HomePage = () => {
     const [topPicks, setTopPicks] = useState([]);
@@ -33,11 +34,13 @@ const HomePage = () => {
         </Container>
         <Container fluid className='customContainer'>
         <h2 className="my-4">Top Picks by Owner</h2>
-        <Row>
+        <div className="customRow">
+        <Row sm={4} md={'auto'} className="g-4">
           {topPicks.map((product) => (
             <ItemCard key={product.id} product={product} />
           ))}
         </Row>
+        </div>
         </Container>
      
     </div>

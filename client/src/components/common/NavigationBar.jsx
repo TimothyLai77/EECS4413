@@ -28,16 +28,17 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
               </Nav>
             </Container>
             <Form inline>
-        <Row>
-          <Col xs="auto">
+        <Row className='row justify-content-start'>
+          
+          <Col xs="auto" className='md-4'>
             <Form.Control
               type="text"
               placeholder="Search"
               className=" mr-sm-2"
-            />
+            /> 
           </Col>
-          <Col xs="auto">
-            <Button type="submit"><FaSearch /></Button>
+          <Col>
+          <Button><FaSearch /></Button>
           </Col>
         </Row>
       </Form>

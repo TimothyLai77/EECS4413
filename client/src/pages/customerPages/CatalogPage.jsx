@@ -6,7 +6,6 @@ import ItemCard from '../../components/common/itemCard';
 import { fetchInventory } from '../../features/catalog';
 import { useDispatch,useSelector } from 'react-redux';
 
-
 function CatalogPage() {
   const dispatch = useDispatch();
   const s = useSelector(store => {
@@ -34,11 +33,13 @@ function CatalogPage() {
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
       <Container>
       <h1 className="my-4">Product Catalogue</h1>
-      <Row>
+      <div>
+      <Row sm={4} md={'auto'} className="g-4">
         {products.map(product => (
           <ItemCard key={product.id} product={product} />
         ))}
       </Row>
+      </div>
     </Container>
     </div>
   )

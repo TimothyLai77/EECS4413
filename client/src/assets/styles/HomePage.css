@@ -1,22 +1,16 @@
-.customHomePage{
-    position: relative;
-}
-img { 
-    width: 100%;
-    height: auto;
-
+.customRow{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    margin-right: 0;
+    margin-left: 0;
   
-  }
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
 
-  .customContainer{
-    padding: 0 !important;
-  }
-  .hgt{
-    height: 100%;
-  }
-  .carousels{
-    height: 500px;
-  }
-  .slide, .carousel-inner,.carousel-item,.img-fluid{
-    height: 100% !important; 
+   
   }

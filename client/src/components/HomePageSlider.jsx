@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
-import '../assets/styles/HomePage.css';
+import '../assets/styles/HomePageSlider.css';
 import image1 from '../assets/images/homePage-1.jpeg';
 import image2 from '../assets/images/homePage-2.jpeg';
 import image3 from '../assets/images/homePage-3.jpeg';
