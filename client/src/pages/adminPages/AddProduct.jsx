@@ -33,9 +33,9 @@ function AddProduct() {
 
       dispatch(createProduct({
         name: product.name,
-        price: product.price,
+        price: parseFloat(product.price),
         brand: product.brand,
-        description: product.description
+        description: product.info
       }));
 
       // // Mocking product addition for now
