@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import {addProduct,inventoryProducts} from '../../services/inventoryProducts';
 import { useNavigate } from 'react-router-dom';
-
+import {createProduct} from '../../features/productManagement';
+import { fetchInventory } from '../../features/catalog';
+import {useDispatch} from 'react-redux'
 
 function AddProduct() {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: '',
@@ -28,19 +32,28 @@ function AddProduct() {
       alert('Product added successfully!');
       */
 
-      // Mocking product addition for now
-      await addProduct(product);
-      setProduct({
-        name: '',
-        brand: '',
-        price: '',
-        info: '',
-        stock: '',
-        image: ''
-      });
-      console.log('Updated Products:', inventoryProducts());
-      alert('Product added successfully!');
-      navigate('/admin');
+      await dispatch(createProduct({
+        name: product.name,
+        price: parseFloat(product.price),
+        brand: product.brand,
+        description: product.info
+      }));
+      
+      await dispatch(fetchInventory());
+
+      // // Mocking product addition for now
+      // await addProduct(product);
+      // setProduct({
+      //   name: '',
+      //   brand: '',
+      //   price: '',
+      //   info: '',
+      //   stock: '',
+      //   image: ''
+      // });
+      // console.log('Updated Products:', inventoryProducts());
+      // alert('Product added successfully!');
+      // navigate('/admin');
     } catch (error) {
       console.error('Error adding product:', error);
       alert('Failed to add product.');
