@@ -19,28 +19,32 @@ module.exports = (app) => {
             const price = request.price;
             const brand = request.brand;
             const description = request.description;
+            const image = request.image;
+            const stock = request.stock;
             // check data is valid
-            if (!name || !price || !brand || !description) throw new Error("Missing information");
+            if (!name || !price || !brand || !description || !image || !stock) throw new Error("Missing information");
             if (typeof price !== 'number') throw new Error("price is not a number");
+            if (typeof stock !== 'number') throw new Error("stock is not a number");
             // insert into database
-            await createItemInCatalogue(name, price, brand, description);
+            await createItemInCatalogue(name, price, brand, description, image, stock);
             res.status(200).end("an item was created");
         } catch (err) {
+            console.log(err)
             res.status(500).end("Internal Server Error");
         }
     });
 
     // remove item from the catalogue completely
-    app.post("/api/items/remove", async (req, res) => {
-        try {
-            // DEBUG/SAMPLE CODE: 
-            // const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
-            await removeItemFromCatalogue(i);
-            res.status(200).end();
-        } catch (err) {
-            res.status(500).end("Internal Server Error");
-        }
-    });
+    // app.post("/api/items/remove", async (req, res) => {
+    //     try {
+    //         // DEBUG/SAMPLE CODE: 
+    //         // const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
+    //         await removeItemFromCatalogue(i);
+    //         res.status(200).end();
+    //     } catch (err) {
+    //         res.status(500).end("Internal Server Error");
+    //     }
+    // });
 
 
     // GET ALL ITEMS FROM CATALOGUE
@@ -58,7 +62,7 @@ module.exports = (app) => {
     // get all items from the Inventory
     app.get("/api/inventory", async (req, res) => {
         try {
-            const inventory = await Inventory.findAll();
+            const inventory = await Inventory.findAll({ include: Item });
             res.send({
                 inventory: inventory
             })

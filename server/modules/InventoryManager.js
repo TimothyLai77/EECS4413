@@ -9,7 +9,7 @@ const { OutOfStockError } = require('../modules/errors')
  * @param {*} itemName Name of the item
  * @param {*} itemPrice price of the item
  */
-const createItemInCatalogue = async (itemName, itemPrice, itemBrand, itemDescription) => {
+const createItemInCatalogue = async (itemName, itemPrice, itemBrand, itemDescription, image, stock) => {
     // create the item in an item database
     const itemId = uniqid('item-');
     await Item.create({
@@ -17,9 +17,10 @@ const createItemInCatalogue = async (itemName, itemPrice, itemBrand, itemDescrip
         name: itemName,
         price: itemPrice,
         brand: itemBrand,
-        description: itemDescription
+        description: itemDescription,
+        image: image,
     });
-    //const inventoryEntry = await Inventory.create({ itemId: itemId, quantity: itemQuantity });
+    await Inventory.create({ itemId: itemId, quantity: stock });
 };
 
 /**
@@ -73,18 +74,17 @@ const removeItemFromInventory = async (itemModel, quantityToRemove) => {
  * Remove an item from the catalogue
  * @param {*} itemModel 
  */
-const removeItemFromCatalogue = async (itemModel) => {
-    // check that the item exists in the catalogue
-    const itemEntry = await Item.findByPk(itemModel.itemId);
-    if (itemEntry) {
-        // itemId exists in the catalogue
-        await itemEntry.destroy();
-    } else {
-        throw new Error("Item does not exist in the catalogue");
-    }
-}
+// const removeItemFromCatalogue = async (itemModel) => {
+//     // check that the item exists in the catalogue
+//     const itemEntry = await Item.findByPk(itemModel.itemId);
+//     if (itemEntry) {
+//         // itemId exists in the catalogue
+//         await itemEntry.destroy();
+//     } else {
+//         throw new Error("Item does not exist in the catalogue");
+//     }
+// }
 
 exports.createItemInCatalogue = createItemInCatalogue;
 exports.addItemToInventory = addItemToInventory;
 exports.removeItemFromInventory = removeItemFromInventory;
-exports.removeItemFromCatalogue = removeItemFromCatalogue;
