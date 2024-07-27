@@ -36,9 +36,11 @@ function AddProduct() {
         name: product.name,
         price: parseFloat(product.price),
         brand: product.brand,
-        description: product.info
+        description: product.info,
+        image : product.image, 
+        stock: parseInt(product.stock), 
       }));
-      
+
       await dispatch(fetchInventory());
 
       // // Mocking product addition for now
