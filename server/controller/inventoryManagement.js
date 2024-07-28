@@ -74,15 +74,15 @@ module.exports = (app) => {
     // ADD QUANTITY OF ITEM TO AN INVENTORY
     app.post("/api/inventory/add", async (req, res) => {
         try {
-            // DEBUG/SAMPLE CODE: 
-            const itemsToAdd = ['item-14allk111lz0dat7m', 'item-14allk111lz0dat7o', 'item-14allk111lz0dat7p'];
+            let request = req.body;
+            const itemID = request.itemID;
+            const stockToAdd = parseInt(request.amount);
 
-            // add each item to the inventory
-            await itemsToAdd.forEach(async (id) => {
-                const i = await Item.findByPk(id);
-                if (!i) throw new Error("Item does not exist");
-                await addItemToInventory(i, 3);
-            });
+            if (stockToAdd < 1) throw new Error("Amount must be greater than 0");
+            const itemFromDB = await Item.findByPk(itemID);
+            if (!itemFromDB) throw new Error("Item does not exist");
+
+            await addItemToInventory(itemFromDB, stockToAdd);
             res.status(200).end("an item was added to the inventory");
         } catch (err) {
             res.status(500).end("Internal Server Error");
@@ -90,26 +90,21 @@ module.exports = (app) => {
     });
 
     // REMOVE QUANTITY OF ITEM TO AN INVENTORY
-    app.post("/api/inventory/remove", async (req, res) => {
+    app.post("/api/inventory/deduct", async (req, res) => {
         try {
-            //const itemsToRemove = ['item-14allk1tvslyoz0gqu', 'item-14allk1tvslyoz0gqv'];
+            let request = req.body;
+            const itemID = request.itemID;
+            const stockToRemove = parseInt(request.amount);
 
+            if (stockToRemove < 1) throw new Error("Amount must be greater than 0");
+            const itemFromDB = await Item.findByPk(itemID);
+            if (!itemFromDB) throw new Error("Item does not exist");
+            if (itemFromDB.quantity < stockToRemove) throw new Error("Cannot have negative stock");
 
-            // wait for all removes to finish
-            // await Promise.all(itemsToRemove.map(async (id) => {
-            //     const item = await Item.findByPk(id);
-            //     if (!item) throw new Error("Item does not exist");
-            //     await removeItemFromInventory(item, 1);
-            // }));
-
-            res.status(200).end("an item was removed");
+            await removeItemFromInventory(itemFromDB, stockToRemove);
+            res.status(200).end("an item was removed from the inventory");
         } catch (err) {
-            if (err instanceof OutOfStockError) {
-                res.status(400).end(err.message);
-            } else {
-                res.status(500).end("Internal Server Error");
-            }
-
+            res.status(500).end("Internal Server Error");
         }
     });
 
