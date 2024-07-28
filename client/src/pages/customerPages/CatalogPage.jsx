@@ -3,7 +3,7 @@ import { Container, Row } from 'react-bootstrap';
 import getProductCatalog from '../../services/catalogProducts';
 import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
-import { fetchInventory } from '../../features/catalog';
+import { fetchInventory, inventoryAddStock, inventoryDeductStock } from '../../features/catalog';
 import { useDispatch,useSelector } from 'react-redux';
 
 
@@ -27,9 +27,23 @@ function CatalogPage() {
       <Container>
       <h1 className="my-4">Product Catalogue</h1>
       <Row>
-        {products.map(product => (
-          <ItemCard key={product.id} product={product} />
-        ))}
+        {products.map(product => {
+          const handleAddStock = () => {
+            dispatch(inventoryAddStock({
+              itemID: product.id,
+              amount: 1
+            }));
+          }
+          
+          const handleRemoveStock = () => {
+            dispatch(inventoryDeductStock({
+              itemID: product.id,
+              amount: 1
+            }));
+          }
+
+          return (<ItemCard key={product.id} product={product}  handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
+        })}
       </Row>
     </Container>
     </div>
