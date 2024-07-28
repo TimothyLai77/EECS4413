@@ -36,6 +36,8 @@ async function prepareApp() {
     // },
     // ]);
 
+    app.use("/*", express.static(CLIENT_FRONTEND_PATH));
+
 
     app.listen(PORT, () => {
         console.log("express started");
