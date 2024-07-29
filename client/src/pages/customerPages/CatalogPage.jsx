@@ -5,6 +5,7 @@ import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
 import { fetchInventory, inventoryAddStock, inventoryDeductStock } from '../../features/catalog';
 import { useDispatch,useSelector } from 'react-redux';
+import { addToCart } from '../../features/shoppingCart';
 
 
 function CatalogPage() {
@@ -12,6 +13,12 @@ function CatalogPage() {
   const products = useSelector(store => {
     return store.catalog.products
   });
+
+  const shoppingCart = useSelector(store => {
+    return store.shoppingCart.cart;
+  });
+  console.log({shoppingCart});
+
   console.log(products);
   // State to hold the list of the products
  
@@ -41,8 +48,15 @@ function CatalogPage() {
               amount: 1
             }));
           }
+          
+          const handleAddToCart = () => {
+            dispatch(addToCart({
+              itemId: product.id,
+              amount: 1
+            }))
+          }
 
-          return (<ItemCard key={product.id} product={product}  handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
+          return (<ItemCard key={product.id} product={product} handleAddToCart={handleAddToCart} handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
         })}
       </Row>
     </Container>

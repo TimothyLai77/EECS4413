@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Card, Button } from 'react-bootstrap';
 import '../../assets/styles/app.css';
-const ItemCard = ({ product, handleAddStock, handleRemoveStock }) => {
+const ItemCard = ({ product, handleAddStock, handleRemoveStock, handleAddToCart }) => {
 
   console.log(product);
   return (
@@ -15,7 +15,7 @@ const ItemCard = ({ product, handleAddStock, handleRemoveStock }) => {
           <Card.Text>{product.info}</Card.Text>
           <Card.Text>Stock: {product.stock}</Card.Text>
           <Button variant="primary">View Details</Button>
-          <Button variant="secondary">Add to Cart</Button>
+          <Button onClick={handleAddToCart} variant="secondary">Add to Cart</Button>
           <Button onClick={handleAddStock}>+</Button>
           <Button onClick={handleRemoveStock}>-</Button>
         </Card.Body>
