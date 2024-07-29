@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux'
 function AddProduct() {
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+ 
   const [product, setProduct] = useState({
     name: '',
     brand: '',
@@ -18,6 +18,7 @@ function AddProduct() {
     stock: '',
     image: ''
   })
+  const navigate = useNavigate();
   const handleChange = (event) =>{
     const{name,value} = event.target;
     setProduct({...product,[name]:value});
@@ -53,9 +54,9 @@ function AddProduct() {
       //   stock: '',
       //   image: ''
       // });
-      // console.log('Updated Products:', inventoryProducts());
-      // alert('Product added successfully!');
-      // navigate('/admin');
+
+      alert('Product added successfully!');
+      navigate('/admin');
     } catch (error) {
       console.error('Error adding product:', error);
       alert('Failed to add product.');
