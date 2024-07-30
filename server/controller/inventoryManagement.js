@@ -6,6 +6,7 @@ const {
 } = require('../modules/InventoryManager');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
+const {checkout } = require('../modules/Checkout');
 const { OutOfStockError } = require('../modules/errors');
 module.exports = (app) => {
 
@@ -130,7 +131,25 @@ module.exports = (app) => {
         }
     });
 
+    app.post("/api/inventory/checkout", async (req, res) =>{
+        try{
+            const request = req.body;
+            let {shoppingCart} = request
+            
+         
+            // remap to match json on the backend
+            const shoppingCartFormatted = shoppingCart.map(item => ({
+                itemId : item.itemId,
+                quantity: item.amount
+            }))
+            // TODO: replace the null with the user model
+            await checkout(null,shoppingCartFormatted);
+            res.status(200).end("checkout completed");
 
+        }catch{
+            res.status(500).end("checkout failed");
+        }
+    });
 
 
 

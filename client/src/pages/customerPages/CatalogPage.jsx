@@ -17,7 +17,7 @@ function CatalogPage() {
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
-  console.log({shoppingCart});
+  console.log(shoppingCart);
 
   console.log(products);
   // State to hold the list of the products
