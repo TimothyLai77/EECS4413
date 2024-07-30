@@ -17,7 +17,7 @@ module.exports = (app) => {
     });
 
 
-    app.get("/api/users/login", async (req, res) => {
+    app.put("/api/users/login", async (req, res) => {
         try {
             const request = req.body;
             const email = request.email;
