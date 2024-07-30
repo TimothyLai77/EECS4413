@@ -4,24 +4,21 @@ import {  Container, Row, Button } from 'react-bootstrap';
 import {inventoryProducts} from '../../services/inventoryProducts';
 import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
 import ItemCard from '../../components/common/itemCard.jsx';
-
-
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchInventory, inventoryAddStock, inventoryDeductStock } from '../../features/catalog';
 
 const AdminPage = () => {
+  const dispatch = useDispatch();
+  const products = useSelector(store => {
+    return store.catalog.products
+  });
 
-  // This works in same ways as the catalog page  
-  const [products, setProducts] = useState([]);
 
-  // Fetch the product from inventory along with available stock when the component mounts
-  const fetchProducts = async () => {
-    const data = await inventoryProducts();
-    setProducts(data);
-  };
 
   useEffect(() => {
-    fetchProducts();
+    // call the redux action to fetch inventory from backend 
+    dispatch(fetchInventory());
   }, []);
-
 
   return (
     <div>
@@ -29,14 +26,30 @@ const AdminPage = () => {
         <AdminNavBar />
       </div>
       <div>
-       <h3>Listing products in our inventory!</h3> <Button onClick={fetchProducts}>Refresh Products</Button>
+       <h3>Listing products in our inventory!</h3> 
       </div>
       <div id='inventory'>
       <Container>
       <Row>
-        {products.map(product => (
-          <ItemCard key={product.id} isAdmin={true} product={product} />
-        ))}
+      {products.map(product => {
+          const handleAddStock = () => {
+            dispatch(inventoryAddStock({
+              itemID: product.id,
+              amount: 1
+            }));
+          }
+          
+          const handleRemoveStock = () => {
+            dispatch(inventoryDeductStock({
+              itemID: product.id,
+              amount: 1
+            }));
+          }
+          
+
+
+          return (<ItemCard key={product.id} isAdmin={true} product={product} handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
+        })}
       </Row>
     </Container>
     </div>
