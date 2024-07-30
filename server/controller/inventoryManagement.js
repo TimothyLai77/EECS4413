@@ -46,7 +46,29 @@ module.exports = (app) => {
     //     }
     // });
 
+    app.get("/api/item", async (req, res) => {
+        try {
+            const request = req.body;
+            const requestedItemId = request.itemId;
+            const item = await Item.findOne({
+                where: {
+                    itemId: requestedItemId
+                }
+            });
+            const itemData = {
+                itemId: item.itemId,
+                name: item.name,
+                price: item.price,
+                brand: item.brand,
+                description: item.description,
+                image: item.image
+            }
 
+            res.send(itemData);
+        } catch (error) {
+            res.status(500).end("error: item probably doesn't exist")
+        }
+    });
     // GET ALL ITEMS FROM CATALOGUE
     app.get("/api/items", async (req, res) => {
         try {
