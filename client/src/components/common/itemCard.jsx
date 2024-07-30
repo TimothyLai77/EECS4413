@@ -1,19 +1,23 @@
-import React from 'react';
+import {React,useState} from 'react';
 import { Col, Card, Button } from 'react-bootstrap';
 import '../../assets/styles/app.css';
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
+import EditProductModal from './adminComponents/editProductModal'; 
 
+const ItemCard = ({ product, handleAddStock, handleRemoveStock, handleAddToCart, isAdmin,  handleUpdateProduct }) => {
 
-const ItemCard = ({ product, handleAddStock, handleRemoveStock, handleAddToCart, isAdmin }) => {
+  const [showModal, setShowModal] = useState(false);
 
-  console.log(product);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+  //console.log(product);
   return (
     <Col md={4} key={product.id}>
       <Card className="mb-4">
         <Card.Img variant="top" src={product.image} />
     
-        {isAdmin && (<> <Button variant="primary" size="sm">
+        {isAdmin && (<> <Button variant="primary" size="sm" onClick={handleShowModal}>
           Edit <FiEdit />
         </Button></>)}
       
@@ -39,6 +43,15 @@ const ItemCard = ({ product, handleAddStock, handleRemoveStock, handleAddToCart,
           }
         </Card.Body>
       </Card>
+
+      
+      {/**This is the modal comppnent*/}
+      <EditProductModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        product={product}
+        handleUpdateProduct={handleUpdateProduct}
+      />
     </Col>
   );
 };
