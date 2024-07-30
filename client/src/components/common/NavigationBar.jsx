@@ -6,7 +6,10 @@ import Image from 'react-bootstrap/Image';
 import logo from '../../assets/images/logo.jpeg';
 import '../../assets/styles/Navbar.css';
 import { FaSearch } from "react-icons/fa";
+
+import { useNavigate } from 'react-router-dom';
 const NavigationBar = ({ isLoggedIn, onLogout }) => {
+  const navigate = useNavigate();
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark" sticky="top">
@@ -20,11 +23,11 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 />
               </Navbar.Brand>
               <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/catalog">Product Cataloge</Nav.Link>
-                <Nav.Link href="/cart">Cart</Nav.Link>
-                <Nav.Link href="/login">Login/Register</Nav.Link>
-                <Nav.Link href="/admin">Temp admin access</Nav.Link>
+                <Nav.Link onClick={() => {navigate("/")}}>Home</Nav.Link>
+                <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
+                <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
+                <Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>
+                <Nav.Link onClick={() => {navigate("/admin")}}>Temp admin access</Nav.Link>
               </Nav>
             </Container>
             <Form inline>

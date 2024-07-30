@@ -42,10 +42,31 @@ const shoppingCartSlice = createSlice({
         }),
         clearCart: create.reducer((state) => {
             state.cart = [];
-        })
+        }),
+        checkout: create.asyncThunk(
+            // actual async function 
+            async (shoppingCart) => {
+                await axios.post("/api/inventory/checkout", {shoppingCart: shoppingCart});
+                
+            },
+            {
+                // runs after asyncThunk is fulfilled, modify the state as needed
+                fulfilled: (state, action) => {
+                    state.cart = [];
+                    alert("checkout complete");
+                },
+                // err handling if async thunk fails
+                rejected: () => {
+                    alert("failed to checkout");
+                }
+            }
+
+
+
+        )
     })
 
 })
 
-export const { addToCart, removeFromCart, clearCart } = shoppingCartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, checkout } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

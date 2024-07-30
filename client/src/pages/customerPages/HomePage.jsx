@@ -10,7 +10,7 @@ import HomePageSlider from '../../components/HomePageSlider';
 //REMOVE THIS BLOCK WHEN DONE TESTING
 import { useDispatch, useSelector } from 'react-redux';
 import {login, createAccount, logout} from '../../features/userManagement' 
-
+import {checkout} from '../../features/shoppingCart';
 
 const HomePage = () => {
     const [topPicks, setTopPicks] = useState([]);
@@ -21,9 +21,13 @@ const HomePage = () => {
   let userInfo = useSelector(store => {
     return store.user.loggedInUser;
   });
+
+  const shoppingCart = useSelector(store => {
+    return store.shoppingCart.cart;
+  });
   userInfo = `user : ${userInfo.userId}, isAdmin: ${userInfo.isAdmin}`
 
-
+  console.log(shoppingCart);
   useEffect(() => {
     const fetchTopPicks = async () => {
       const products = await getTopPicks();
@@ -51,7 +55,9 @@ const HomePage = () => {
         dispatch(logout());
       }}>LOGOUT TEMP</Button>
 
-
+    <Button onClick={()=> {
+        dispatch(checkout(shoppingCart));
+      }}>CHECKOUT TEMP</Button>
 
 
       <Container fluid className='customContainer'>
