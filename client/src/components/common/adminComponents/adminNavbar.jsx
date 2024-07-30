@@ -30,15 +30,7 @@ function adminNavbar() {
                       <Nav.Link href="/">Go back to Home</Nav.Link>
                       <Nav.Link href="/salesHistory">Sale history</Nav.Link>
                       <Nav.Link href="/analytics">Analytics</Nav.Link>
-                      <NavDropdown
-                        title="Product Management"
-                        menuVariant="dark"
-                        id={`offcanvasNavbarDropdown-expand-${expand}`}
-                      >
-                        <NavDropdown.Item href="/admin/updateProduct">Update product catalog</NavDropdown.Item>
-                        <NavDropdown.Item href="/admin/addProduct">Add new product</NavDropdown.Item>
-                        
-                      </NavDropdown>
+                      <Nav.Link href="/admin/addProduct">Add new product</Nav.Link>
                     </Nav>
                     <Form className="d-flex">
                       <Form.Control

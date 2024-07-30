@@ -67,7 +67,7 @@ const HomePage = () => {
         <h2 className="my-4">Top Picks by Owner</h2>
         <Row>
           {topPicks.map((product) => (
-            <ItemCard key={product.id} product={product} />
+            <ItemCard key={product.id} isAdmin={false} product={product} />
           ))}
         </Row>
         </Container>

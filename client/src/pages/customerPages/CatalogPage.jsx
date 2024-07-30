@@ -56,7 +56,7 @@ function CatalogPage() {
             }))
           }
 
-          return (<ItemCard key={product.id} product={product} handleAddToCart={handleAddToCart} handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
+          return (<ItemCard key={product.id} isAdmin={false} product={product} handleAddToCart={handleAddToCart} handleAddStock={handleAddStock} handleRemoveStock={handleRemoveStock}/>)
         })}
       </Row>
     </Container>
