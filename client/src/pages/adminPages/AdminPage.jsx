@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {  Container, Row, Button } from 'react-bootstrap';
 import {inventoryProducts} from '../../services/inventoryProducts';
 import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
-import ItemCardInventory from '../../components/common/adminComponents/ItemCardInventory';
+import ItemCard from '../../components/common/itemCard.jsx';
 
 
 
@@ -35,7 +35,7 @@ const AdminPage = () => {
       <Container>
       <Row>
         {products.map(product => (
-          <ItemCardInventory key={product.id} product={product} />
+          <ItemCard key={product.id} isAdmin={true} product={product} />
         ))}
       </Row>
     </Container>
