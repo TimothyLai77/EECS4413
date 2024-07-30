@@ -4,8 +4,10 @@ const cors = require("cors");
 const path = require("path");
 
 const inventoryController = require("./server/controller/inventoryManagement");
-const { connectToDb } = require("./server/data/sequelizeModels/index");
+const userController = require("./server/controller/userManagement");
 
+const { connectToDb } = require("./server/data/sequelizeModels/index");
+const { touchAdminUser } = require('./server/modules/UserManager');
 const { createUsersTest } = require("./server/tests/dbTest");
 const { checkout } = require('./server/modules/Checkout');
 
@@ -22,8 +24,9 @@ async function prepareApp() {
     app.use(cors());
     app.use("/", express.static(CLIENT_FRONTEND_PATH))
     inventoryController(app);
+    userController(app);
     await connectToDb();
-
+    await touchAdminUser();
     // DEBUG TESTING
     //await createUsersTest();
     // await checkout(null, [{
