@@ -3,6 +3,10 @@ const { User } = require('../data/sequelizeModels/User');
 const uniqid = require('uniqid');
 const { EmailAlreadyExistsError, UserDoesNotExistError } = require('../modules/errors');
 
+// lol
+const ADMIN_EMAIL = "root@app.com";
+const ADMIN_PASSWORD = "root";
+
 const createNewUser = async (firstName, lastName, email, password) => {
 
 
@@ -82,11 +86,50 @@ const promoteUserToAdmin = async (User) => {
     }
 };
 
+const authenticateUserLogin = async (email, password) => {
+    const user = await User.findOne({
+        where: {
+            email: email
+        }
+    });
+    if (!user) throw Error("no user");
+    if (user.validatePassword(password)) {
+        return user;
+    } else {
+        throw new Error("invalid login");
+    }
+
+}
+
+const touchAdminUser = async () => {
+    const checkAdminExists = await User.findOne({
+        where: {
+            email: ADMIN_EMAIL
+        }
+    })
+    // admin already exists
+    if (checkAdminExists) {
+        return
+    } else {
+        // no admin create one
+        const userId = uniqid('user-');
+        await User.create({
+            userId: userId,
+            firstName: "root",
+            lastName: "root",
+            email: ADMIN_EMAIL,
+            password: User.generateHash(ADMIN_PASSWORD),
+            isAdmin: true
+        });
+    }
+}
 
 
 
+exports.touchAdminUser = touchAdminUser;
 exports.createNewUser = createNewUser;
 exports.deleteUser = deleteUser;
 exports.updateUserAddress = updateUserAddress;
 exports.updateUserBillingInfo = updateUserBillingInfo;
 exports.promoteUserToAdmin = promoteUserToAdmin;
+exports.authenticateUserLogin = authenticateUserLogin;
