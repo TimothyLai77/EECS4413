@@ -70,6 +70,24 @@ const removeItemFromInventory = async (itemModel, quantityToRemove) => {
 
 };
 
+const updateItemFromCatalogue = async({itemId, newItemName, newItemPrice, newItemBrand, newItemDescription, newImage, newStock}) => {
+        // create the item in an item database
+        const itemToUpdate = await Item.findByPk(itemId, {
+            include: Inventory
+        });
+        if(!itemToUpdate) throw new Error("item does not exist");
+        itemToUpdate.name = newItemName;
+        itemToUpdate.price = newItemPrice;
+        itemToUpdate.brand = newItemBrand;
+        itemToUpdate.description = newItemDescription;
+        itemToUpdate.image = newImage;
+        await itemToUpdate.save();
+
+        // update stock
+        itemToUpdate.Inventory.quantity = newStock;
+        await itemToUpdate.Inventory.save();
+}
+
 /**
  * Remove an item from the catalogue
  * @param {*} itemModel 
@@ -88,3 +106,4 @@ const removeItemFromInventory = async (itemModel, quantityToRemove) => {
 exports.createItemInCatalogue = createItemInCatalogue;
 exports.addItemToInventory = addItemToInventory;
 exports.removeItemFromInventory = removeItemFromInventory;
+exports.updateItemFromCatalogue = updateItemFromCatalogue;

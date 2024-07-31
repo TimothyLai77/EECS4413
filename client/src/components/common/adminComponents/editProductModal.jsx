@@ -1,9 +1,27 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
+import { useDispatch } from 'react-redux';
+import {updateProduct} from '../../../features/productManagement'
+import { fetchInventory } from '../../../features/catalog';
 const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) => {
   const [updatedProduct, setUpdatedProduct] = useState({ ...product });
+  console.log(updatedProduct);
+  const dispatch = useDispatch();
 
+
+  const handleSave = async () => {
+    const payload = {
+      itemId: updatedProduct.id,
+      name: updatedProduct.name,
+      price: updatedProduct.price,
+      brand: updatedProduct.brand,
+      description: updatedProduct.info,
+      image: updatedProduct.image,
+      stock: updatedProduct.stock
+    }
+    await dispatch(updateProduct(payload));
+    await dispatch(fetchInventory());
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedProduct((prevProduct) => ({
@@ -12,10 +30,10 @@ const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) =
     }));
   };
 
-  const handleSaveChanges = () => {
-    handleUpdateProduct(updatedProduct);
-    handleClose();
-  };
+  // const handleSaveChanges = () => {
+  //   handleUpdateProduct(updatedProduct);
+  //   handleClose();
+  // };
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -85,7 +103,7 @@ const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) =
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleSaveChanges}>
+        <Button variant="primary" onClick={handleSave}>
           Save Changes
         </Button>
       </Modal.Footer>
