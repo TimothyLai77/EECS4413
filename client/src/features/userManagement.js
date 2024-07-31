@@ -48,6 +48,7 @@ const userManagementSlice = createSlice({
             },
             rejected: (state, action) => {
                 alert("account login failed");
+                throw new Error("login failed");
             }
         }),
 

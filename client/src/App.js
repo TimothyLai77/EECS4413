@@ -4,6 +4,7 @@ import HomePage from './pages/customerPages/HomePage';
 import CatalogPage from './pages/customerPages/CatalogPage'; 
 import CartPage from './pages/customerPages/CartPage';
 import LoginPage from './pages/customerPages/LoginPage'; 
+import TempLoginPage from "./pages/customerPages/LoginCreatePageTemp"; 
 import AdminPage from './pages/adminPages/AdminPage'; 
 import AddProduct from './pages/adminPages/AddProduct';
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
@@ -14,7 +15,7 @@ const App = () => (
       <Route path="/" element={<HomePage />} />
       <Route path="/catalog" element={<CatalogPage />} />
       <Route path="/cart" element={<CartPage />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<TempLoginPage />} />
      <Route path="/admin" element={<AdminPage />} />
      <Route path="/admin/addProduct" element={<AddProduct />} />
      {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
