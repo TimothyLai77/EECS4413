@@ -3,6 +3,7 @@ const {
     addItemToInventory,
     removeItemFromInventory,
     removeItemFromCatalogue,
+    updateItemFromCatalogue
 } = require('../modules/InventoryManager');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
@@ -148,6 +149,25 @@ module.exports = (app) => {
 
         }catch{
             res.status(500).end("checkout failed");
+        }
+    });
+
+    app.put("/api/items/update", async (req, res) => {
+        try{
+            const request = req.body;
+            const updatePacket = {
+                itemId: request.itemId,
+                newItemName: request.name,
+                newItemPrice: request.price,
+                newItemBrand: request.brand,
+                newItemDescription: request.description,
+                newImage: request.image,
+                newStock: request.stock
+            }
+            await updateItemFromCatalogue(updatePacket);
+            res.status(200).end("item updated")
+        }catch (err){
+            res.status(500).end("error updaing item")
         }
     });
 
