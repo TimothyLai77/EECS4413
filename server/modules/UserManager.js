@@ -7,7 +7,7 @@ const { EmailAlreadyExistsError, UserDoesNotExistError } = require('../modules/e
 const ADMIN_EMAIL = "root@app.com";
 const ADMIN_PASSWORD = "root";
 
-const createNewUser = async (firstName, lastName, email, password) => {
+const createNewUser = async (firstName, lastName, email, password, sAddr, bAddr, cc, cvv, exp) => {
 
 
     // check duplicate emails
@@ -25,7 +25,12 @@ const createNewUser = async (firstName, lastName, email, password) => {
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: User.generateHash(password)
+            password: User.generateHash(password),
+            shippingAddress : sAddr,
+            billingAddress : bAddr,
+            creditCardNumber: cc,
+            creditCardExpiry: exp, 
+            cvv: cvv,
         });
         return newUser;
     } else {

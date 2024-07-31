@@ -19,13 +19,13 @@ const userManagementSlice = createSlice({
 
     reducers: (create) => ({
         createAccount: create.asyncThunk(async (payload) => {
-            const reqBody = {
-                firstName: payload.firstName,
-                lastName: payload.lastName,
-                email: payload.email,
-                password: payload.password
-            }
-            await axios.post("/api/users/create", reqBody)
+            // const reqBody = {
+            //     firstName: payload.firstName,
+            //     lastName: payload.lastName,
+            //     email: payload.email,
+            //     password: payload.password
+            // }
+            await axios.post("/api/users/create", payload)
         }, {
             fulfilled: () => {
                 alert("Account created");

@@ -41,8 +41,6 @@ const LoginCreatePage = () => {
         lastName: createLastName,
         email: createEmail,
         password: createPassword,
-
-        //not implemented
         shippingAddr: createShippingAddress,
         billingAddr: createBillingAddress,
         creditCard : CC, 
