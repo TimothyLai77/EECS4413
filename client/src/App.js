@@ -6,7 +6,7 @@ import CartPage from './pages/customerPages/CartPage';
 import LoginPage from './pages/customerPages/LoginPage'; 
 import AdminPage from './pages/adminPages/AdminPage'; 
 import AddProduct from './pages/adminPages/AddProduct';
-import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
+//import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => (
   <Router>
      <Suspense fallback={<div>Loading...</div>}>
@@ -17,7 +17,7 @@ const App = () => (
       <Route path="/login" element={<LoginPage />} />
      <Route path="/admin" element={<AdminPage />} />
      <Route path="/admin/addProduct" element={<AddProduct />} />
-     <Route path="/admin/updateProduct" element={<UpdateProduct />} />
+     {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
     </Routes>
     </Suspense>
   </Router>
