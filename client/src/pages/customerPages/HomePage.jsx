@@ -44,7 +44,7 @@ const HomePage = () => {
 
       {/* REMOVE THIS BLOCK WHEN DONE TESTING */}
       <p>{userInfo}</p>
-      <Button onClick={()=> {
+      {/* <Button onClick={()=> {
         dispatch(login({
             email: "root@app.com",
             password: "root"
@@ -58,6 +58,7 @@ const HomePage = () => {
     <Button onClick={()=> {
         dispatch(checkout(shoppingCart));
       }}>CHECKOUT TEMP</Button>
+ */}
 
 
       <Container fluid className='customContainer'>

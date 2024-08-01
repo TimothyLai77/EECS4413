@@ -43,10 +43,10 @@ const shoppingCartSlice = createSlice({
         clearCart: create.reducer((state) => {
             state.cart = [];
         }),
-        checkout: create.asyncThunk(
+        purchase: create.asyncThunk(
             // actual async function 
-            async (shoppingCart) => {
-                await axios.post("/api/inventory/checkout", {shoppingCart: shoppingCart});
+            async (payload) => {
+                await axios.post("/api/inventory/checkout", payload);
                 
             },
             {
@@ -68,5 +68,5 @@ const shoppingCartSlice = createSlice({
 
 })
 
-export const { addToCart, removeFromCart, clearCart, checkout } = shoppingCartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, purchase } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;

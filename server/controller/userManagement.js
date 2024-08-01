@@ -7,8 +7,13 @@ module.exports = (app) => {
             const lastName = request.lastName;
             const email = request.email;
             const password = request.password;
+            const shippingAddress = request.shippingAddr;
+            const billingAddress = request.billingAddr;
+            const creditCard = request.creditCard;
+            const cvv = request.cvv;
+            const expiry = request.expiry
             if (!email || !password) throw new Error("Missing info");
-            await createNewUser(firstName, lastName, email, password);
+            await createNewUser(firstName, lastName, email, password, shippingAddress, billingAddress, creditCard, cvv, expiry);
             res.status(200).end("user created");
         } catch (error) {
             res.status(500).end("internal server error");
@@ -29,7 +34,12 @@ module.exports = (app) => {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                isAdmin: user.isAdmin
+                isAdmin: user.isAdmin,
+                shippingAddress : user.shippingAddress ,
+                billingAddress: user.billingAddress  ,
+                creditCard: user.creditCardNumber,
+                expiry: user.creditCardExpiry,
+                cvv: user.cvv,
             }
             res.send(userData);
         } catch (error) {
