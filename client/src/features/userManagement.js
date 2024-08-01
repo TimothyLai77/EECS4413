@@ -11,12 +11,16 @@ const userManagementSlice = createSlice({
             email: null,
             firstName: null,
             lastName: null,
-            isAdmin: null
-        }
+            isAdmin: null,
+            shippingAddress: null,
+            billingAddress: null,
+            creditCard: null,
+            expiry: null,
+            cvv: null
+        },
+        isLoggedIn : false
+        
     },
-
-
-
     reducers: (create) => ({
         createAccount: create.asyncThunk(async (payload) => {
             // const reqBody = {
@@ -45,6 +49,7 @@ const userManagementSlice = createSlice({
             fulfilled: (state, action) => {
                 const userData = action.payload;
                 state.loggedInUser = userData;
+                state.isLoggedIn = true;
             },
             rejected: (state, action) => {
                 alert("account login failed");
@@ -61,6 +66,7 @@ const userManagementSlice = createSlice({
                 isAdmin: null
             };
             state.loggedInUser = newState;
+            state.isLoggedIn = false; 
         })
     })
 
