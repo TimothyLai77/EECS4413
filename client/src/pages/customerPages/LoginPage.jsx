@@ -6,6 +6,11 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [billingAddress, setBillingAddress] = useState('');
+  const [shippingAddress, setShippingAddress] = useState('');
+  const [sameAddress, setSameAddress] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -16,18 +21,36 @@ function LoginPage() {
       } else {
         setError('');
         // Handle successful login logic
+        // User is logeed in and handle the login 
         console.log('Login submitted:', { email, password });
       }
     } else {
-      if (!email || !password || !confirmPassword) {
+      if (!email || !password || !confirmPassword || !firstName || !lastName || !billingAddress || (!sameAddress && !shippingAddress)) {
         setError('Please fill in all fields');
       } else if (password !== confirmPassword) {
         setError('Passwords do not match');
       } else {
         setError('');
-        // Handle successful registration logic
-        console.log('Registration submitted:', { email, password });
+        // Handle successful registration logic 
+        // Below code for Debugging that the value is stored in the object.
+        console.log('Registration submitted:', {
+          email,
+          password,
+          firstName,
+          lastName,
+          billingAddress,
+          shippingAddress: sameAddress ? billingAddress : shippingAddress,
+        });
       }
+    }
+  };
+
+  const handleSameAddressChange = (e) => {
+    setSameAddress(e.target.checked);
+    if (e.target.checked) {
+      setShippingAddress(billingAddress);
+    } else {
+      setShippingAddress('');
     }
   };
 
@@ -56,15 +79,63 @@ function LoginPage() {
             />
           </Form.Group>
           {!isLogin && (
-            <Form.Group controlId="formConfirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </Form.Group>
+            <>
+              <Form.Group controlId="formConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formFirstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formLastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBillingAddress">
+                <Form.Label>Billing Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Billing Address"
+                  value={billingAddress}
+                  onChange={(e) => setBillingAddress(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formSameAddress">
+                <Form.Check
+                  type="checkbox"
+                  label="Shipping address is the same as billing address"
+                  checked={sameAddress}
+                  onChange={handleSameAddressChange}
+                />
+              </Form.Group>
+              {!sameAddress && (
+                <Form.Group controlId="formShippingAddress">
+                  <Form.Label>Shipping Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Shipping Address"
+                    value={shippingAddress}
+                    onChange={(e) => setShippingAddress(e.target.value)}
+                  />
+                </Form.Group>
+              )}
+            </>
           )}
           <Button variant="primary" type="submit" className="mt-3 w-100">
             {isLogin ? 'Login' : 'Register'}
