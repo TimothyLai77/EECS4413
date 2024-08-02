@@ -49,8 +49,32 @@ function LoginPage() {
       } else if (password !== confirmPassword) {
         setError('Passwords do not match');
       } else {
-        setError('');
+        //setError('');
         // Handle successful registration logic 
+        try {
+          const createUserPacket = {
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            password : password,
+            shippingAddr : sameAddress ? billingAddress : shippingAddress,
+            billingAddr : billingAddress,
+            creditCard : null,
+            cvv : null,
+            expiry : null
+          }
+
+          await dispatch(createAccount(createUserPacket));
+          await dispatch(login({
+              email: email,
+              password: password
+          }));
+          await navigate("/");
+        } catch (err) {
+            setError("Account Creation Failed")
+        }
+
+
         // Below code for Debugging that the value is stored in the object.
         console.log('Registration submitted:', {
           email,
