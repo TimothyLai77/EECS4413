@@ -54,7 +54,15 @@ const getTransactionDetails = async (transactionId) => {
 
 // admin side, get all transactions
 const getAllTransactions = async () => {
-
+    const allTransactionModels = await Transaction.findAll();
+    const returnList = allTransactionModels.map((t) => {
+        return {
+            transactionId: t.transactionId,
+            date: t.date,
+            userId: t.userId
+        }
+    })
+    return returnList;
 }
 
 exports.getTransactionDetails = getTransactionDetails;
