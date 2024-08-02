@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-
+import { useDispatch, useSelector } from "react-redux";
+import { login, createAccount } from "../../features/userManagement"
+import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -12,8 +14,12 @@ function LoginPage() {
   const [shippingAddress, setShippingAddress] = useState('');
   const [sameAddress, setSameAddress] = useState(false);
   const [error, setError] = useState('');
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
+
+
     e.preventDefault();
     if (isLogin) {
       if (!email || !password) {
@@ -23,6 +29,19 @@ function LoginPage() {
         // Handle successful login logic
         // User is logeed in and handle the login 
         console.log('Login submitted:', { email, password });
+        const authPacket = {
+          email: email,
+          password: password
+        };
+
+        
+        try{
+          await dispatch(login(authPacket));
+          await navigate("/")
+        }catch (err){
+          setError("Invalid Login Credentials");
+        }
+   
       }
     } else {
       if (!email || !password || !confirmPassword || !firstName || !lastName || !billingAddress || (!sameAddress && !shippingAddress)) {

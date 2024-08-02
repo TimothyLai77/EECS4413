@@ -17,7 +17,7 @@ const App = () => (
       <Route path="/" element={<HomePage />} />
       <Route path="/catalog" element={<CatalogPage />} />
       <Route path="/cart" element={<TempCartPage />} />
-      <Route path="/login" element={<TempLoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
      <Route path="/admin" element={<AdminPage />} />
      <Route path="/admin/addProduct" element={<AddProduct />} />
      <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit/>}/>

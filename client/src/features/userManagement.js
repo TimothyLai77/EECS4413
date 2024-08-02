@@ -52,7 +52,7 @@ const userManagementSlice = createSlice({
                 state.isLoggedIn = true;
             },
             rejected: (state, action) => {
-                alert("account login failed");
+                //alert("account login failed");
                 throw new Error("login failed");
             }
         }),
