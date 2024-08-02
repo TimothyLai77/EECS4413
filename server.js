@@ -5,7 +5,7 @@ const path = require("path");
 
 const inventoryController = require("./server/controller/inventoryManagement");
 const userController = require("./server/controller/userManagement");
-
+const transactionController = require('./server/controller/transactionManagement');
 const { connectToDb } = require("./server/data/sequelizeModels/index");
 const { touchAdminUser } = require('./server/modules/UserManager');
 const { createUsersTest } = require("./server/tests/dbTest");
@@ -25,6 +25,7 @@ async function prepareApp() {
     app.use("/", express.static(CLIENT_FRONTEND_PATH))
     inventoryController(app);
     userController(app);
+    transactionController(app);
     await connectToDb();
     await touchAdminUser();
     // DEBUG: 
