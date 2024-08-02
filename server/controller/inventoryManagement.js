@@ -135,16 +135,24 @@ module.exports = (app) => {
     app.post("/api/inventory/checkout", async (req, res) =>{
         try{
             const request = req.body;
-            let {shoppingCart} = request
+            let shoppingCart = request.shoppingCart
+
             
-         
+            // make a new user info object, because the user could have changed their 
+            // billing information during the checkout process, can't use the stored info in db
+            const userInfo = {
+                userId : request.userId,
+                creditCard : request.creditCard,
+                cvv : request.cvv,
+                expiry: request.expiry
+            }
             // remap to match json on the backend
             const shoppingCartFormatted = shoppingCart.map(item => ({
                 itemId : item.itemId,
                 quantity: item.amount
             }))
             // TODO: replace the null with the user model
-            await checkout(null,shoppingCartFormatted);
+            await checkout(userInfo, shoppingCartFormatted);
             res.status(200).end("checkout completed");
 
         }catch{
