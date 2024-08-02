@@ -32,10 +32,11 @@ const userManagementSlice = createSlice({
             await axios.post("/api/users/create", payload)
         }, {
             fulfilled: () => {
-                alert("Account created");
+                //alert("Account created");
             },
             rejected: () => {
-                alert("account creation failed");
+                //alert("account creation failed");
+                throw new Error("Account creation failed");
             }
         }),
 
