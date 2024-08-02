@@ -5,12 +5,12 @@ const path = require("path");
 
 const inventoryController = require("./server/controller/inventoryManagement");
 const userController = require("./server/controller/userManagement");
-
+const transactionController = require('./server/controller/transactionManagement');
 const { connectToDb } = require("./server/data/sequelizeModels/index");
 const { touchAdminUser } = require('./server/modules/UserManager');
 const { createUsersTest } = require("./server/tests/dbTest");
 const { checkout } = require('./server/modules/Checkout');
-
+const { getTransactionDetails, getUserTransactions } = require('./server/modules/TransactionManager');
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
 
@@ -25,19 +25,13 @@ async function prepareApp() {
     app.use("/", express.static(CLIENT_FRONTEND_PATH))
     inventoryController(app);
     userController(app);
+    transactionController(app);
     await connectToDb();
     await touchAdminUser();
-    // DEBUG TESTING
-    //await createUsersTest();
-    // await checkout(null, [{
-    //     itemId: "item-14allk111lz0dat7m",
-    //     quantity: 1
-    // },
-    // {
-    //     itemId: "item-14allk111lz0dat7o",
-    //     quantity: 3
-    // },
-    // ]);
+    // DEBUG: 
+    // await getUserTransactions('user-s97h0ajlzbzepz2')
+    // await getTransactionDetails('transaction-s97h0ajlzbzg0cy')
+
 
     app.use("/*", express.static(CLIENT_FRONTEND_PATH));
 
