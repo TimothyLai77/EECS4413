@@ -31,9 +31,9 @@ const checkout = async (userInfo, itemList) => {
     if(!userModel) throw new Error("user does not exist");
 
     //TODO: CC VALIDATION HERE
-    const ccRegex = /^(\d{4}){3}$/gm;
-    if(userInfo.cvv < 0 && userInfo.cvv > 999) throw new Error("Invalid Formatting");
-    if(ccRegex.test(userInfo.creditCard.replace(/\s/g,''))) throw new Error("Invalid Formatting");
+    //const ccRegex = /^(\d{4}){3}$/gm;
+    //if(userInfo.cvv < 0 && userInfo.cvv > 999) throw new Error("Invalid Formatting");
+    //if(ccRegex.test(userInfo.creditCard.replace(/\s/g,''))) throw new Error("Invalid Formatting");
     // TODO: figure out the expiry date one 
     ``
     const fetchItemsFromInventory = await Promise.all(itemList.map(async itemToBuy => {
@@ -84,12 +84,11 @@ const checkout = async (userInfo, itemList) => {
     // make a transaction
 
     //BUG: the dates are pretty wrong, at least on my machine, fix when i have time to get around to it
-    t = await Transaction.create({
+    await Transaction.create({
         transactionId: transactionId,
-        date: DataTypes.NOW,
+        date: new Date(),
         userId: userInfo.userId
     });
-     console.log(t);
 }
 
 exports.checkout = checkout;
