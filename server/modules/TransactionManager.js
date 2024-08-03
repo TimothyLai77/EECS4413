@@ -44,7 +44,7 @@ const getTransactionDetails = async (transactionId) => {
     const transactionDetails = ledgerList.map((ledgerE) => {
         return {
             transactionId: ledgerE.transactionId,
-            itemid: ledgerE.itemId,
+            itemId: ledgerE.itemId,
             priceSold: ledgerE.priceSold,
             quantity: ledgerE.quantity
         }
