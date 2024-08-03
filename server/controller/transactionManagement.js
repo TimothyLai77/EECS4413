@@ -29,7 +29,7 @@ module.exports = (app) => {
     });
 
     // get the ledger or the details of a transaction
-    app.get("/api/transactions/details", async (req, res) => {
+    app.get("/api/transactions/details/", async (req, res) => {
         try {
             const request = req.body;
             const transactionId = request.transactionId;
