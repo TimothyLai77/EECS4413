@@ -30,7 +30,7 @@ const transactionFetcherSlice = createSlice({
     }),
 
     getUserTransactions: create.asyncThunk(async (userId) => {
-        return (await axios.get("/api/user/transactions/", userId)).data;
+        return (await axios.post("/api/user/transactions/", {userId: userId})).data;
     }, {
         fulfilled: (state, action) => {
             const newTransactions = action.payload;
@@ -43,10 +43,11 @@ const transactionFetcherSlice = createSlice({
 
 
     getTransactionDetails: create.asyncThunk(async (transactionId) => {
-        return (await axios.get("/api/transactions/details", transactionId)).data;
+        return (await axios.post("/api/transactions/details", {transactionId: transactionId})).data;
     }, {
         fulfilled: (state, action) => {
             const transactionDetails = action.payload;
+            //console.log(transactionDetails);
             state.transactionDetails = transactionDetails 
         },
         rejected: () => {
