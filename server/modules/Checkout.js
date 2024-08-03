@@ -64,15 +64,16 @@ const checkout = async (userInfo, itemList) => {
 
     //  generate Ledger entires and transaction
     const transactionId = uniqid("transaction-");
+    let total = 0.0;
     // generate a ledger list of ledger entries for each item in the transaction 
     ledgerList = await Promise.all(itemList.map(async (item) =>{
         const catalogItem = await Item.findByPk(item.itemId);
         const quantityPurchased = item.quantity;
         if(!catalogItem) throw new Error("item does not exist in the catalog");
         console.log(catalogItem);
-
+        
         const priceSold = catalogItem.price*quantityPurchased;
-
+        total+= priceSold;
         return await LedgerEntry.create({
             transactionId : transactionId,
             itemId: item.itemId,
@@ -86,6 +87,7 @@ const checkout = async (userInfo, itemList) => {
     //BUG: the dates are pretty wrong, at least on my machine, fix when i have time to get around to it
     await Transaction.create({
         transactionId: transactionId,
+        total: total,
         date: new Date(),
         userId: userInfo.userId
     });

@@ -8,6 +8,10 @@ Transaction.init(
             type: DataTypes.STRING,
             primaryKey: true
         },
+        total: {
+            type: DataTypes.DOUBLE,
+            allowNull: false
+        },
         date: {
             type: DataTypes.DATE,
             allowNull: false

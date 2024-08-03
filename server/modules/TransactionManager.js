@@ -19,6 +19,7 @@ const getUserTransactions = async (userId) => {
     const returnList = userTransactionList.map((t) => {
         return {
             transactionId: t.transactionId,
+            total: t.total,
             date: t.date,
             userId: t.userId
         }
@@ -58,6 +59,7 @@ const getAllTransactions = async () => {
     const returnList = allTransactionModels.map((t) => {
         return {
             transactionId: t.transactionId,
+            total: t.total,
             date: t.date,
             userId: t.userId
         }
