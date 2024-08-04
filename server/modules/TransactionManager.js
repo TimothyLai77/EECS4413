@@ -19,6 +19,7 @@ const getUserTransactions = async (userId) => {
     const returnList = userTransactionList.map((t) => {
         return {
             transactionId: t.transactionId,
+            total: t.total,
             date: t.date,
             userId: t.userId
         }
@@ -43,7 +44,7 @@ const getTransactionDetails = async (transactionId) => {
     const transactionDetails = ledgerList.map((ledgerE) => {
         return {
             transactionId: ledgerE.transactionId,
-            itemid: ledgerE.itemId,
+            itemId: ledgerE.itemId,
             priceSold: ledgerE.priceSold,
             quantity: ledgerE.quantity
         }
@@ -58,6 +59,7 @@ const getAllTransactions = async () => {
     const returnList = allTransactionModels.map((t) => {
         return {
             transactionId: t.transactionId,
+            total: t.total,
             date: t.date,
             userId: t.userId
         }

@@ -17,7 +17,7 @@ module.exports = (app) => {
 
 
     // get all user transactions
-    app.get("/api/user/transactions/", async (req, res) => {
+    app.post("/api/user/transactions/", async (req, res) => {
         try {
             const request = req.body;
             const userId = request.userId;
@@ -29,7 +29,7 @@ module.exports = (app) => {
     });
 
     // get the ledger or the details of a transaction
-    app.get("/api/transactions/details", async (req, res) => {
+    app.post("/api/transactions/details/", async (req, res) => {
         try {
             const request = req.body;
             const transactionId = request.transactionId;

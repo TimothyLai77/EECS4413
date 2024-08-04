@@ -9,6 +9,7 @@ import TempLoginPage from "./pages/customerPages/LoginCreatePageTemp";
 import AdminPage from './pages/adminPages/AdminPage'; 
 import AddProduct from './pages/adminPages/AddProduct';
 import TempCartPage from './pages/customerPages/CartPageTemp';
+import TempTransactionPage from './pages/customerPages/TempTransactionPage';
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => (
   <Router>
@@ -21,6 +22,7 @@ const App = () => (
      <Route path="/admin" element={<AdminPage />} />
      <Route path="/admin/addProduct" element={<AddProduct />} />
      <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit/>}/>
+     <Route path="/temptransactions" element={<TempTransactionPage/>}/>
      {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
     </Routes>
     </Suspense>
