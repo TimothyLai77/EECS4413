@@ -22,7 +22,7 @@ const App = () => (
      <Route path="/admin" element={<AdminPage />} />
      <Route path="/admin/addProduct" element={<AddProduct />} />
      <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit/>}/>
-     <Route path="/transactions" element={<TempTransactionPage/>}/>
+     <Route path="/temptransactions" element={<TempTransactionPage/>}/>
      {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
     </Routes>
     </Suspense>
