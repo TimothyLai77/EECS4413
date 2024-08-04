@@ -50,36 +50,51 @@ const deleteUser = async (User) => {
     }
 };
 
-const updateUserAddress = async (User, ccNumber, ccExpiry, cvv, billingAddress) => {
-    const userToUpdate = await User.findByPk(User.userId);
-    if (!userToUpdate) {
-        // if user does exist, delete and save changes
-        await userToUpdate.set({
-            creditCardNumber: ccNumber,
-            creditCardExpiry: ccExpiry,
-            cvv: cvv,
-            billingAddress: billingAddress
-        });
-        userToUpdate.save();
-    } else {
-        // user does not exist
-        throw new UserDoesNotExistError;
-    }
-};
+// const updateUserAddress = async (updatePacket) => {
+//     const userToUpdate = await User.findByPk(updatePacket.userId);
+//     if (!userToUpdate) {
+//         // if user does exist, delete and save changes
+//         await userToUpdate.set({
+//             creditCardNumber: ccNumber,
+//             creditCardExpiry: ccExpiry,
+//             cvv: cvv,
+//             billingAddress: billingAddress
+//         });
+//         userToUpdate.save();
+//     } else {
+//         // user does not exist
+//         throw new UserDoesNotExistError;
+//     }
+// };
 
-const updateUserBillingInfo = async (User, newShippingAddress) => {
-    const userToUpdate = await User.findByPk(User.userId);
-    if (!userToUpdate) {
-        // if user does exist, delete and save changes
-        await userToUpdate.set({
-            shippingAddress: newShippingAddress,
-        });
-        userToUpdate.save();
-    } else {
-        // user does not exist
-        throw new UserDoesNotExistError;
-    }
-};
+// const updateUserBillingInfo = async (User, newShippingAddress) => {
+//     const userToUpdate = await User.findByPk(User.userId);
+//     if (!userToUpdate) {
+//         // if user does exist, delete and save changes
+//         await userToUpdate.set({
+//             shippingAddress: newShippingAddress,
+//         });
+//         userToUpdate.save();
+//     } else {
+//         // user does not exist
+//         throw new UserDoesNotExistError;
+//     }
+// };
+
+const updateUserInfo = async (updatePacket) => {
+    const userModel = await User.findByPk(updatePacket.userId);
+    if(!userModel) throw new Error("user does not exist");
+
+    userModel.firstName = updatePacket.firstName;
+    userModel.lastName = updatePacket.lastName;
+    userModel.creditCardNumber = updatePacket.creditCard;
+    userModel.creditCardExpiry = updatePacket.expiry;
+    userModel.cvv = updatePacket.cvv;
+    userModel.shippingAddress = updatePacket.shippingAddress;
+    userModel.billingAddress = updatePacket.billingAddress;
+    await userModel.save()
+}
+
 
 const promoteUserToAdmin = async (User) => {
     const userToPromote = await User.findByPk(User.userId);
@@ -134,7 +149,8 @@ const touchAdminUser = async () => {
 exports.touchAdminUser = touchAdminUser;
 exports.createNewUser = createNewUser;
 exports.deleteUser = deleteUser;
-exports.updateUserAddress = updateUserAddress;
-exports.updateUserBillingInfo = updateUserBillingInfo;
+//exports.updateUserAddress = updateUserAddress;
+//exports.updateUserBillingInfo = updateUserBillingInfo;
 exports.promoteUserToAdmin = promoteUserToAdmin;
 exports.authenticateUserLogin = authenticateUserLogin;
+exports.updateUserInfo = updateUserInfo;

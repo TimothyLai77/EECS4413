@@ -68,8 +68,34 @@ const userManagementSlice = createSlice({
             };
             state.loggedInUser = newState;
             state.isLoggedIn = false; 
-        })
+        }),
+
+        updateUserDetails: create.asyncThunk(async (payload) => {
+            const reqBody = {
+                userId: payload.userId, // can't actually update but need userid to lookup
+                firstName: payload.firstName,
+                lastName: payload.lastName,
+                shippingAddress: payload.shippingAddress,
+                billingAddress: payload.billingAddress,
+                creditCard: payload.creditCard,
+                expiry: payload.expiry,
+                cvv:payload.cvv
+            }
+            return (await axios.put("api/users/update", reqBody)).data;
+        }, {
+            fulfilled: (state, action) => {
+                const userData = action.payload;
+                state.loggedInUser = userData;
+                state.isLoggedIn = true;
+            },
+            rejected: (state, action) => {
+                alert("account update failed");
+                //throw new Error("login failed");
+            }
+        }),
     })
+
+
 
 });
 

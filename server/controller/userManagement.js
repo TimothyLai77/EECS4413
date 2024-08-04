@@ -1,4 +1,4 @@
-const { createNewUser, authenticateUserLogin } = require('../modules/UserManager');
+const { createNewUser, authenticateUserLogin, updateUserInfo } = require('../modules/UserManager');
 module.exports = (app) => {
     app.post("/api/users/create", async (req, res) => {
         try {
@@ -15,6 +15,17 @@ module.exports = (app) => {
             if (!email || !password) throw new Error("Missing info");
             await createNewUser(firstName, lastName, email, password, shippingAddress, billingAddress, creditCard, cvv, expiry);
             res.status(200).end("user created");
+        } catch (error) {
+            res.status(500).end("internal server error");
+        }
+
+    });
+
+    app.put("/api/users/update", async (req, res) => {
+        try {
+            const request = req.body;
+            await updateUserInfo(request);
+            res.status(200).end("user info updated");
         } catch (error) {
             res.status(500).end("internal server error");
         }
