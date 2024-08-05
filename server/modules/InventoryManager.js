@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Sequelize, DataTypes, Model, Op } = require('sequelize');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
 const uniqid = require('uniqid');
@@ -88,6 +88,31 @@ const updateItemFromCatalogue = async({itemId, newItemName, newItemPrice, newIte
         await itemToUpdate.Inventory.save();
 }
 
+
+// https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#eager-loading-filtered-at-the-associated-model-level
+const searchForItem = async (searchTerm) => {
+    // Gets all the Inventory rows with an ItemModel attached, 
+    // WHERE ItemModel name OR brand is 'like' the searchTerm
+    const invSearchResult = await Inventory.findAll({
+        include: {
+            model: Item,
+            where: {
+                // add inside this obj to increase search scope
+                [Op.or] :{
+                    name: {
+                        [Op.like] : '%'+searchTerm+'%'
+                    },
+                    brand: {
+                        [Op.like] : '%'+searchTerm+'%'
+                    }
+                }
+
+            }
+        }
+    })
+
+    return invSearchResult;
+}
 /**
  * Remove an item from the catalogue
  * @param {*} itemModel 
@@ -107,3 +132,4 @@ exports.createItemInCatalogue = createItemInCatalogue;
 exports.addItemToInventory = addItemToInventory;
 exports.removeItemFromInventory = removeItemFromInventory;
 exports.updateItemFromCatalogue = updateItemFromCatalogue;
+exports.searchForItem = searchForItem;

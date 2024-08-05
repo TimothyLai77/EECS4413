@@ -5,7 +5,7 @@ import {updateProduct} from '../../../features/productManagement'
 import { fetchInventory } from '../../../features/catalog';
 const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) => {
   const [updatedProduct, setUpdatedProduct] = useState({ ...product });
-  console.log(updatedProduct);
+  //console.log(updatedProduct);
   const dispatch = useDispatch();
 
 

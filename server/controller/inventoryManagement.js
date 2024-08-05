@@ -3,7 +3,8 @@ const {
     addItemToInventory,
     removeItemFromInventory,
     removeItemFromCatalogue,
-    updateItemFromCatalogue
+    updateItemFromCatalogue,
+    searchForItem
 } = require('../modules/InventoryManager');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
@@ -157,6 +158,23 @@ module.exports = (app) => {
 
         }catch{
             res.status(500).end("checkout failed");
+        }
+    });
+
+
+    app.post("/api/inventory/search", async (req, res) =>{
+        try{
+            const request = req.body;
+            const searchTerm = request.searchTerm
+            // make a new user info object, because the user could have changed their 
+            // billing information during the checkout process, can't use the stored info in db
+            const matchingInventoryItems = await searchForItem(searchTerm);
+            console.log(matchingInventoryItems);
+            res.send({
+                inventory: matchingInventoryItems
+            });
+        }catch{
+            res.status(500).end("item search failed");
         }
     });
 
