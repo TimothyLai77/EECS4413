@@ -169,7 +169,10 @@ module.exports = (app) => {
             // make a new user info object, because the user could have changed their 
             // billing information during the checkout process, can't use the stored info in db
             const matchingInventoryItems = await searchForItem(searchTerm);
-            res.send(matchingInventoryItems);
+            console.log(matchingInventoryItems);
+            res.send({
+                inventory: matchingInventoryItems
+            });
         }catch{
             res.status(500).end("item search failed");
         }

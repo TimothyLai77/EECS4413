@@ -11,6 +11,38 @@ const catalogSlice = createSlice({
     // Everything to modify the state
     reducers: (create) => ({
         // running async function such as fetching data from the backend 
+        searchInventory: create.asyncThunk(
+            // actual async function 
+            async (searchTerm) => {
+                let { data } = await axios.post("/api/inventory/search", {searchTerm : searchTerm});
+                // this return value is stored under action.payload
+                //  FORMAT for page render: 
+                // id: 4, name: 'Product 4', price: 14.99, brand:'BRAND',info:"This is the product information", image: image },
+                data = data.inventory.map(item => ({
+                    id: item.itemId,
+                    name: item.Item.name,
+                    price: item.Item.price,
+                    brand: item.Item.brand,
+                    info: item.Item.description,
+                    image: item.Item.image,
+                    stock: item.quantity,
+                }));
+
+                return data;
+            },
+            {
+                // runs after asyncThunk is fulfilled, modify the state as needed
+                fulfilled: (state, action) => {
+
+                    state.products = action.payload;
+                },
+                // err handling if async thunk fails
+                rejected: (state, action) => {
+
+                    console.log("search failed");
+                }
+            }
+        ),
         fetchInventory: create.asyncThunk(
             // actual async function 
             async () => {
@@ -94,10 +126,11 @@ const catalogSlice = createSlice({
                 console.log("inventory duduction failed");
             }
         })
+        
     })
 });
 
-export const { fetchInventory, inventoryAddStock, inventoryDeductStock } = catalogSlice.actions;
+export const { fetchInventory, inventoryAddStock, inventoryDeductStock, searchInventory } = catalogSlice.actions;
 export default catalogSlice.reducer;
 
 
