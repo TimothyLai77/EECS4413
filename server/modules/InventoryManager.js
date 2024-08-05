@@ -89,15 +89,24 @@ const updateItemFromCatalogue = async({itemId, newItemName, newItemPrice, newIte
 }
 
 
-
-const searchForItem = async (itemNameSearch) => {
+// https://sequelize.org/docs/v6/advanced-association-concepts/eager-loading/#eager-loading-filtered-at-the-associated-model-level
+const searchForItem = async (searchTerm) => {
+    // Gets all the Inventory rows with an ItemModel attached, 
+    // WHERE ItemModel name OR brand is 'like' the searchTerm
     const invSearchResult = await Inventory.findAll({
         include: {
             model: Item,
             where: {
-                name: {
-                    [Op.like] : '%'+itemNameSearch+'%'
+                // add inside this obj to increase search scope
+                [Op.or] :{
+                    name: {
+                        [Op.like] : '%'+searchTerm+'%'
+                    },
+                    brand: {
+                        [Op.like] : '%'+searchTerm+'%'
+                    }
                 }
+
             }
         }
     })

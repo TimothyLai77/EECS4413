@@ -35,8 +35,13 @@ async function prepareApp() {
     // await getUserTransactions('user-s97h0ajlzbzepz2')
     // await getTransactionDetails('transaction-s97h0ajlzbzg0cy')
     //await createTestItems();
-    const searchItems = await searchForItem("item");
-    console.log(JSON.stringify(searchItems, null, 2));
+    // let searchItems = await searchForItem("item 1");
+    // console.log(JSON.stringify(searchItems, null, 2));
+    // searchItems = await searchForItem("brand 2");
+    // console.log(JSON.stringify(searchItems, null, 2));
+    // searchItems = await searchForItem("match");
+    // console.log(JSON.stringify(searchItems, null, 2));
+
     app.use("/*", express.static(CLIENT_FRONTEND_PATH));
 
 
