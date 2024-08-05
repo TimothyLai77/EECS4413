@@ -2,6 +2,7 @@ const { } = require('../modules/InventoryManager');
 const { createNewUser } = require('../modules/UserManager');
 const { User } = require('../data/sequelizeModels/User');
 const { EmailAlreadyExistsError } = require("../modules/errors")
+const {createItemInCatalogue, addItemToInventory} = require('../modules/InventoryManager');
 
 const createUsersTest = async () => {
 
@@ -21,4 +22,16 @@ const createUsersTest = async () => {
 
 }
 
+const createTestItems = async () => {
+    await createItemInCatalogue(`item 1`, 100, `brand 1`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 2`, 100, `brand 1`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 3`, 100, `brand 2`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 4`, 100, `brand 2`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 5`, 100, `brand 3`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 6`, 100, `brand 3`, `desc`, "imgUrl", 100);
+    await createItemInCatalogue(`item 7`, 100, `brand 4`, `desc`, "imgUrl", 100);
+
+}
+
 exports.createUsersTest = createUsersTest;
+exports.createTestItems = createTestItems;
