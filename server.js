@@ -11,6 +11,8 @@ const { touchAdminUser } = require('./server/modules/UserManager');
 const { createUsersTest } = require("./server/tests/dbTest");
 const { checkout } = require('./server/modules/Checkout');
 const { getTransactionDetails, getUserTransactions } = require('./server/modules/TransactionManager');
+const {createTestItems} = require('./server/tests/dbTest');
+const {searchForItem} = require('./server/modules/InventoryManager');
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
 
@@ -28,11 +30,13 @@ async function prepareApp() {
     transactionController(app);
     await connectToDb();
     await touchAdminUser();
+    
     // DEBUG: 
     // await getUserTransactions('user-s97h0ajlzbzepz2')
     // await getTransactionDetails('transaction-s97h0ajlzbzg0cy')
-
-
+    //await createTestItems();
+    const searchItems = await searchForItem("item");
+    console.log(JSON.stringify(searchItems, null, 2));
     app.use("/*", express.static(CLIENT_FRONTEND_PATH));
 
 

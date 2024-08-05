@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Sequelize, DataTypes, Model, Op } = require('sequelize');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
 const uniqid = require('uniqid');
@@ -88,6 +88,22 @@ const updateItemFromCatalogue = async({itemId, newItemName, newItemPrice, newIte
         await itemToUpdate.Inventory.save();
 }
 
+
+
+const searchForItem = async (itemNameSearch) => {
+    const invSearchResult = await Inventory.findAll({
+        include: {
+            model: Item,
+            where: {
+                name: {
+                    [Op.like] : '%'+itemNameSearch+'%'
+                }
+            }
+        }
+    })
+
+    return invSearchResult;
+}
 /**
  * Remove an item from the catalogue
  * @param {*} itemModel 
@@ -107,3 +123,4 @@ exports.createItemInCatalogue = createItemInCatalogue;
 exports.addItemToInventory = addItemToInventory;
 exports.removeItemFromInventory = removeItemFromInventory;
 exports.updateItemFromCatalogue = updateItemFromCatalogue;
+exports.searchForItem = searchForItem;
