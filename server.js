@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+const session = require('express-session');
+
 const inventoryController = require("./server/controller/inventoryManagement");
 const userController = require("./server/controller/userManagement");
 const transactionController = require('./server/controller/transactionManagement');
@@ -16,14 +18,28 @@ const {searchForItem} = require('./server/modules/InventoryManager');
 const PORT = 8080;
 const CLIENT_FRONTEND_PATH = path.join(__dirname, "client", "build");
 
+const expressSessionConfig = session({
+    secret: "eecs4413",
+    resave: false,
+    HttpOnly: true,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      sameSite: true,
+    },
+  });
+  
 
 
 const env = process.env;
 
 async function prepareApp() {
     const app = express();
+    app.set("trust proxy", 1);
     app.use(express.json());
     app.use(cors());
+    app.use(expressSessionConfig);
+
     app.use("/", express.static(CLIENT_FRONTEND_PATH))
     inventoryController(app);
     userController(app);

@@ -25,7 +25,7 @@ const HomePage = () => {
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
-  userInfo = `user : ${userInfo.userId}, isAdmin: ${userInfo.isAdmin}`
+  userInfo = `user : ${userInfo.email}, isAdmin: ${userInfo.isAdmin}`
 
   console.log(shoppingCart);
   useEffect(() => {

@@ -137,7 +137,7 @@ module.exports = (app) => {
         try{
             const request = req.body;
             let shoppingCart = request.shoppingCart
-
+            console.log(req.session.user);
             
             // make a new user info object, because the user could have changed their 
             // billing information during the checkout process, can't use the stored info in db

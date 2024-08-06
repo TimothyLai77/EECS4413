@@ -40,12 +40,27 @@ const userManagementSlice = createSlice({
             }
         }),
 
+        testSession: create.asyncThunk(async (payload) => {
+            return ((await axios.get("/api/users/info")).data);
+        },
+        {
+            fulfilled: (state, action) => {
+                const userData = action.payload;
+                state.loggedInUser = userData;
+                state.isLoggedIn = true;
+            },
+            rejected: () => {
+                // user session was not stored, don't do anything, user either logins or use guest mode
+            }
+        }),
+
         login: create.asyncThunk(async (payload) => {
             const reqBody = {
                 email: payload.email,
                 password: payload.password
             }
-            return (await axios.put("api/users/login", reqBody)).data;
+            await axios.put("api/users/login", reqBody)
+            return ((await axios.get("/api/users/info")).data);
         }, {
             fulfilled: (state, action) => {
                 const userData = action.payload;
@@ -73,5 +88,5 @@ const userManagementSlice = createSlice({
 
 });
 
-export const { createAccount, login, logout } = userManagementSlice.actions;
+export const { createAccount, login, logout, testSession } = userManagementSlice.actions;
 export default userManagementSlice.reducer;
