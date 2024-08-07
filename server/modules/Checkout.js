@@ -6,8 +6,9 @@ const { Item, LedgerEntry } = require('../data/sequelizeModels/index');
 const uniqid = require('uniqid');
 const { InvalidOperationError } = require('../modules/errors');
 const { parse } = require('dotenv');
-
-
+const dayjs = require('dayjs');
+var customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 /**
  * 
  * @param {*} userModel 
@@ -31,10 +32,18 @@ const checkout = async (userInfo, itemList) => {
     if(!userModel) throw new Error("user does not exist");
 
     //TODO: CC VALIDATION HERE
-    //const ccRegex = /^(\d{4}){3}$/gm;
-    //if(userInfo.cvv < 0 && userInfo.cvv > 999) throw new Error("Invalid Formatting");
-    //if(ccRegex.test(userInfo.creditCard.replace(/\s/g,''))) throw new Error("Invalid Formatting");
-    // TODO: figure out the expiry date one 
+    let creditCardString = userInfo.creditCard; 
+    creditCardString = creditCardString.replace(" ", "");
+    const ccRegex = /[0-9]{16}/gmi;
+    if(!ccRegex.test(creditCardString)) throw new Error("Invalid Formatting");
+    if(userInfo.cvv > 999 || userInfo.cvv < 0) throw new Error("invalid cvv format");
+
+    // CC Expiry validation
+    userExpiry = dayjs(userInfo.expiry, ['MM/YY', 'MM/YYYY', 'MM YY', 'MM YYYY']);
+    if(!userExpiry.isValid()) throw new Error("invalid expiry date format");
+    userExpiry = userExpiry.endOf('month'); // set the cc expiry to end of month
+    if(userExpiry.isBefore(dayjs())) throw new Error("credit card expired");
+
     ``
     const fetchItemsFromInventory = await Promise.all(itemList.map(async itemToBuy => {
         const itemInInventory = await Inventory.findByPk(itemToBuy.itemId, { include: Item });
