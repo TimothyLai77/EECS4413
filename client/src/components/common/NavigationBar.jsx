@@ -6,10 +6,25 @@ import Image from 'react-bootstrap/Image';
 import logo from '../../assets/images/logo.jpeg';
 import '../../assets/styles/Navbar.css';
 import { FaSearch } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../features/userManagement';
 
 import { useNavigate } from 'react-router-dom';
-const NavigationBar = ({ isLoggedIn, onLogout }) => {
+const NavigationBar = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(store => store.user.isLoggedIn);
+  const userInfo = useSelector(store => store.user.loggedInUser);
+  const isAdmin = useSelector(store => store.user.isAdmin); 
+
+  const handleLogout = async () => {
+    //short circuit no-op if the user is not even logged in and this function is called
+    if (!isLoggedIn) return;
+    await dispatch(logout()); 
+    navigate("/");
+  }
+
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark" sticky="top">
@@ -27,8 +42,20 @@ const NavigationBar = ({ isLoggedIn, onLogout }) => {
                 <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/admin")}}>Temp admin access</Nav.Link>
+                {
+                  (isLoggedIn && isAdmin)? 
+                    (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
+                    null 
+                }
               </Nav>
+              {/* render the logout button only if the user is logged in */}
+              {isLoggedIn? (
+                <Container>
+                  <p style={{color: "white"}}>{`Hello ${userInfo.firstName} ${userInfo.lastName}`}</p>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </Container>
+                ): null }
+
             </Container>
             <Form inline>
         <Row>

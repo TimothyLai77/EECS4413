@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Button} from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import NavigationBar from '../../components/common/NavigationBar';
 import { getTopPicks } from '../../services/topPickProduct';
 import ItemCard from '../../components/common/itemCard';
@@ -8,8 +8,7 @@ import HomePageSlider from '../../components/HomePageSlider';
 
 
 //REMOVE THIS BLOCK WHEN DONE TESTING
-import { useDispatch, useSelector } from 'react-redux';
-import {login, createAccount, logout} from '../../features/userManagement' 
+import {  useSelector } from 'react-redux';
 import {checkout} from '../../features/shoppingCart';
 
 const HomePage = () => {
@@ -17,15 +16,9 @@ const HomePage = () => {
 
 
   //REMOVE THIS BLOCK WHEN DONE TESTING
-  const dispatch = useDispatch();
-  let userInfo = useSelector(store => {
-    return store.user.loggedInUser;
-  });
-
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
-  userInfo = `user : ${userInfo.email}, isAdmin: ${userInfo.isAdmin}`
 
   console.log(shoppingCart);
   useEffect(() => {
@@ -43,7 +36,6 @@ const HomePage = () => {
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
 
       {/* REMOVE THIS BLOCK WHEN DONE TESTING */}
-      <p>{userInfo}</p>
       {/* <Button onClick={()=> {
         dispatch(login({
             email: "root@app.com",
