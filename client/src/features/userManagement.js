@@ -18,7 +18,7 @@ const userManagementSlice = createSlice({
             expiry: null,
             cvv: null
         },
-        isLoggedIn : false
+        isLoggedIn : false,
         
     },
     reducers: (create) => ({
@@ -73,16 +73,26 @@ const userManagementSlice = createSlice({
             }
         }),
 
-        logout: create.reducer((state) => {
-            const newState = {
-                userId: null,
-                email: null,
-                firstName: null,
-                lastName: null,
-                isAdmin: null
-            };
-            state.loggedInUser = newState;
-            state.isLoggedIn = false; 
+
+        logout: create.asyncThunk(async () => {
+            await axios.delete("/api/user/logout"); 
+        }, {
+            fulfilled: (state, action) => {
+                const newState = {
+                    userId: null,
+                    email: null,
+                    firstName: null,
+                    lastName: null,
+                    isAdmin: null,
+                    shippingAddress: null,
+                    billingAddress: null,
+                    creditCard: null,
+                    expiry: null,
+                    cvv: null
+                };
+                state.loggedInUser = newState;
+                state.isLoggedIn = false;
+            }
         })
     })
 
