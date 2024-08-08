@@ -15,6 +15,7 @@ const NavigationBar = () => {
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(store => store.user.isLoggedIn);
+  const userInfo = useSelector(store => store.user.loggedInUser);
   const isAdmin = useSelector(store => store.user.isAdmin); 
 
   const handleLogout = async () => {
@@ -41,10 +42,19 @@ const NavigationBar = () => {
                 <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/admin")}}>Temp admin access</Nav.Link>
+                {
+                  (isLoggedIn && isAdmin)? 
+                    (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
+                    null 
+                }
               </Nav>
               {/* render the logout button only if the user is logged in */}
-              {isLoggedIn? (<Button onClick={handleLogout}>Logout</Button>): null }
+              {isLoggedIn? (
+                <Container>
+                  <p style={{color: "white"}}>{`Hello ${userInfo.firstName} ${userInfo.lastName}`}</p>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </Container>
+                ): null }
 
             </Container>
             <Form inline>

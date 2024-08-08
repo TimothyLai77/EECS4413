@@ -19,6 +19,7 @@ const userManagementSlice = createSlice({
             cvv: null
         },
         isLoggedIn : false,
+        isAdmin : false, 
         
     },
     reducers: (create) => ({
@@ -66,6 +67,9 @@ const userManagementSlice = createSlice({
                 const userData = action.payload;
                 state.loggedInUser = userData;
                 state.isLoggedIn = true;
+                if (userData.isAdmin && typeof userData.isAdmin === "boolean"){
+                    state.isAdmin = userData.isAdmin; 
+                }
             },
             rejected: (state, action) => {
                 //alert("account login failed");
@@ -92,6 +96,7 @@ const userManagementSlice = createSlice({
                 };
                 state.loggedInUser = newState;
                 state.isLoggedIn = false;
+                state.isAdmin = false;
             }
         })
     })
