@@ -12,6 +12,7 @@ import TempCartPage from './pages/customerPages/CartPageTemp';
 import TempTransactionPage from './pages/customerPages/TempTransactionPage';
 import { useDispatch } from 'react-redux';
 import {testSession} from './features/userManagement'
+import AdminTransactionPage from './pages/adminPages/AdminTransactionPage';
 
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
      <Route path="/admin/addProduct" element={<AddProduct />} />
      <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit/>}/>
      <Route path="/temptransactions" element={<TempTransactionPage/>}/>
+     <Route path="/admin/transactions" element={<AdminTransactionPage/>}/>
      {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
     </Routes>
     </Suspense>

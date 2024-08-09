@@ -19,7 +19,7 @@ const connectAndAssociate = async () => {
     // ASSOCIATION DEFINITIONS
     // User and Transactions
     User.hasMany(Transaction, { foreignKey: 'userId' });
-    Transaction.hasOne(User, { foreignKey: "userId" });
+    Transaction.belongsTo(User, { foreignKey: "userId" });
 
     // Inventory and Items
     Inventory.hasOne(Item, { foreignKey: "itemId" });
@@ -28,6 +28,9 @@ const connectAndAssociate = async () => {
     // Transactions and Ledgers
     Transaction.hasMany(LedgerEntry, { foreignKey: "transactionId" });
     LedgerEntry.hasOne(Transaction, { foreignKey: "transactionId" });
+    LedgerEntry.belongsTo(Item, {foreignKey: "itemId"});
+
+
 };
 
 exports.connectToDb = connectAndAssociate;
