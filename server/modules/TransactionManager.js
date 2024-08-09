@@ -2,7 +2,7 @@ const { Sequelize, DataTypes, Model } = require('sequelize');
 const { User } = require('../data/sequelizeModels/User');
 const {Transaction } = require('../data/sequelizeModels/Transaction');
 const {LedgerEntry} = require('../data/sequelizeModels/LedgerEntry')
-
+const {Item} = require('../data/sequelizeModels/Item')
 
 // customer side get all of their transactions
 const getUserTransactions = async (userId) => {
@@ -55,13 +55,28 @@ const getTransactionDetails = async (transactionId) => {
 
 // admin side, get all transactions
 const getAllTransactions = async () => {
-    const allTransactionModels = await Transaction.findAll();
+    const allTransactionModels = await Transaction.findAll({
+        include: [
+            {model: LedgerEntry, include: Item},
+            {model: User}
+        ]
+    });
+    console.log(allTransactionModels);
     const returnList = allTransactionModels.map((t) => {
         return {
             transactionId: t.transactionId,
             total: t.total,
             date: t.date,
-            userId: t.userId
+            userId: t.userId,
+            userEmail: t.User.email,
+            userFirstName: t.User.firstName,
+            userLastName: t.User.lastName,
+            itemsBought: t.LedgerEntries.map((itemBought) => ({
+                itemName: itemBought.Item.name,
+                itemBrand: itemBought.Item.brand,
+                priceSold: itemBought.priceSold,
+                quantity: itemBought.quantity
+            }))
         }
     })
     return returnList;
