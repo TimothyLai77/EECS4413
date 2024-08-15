@@ -23,11 +23,7 @@ function CatalogPage() {
   
   // State to hold the list of the products
  
-  // Fetch the product catalog when the component mounts
-  useEffect(() => {
-    // call the redux action to fetch inventory from backend 
-    dispatch(fetchInventory());
-  }, []);
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
