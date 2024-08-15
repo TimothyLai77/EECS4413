@@ -29,20 +29,20 @@ const checkout = async (userInfo, itemList) => {
             }
      */
     const userModel = await User.findByPk(userInfo.userId);
-    if(!userModel) throw new Error("user does not exist");
+    if (!userModel) throw new Error("user does not exist");
 
     //TODO: CC VALIDATION HERE
-    let creditCardString = userInfo.creditCard; 
-    creditCardString = creditCardString.replace(" ", "");
+    let creditCardString = userInfo.creditCard;
+    creditCardString = creditCardString.replaceAll(" ", "");
     const ccRegex = /[0-9]{16}/gmi;
-    if(!ccRegex.test(creditCardString)) throw new Error("Invalid Formatting");
-    if(userInfo.cvv > 999 || userInfo.cvv < 0) throw new Error("invalid cvv format");
+    if (!ccRegex.test(creditCardString)) throw new Error("Invalid Formatting");
+    if (userInfo.cvv > 999 || userInfo.cvv < 0) throw new Error("invalid cvv format");
 
     // CC Expiry validation
     userExpiry = dayjs(userInfo.expiry, ['MM/YY', 'MM/YYYY', 'MM YY', 'MM YYYY']);
-    if(!userExpiry.isValid()) throw new Error("invalid expiry date format");
+    if (!userExpiry.isValid()) throw new Error("invalid expiry date format");
     userExpiry = userExpiry.endOf('month'); // set the cc expiry to end of month
-    if(userExpiry.isBefore(dayjs())) throw new Error("credit card expired");
+    if (userExpiry.isBefore(dayjs())) throw new Error("credit card expired");
 
     ``
     const fetchItemsFromInventory = await Promise.all(itemList.map(async itemToBuy => {
@@ -75,16 +75,16 @@ const checkout = async (userInfo, itemList) => {
     const transactionId = uniqid("transaction-");
     let total = 0.0;
     // generate a ledger list of ledger entries for each item in the transaction 
-    ledgerList = await Promise.all(itemList.map(async (item) =>{
+    ledgerList = await Promise.all(itemList.map(async (item) => {
         const catalogItem = await Item.findByPk(item.itemId);
         const quantityPurchased = item.quantity;
-        if(!catalogItem) throw new Error("item does not exist in the catalog");
+        if (!catalogItem) throw new Error("item does not exist in the catalog");
         console.log(catalogItem);
-        
-        const priceSold = catalogItem.price*quantityPurchased;
-        total+= priceSold;
+
+        const priceSold = catalogItem.price * quantityPurchased;
+        total += priceSold;
         return await LedgerEntry.create({
-            transactionId : transactionId,
+            transactionId: transactionId,
             itemId: item.itemId,
             priceSold: priceSold,
             quantity: quantityPurchased
