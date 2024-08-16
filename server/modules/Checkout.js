@@ -8,7 +8,7 @@ const { InvalidOperationError } = require('../modules/errors');
 const { parse } = require('dotenv');
 const dayjs = require('dayjs');
 var customParseFormat = require("dayjs/plugin/customParseFormat");
-import { PaymentError, OutOfStockError } from '../modules/errors';
+const { PaymentError, OutOfStockError } = require('../modules/errors');
 
 
 dayjs.extend(customParseFormat);
@@ -36,6 +36,9 @@ const checkout = async (userInfo, itemList) => {
 
     //TODO: CC VALIDATION HERE
     let creditCardString = userInfo.creditCard;
+    if (!creditCardString) {
+        throw new PaymentError("Invalid formatting");
+    }
     creditCardString = creditCardString.replaceAll(" ", "");
     const ccRegex = /[0-9]{16}/gmi;
     if (!ccRegex.test(creditCardString)) throw new PaymentError("Invalid Formatting");
