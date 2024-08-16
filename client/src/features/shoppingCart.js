@@ -25,6 +25,21 @@ const shoppingCartSlice = createSlice({
             }
             state.cart = newState;
         }),
+        reduceFromCart: create.reducer((state, action) => {
+            const newState = [...state.cart];
+            /**
+             * example:
+             * itemId: 'string'
+             * amount: 'number'
+             */
+            const newCartItem = action.payload;
+
+            const duplicateItemInCart = newState.find(e => e.itemId === newCartItem.itemId);
+            if (duplicateItemInCart && duplicateItemInCart.amount > 1) {
+                duplicateItemInCart.amount -= 1;
+            }
+            state.cart = newState;
+        }),
         removeFromCart: create.reducer((state, action) => {
             const newState = [...state.cart];
             /**
@@ -40,6 +55,7 @@ const shoppingCartSlice = createSlice({
                 state.cart = newState;
             }
         }),
+
         clearCart: create.reducer((state) => {
             state.cart = [];
         }),
@@ -47,7 +63,7 @@ const shoppingCartSlice = createSlice({
             // actual async function 
             async (payload) => {
                 await axios.post("/api/inventory/checkout", payload);
-                
+
             },
             {
                 // runs after asyncThunk is fulfilled, modify the state as needed
@@ -68,5 +84,5 @@ const shoppingCartSlice = createSlice({
 
 })
 
-export const { addToCart, removeFromCart, clearCart, purchase } = shoppingCartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, purchase, reduceFromCart } = shoppingCartSlice.actions;
 export default shoppingCartSlice.reducer;
