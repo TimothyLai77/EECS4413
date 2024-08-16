@@ -49,7 +49,9 @@ const shoppingCartSlice = createSlice({
              */
             const newCartItem = action.payload;
 
-            const index = newState.indexOf(e => e.itemId === newCartItem.itemId);
+            const cartItemIds = newState.map(e => e.itemId);
+
+            const index = cartItemIds.indexOf(newCartItem.itemId);
             if (index > -1) {
                 newState.splice(index, 1);
                 state.cart = newState;

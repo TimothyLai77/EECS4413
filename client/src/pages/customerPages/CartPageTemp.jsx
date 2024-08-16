@@ -9,7 +9,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../../components/common/NavigationBar";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, reduceFromCart } from "../../features/shoppingCart";
+import {
+  addToCart,
+  reduceFromCart,
+  removeFromCart,
+} from "../../features/shoppingCart";
 function TempCartPage() {
   const cart = useSelector((store) => {
     return store.shoppingCart.cart;
@@ -65,6 +69,14 @@ function TempCartPage() {
       );
     };
 
+    const handleRemove = () => {
+      dispatch(
+        removeFromCart({
+          itemId: item.itemId,
+        })
+      );
+    };
+
     return (
       <ListGroup.Item>
         <b>{headerLine} </b>
@@ -76,6 +88,7 @@ function TempCartPage() {
           <Button onClick={handleMinus}>-</Button>
           <Button onClick={handleAdd}>+</Button>
         </ButtonGroup>
+        <Button onClick={handleRemove}>Remove from Cart</Button>
       </ListGroup.Item>
     );
   });
