@@ -63,9 +63,13 @@ const shoppingCartSlice = createSlice({
         }),
         purchase: create.asyncThunk(
             // actual async function 
-            async (payload) => {
-                await axios.post("/api/inventory/checkout", payload);
-
+            async (payload, { rejectWithValue }) => {
+                try {
+                    await axios.post("/api/inventory/checkout", payload);
+                } catch (error) {
+                    rejectWithValue(error.response.data);
+                    throw new Error(error.response.data);
+                }
             },
             {
                 // runs after asyncThunk is fulfilled, modify the state as needed
@@ -74,8 +78,10 @@ const shoppingCartSlice = createSlice({
                     alert("checkout complete");
                 },
                 // err handling if async thunk fails
-                rejected: () => {
-                    alert("failed to checkout");
+                rejected: (state, action) => {
+                    const errorMsg = action.error.message;
+                    alert(errorMsg);
+                    //alert("failed to checkout");
                 }
             }
 

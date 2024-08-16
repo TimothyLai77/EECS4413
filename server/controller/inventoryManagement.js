@@ -8,8 +8,8 @@ const {
 } = require('../modules/InventoryManager');
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
-const {checkout } = require('../modules/Checkout');
-const { OutOfStockError } = require('../modules/errors');
+const { checkout } = require('../modules/Checkout');
+const { OutOfStockError, PaymentError } = require('../modules/errors');
 module.exports = (app) => {
 
     // ADD ITEM TO CATALOGUE
@@ -133,37 +133,43 @@ module.exports = (app) => {
         }
     });
 
-    app.post("/api/inventory/checkout", async (req, res) =>{
-        try{
+    app.post("/api/inventory/checkout", async (req, res) => {
+        try {
             const request = req.body;
             let shoppingCart = request.shoppingCart
             console.log(req.session.user);
-            
+
             // make a new user info object, because the user could have changed their 
             // billing information during the checkout process, can't use the stored info in db
             const userInfo = {
-                userId : request.userId,
-                creditCard : request.creditCard,
-                cvv : request.cvv,
+                userId: request.userId,
+                creditCard: request.creditCard,
+                cvv: request.cvv,
                 expiry: request.expiry
             }
             // remap to match json on the backend
             const shoppingCartFormatted = shoppingCart.map(item => ({
-                itemId : item.itemId,
+                itemId: item.itemId,
                 quantity: item.amount
             }))
             // TODO: replace the null with the user model
             await checkout(userInfo, shoppingCartFormatted);
             res.status(200).end("checkout completed");
 
-        }catch{
-            res.status(500).end("checkout failed");
+        } catch (e) {
+            if (e instanceof OutOfStockError) {
+                res.status(400).end("Item(s) out of stock");
+            } else if (e instanceof PaymentError) {
+                res.status(400).end("Credit Card Authorization Failed");
+            } else {
+                res.status(500).end("checkout failed");
+            }
         }
     });
 
 
-    app.post("/api/inventory/search", async (req, res) =>{
-        try{
+    app.post("/api/inventory/search", async (req, res) => {
+        try {
             const request = req.body;
             const searchTerm = request.searchTerm
             // make a new user info object, because the user could have changed their 
@@ -173,13 +179,13 @@ module.exports = (app) => {
             res.send({
                 inventory: matchingInventoryItems
             });
-        }catch{
+        } catch {
             res.status(500).end("item search failed");
         }
     });
 
     app.put("/api/items/update", async (req, res) => {
-        try{
+        try {
             const request = req.body;
             const updatePacket = {
                 itemId: request.itemId,
@@ -192,7 +198,7 @@ module.exports = (app) => {
             }
             await updateItemFromCatalogue(updatePacket);
             res.status(200).end("item updated")
-        }catch (err){
+        } catch (err) {
             res.status(500).end("error updaing item")
         }
     });
