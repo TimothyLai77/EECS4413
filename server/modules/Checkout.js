@@ -8,6 +8,9 @@ const { InvalidOperationError } = require('../modules/errors');
 const { parse } = require('dotenv');
 const dayjs = require('dayjs');
 var customParseFormat = require("dayjs/plugin/customParseFormat");
+const { PaymentError, OutOfStockError } = require('../modules/errors');
+
+
 dayjs.extend(customParseFormat);
 /**
  * 
@@ -33,16 +36,19 @@ const checkout = async (userInfo, itemList) => {
 
     //TODO: CC VALIDATION HERE
     let creditCardString = userInfo.creditCard;
+    if (!creditCardString) {
+        throw new PaymentError("Invalid formatting");
+    }
     creditCardString = creditCardString.replaceAll(" ", "");
     const ccRegex = /[0-9]{16}/gmi;
-    if (!ccRegex.test(creditCardString)) throw new Error("Invalid Formatting");
-    if (userInfo.cvv > 999 || userInfo.cvv < 0) throw new Error("invalid cvv format");
+    if (!ccRegex.test(creditCardString)) throw new PaymentError("Invalid Formatting");
+    if (userInfo.cvv > 999 || userInfo.cvv < 0) throw new PaymentError("invalid cvv format");
 
     // CC Expiry validation
     userExpiry = dayjs(userInfo.expiry, ['MM/YY', 'MM/YYYY', 'MM YY', 'MM YYYY']);
-    if (!userExpiry.isValid()) throw new Error("invalid expiry date format");
+    if (!userExpiry.isValid()) throw new PaymentError("invalid expiry date format");
     userExpiry = userExpiry.endOf('month'); // set the cc expiry to end of month
-    if (userExpiry.isBefore(dayjs())) throw new Error("credit card expired");
+    if (userExpiry.isBefore(dayjs())) throw new PaymentError("credit card expired");
 
     ``
     const fetchItemsFromInventory = await Promise.all(itemList.map(async itemToBuy => {
@@ -56,7 +62,7 @@ const checkout = async (userInfo, itemList) => {
     fetchItemsFromInventory.forEach(item => {
         if (item.requestedQuantity > item.item.quantity) {
             // not enough quantity
-            throw new InvalidOperationError("Not enough stock");
+            throw new OutOfStockError("Not enough stock");
         }
     })
 

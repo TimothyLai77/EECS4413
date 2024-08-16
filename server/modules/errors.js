@@ -2,6 +2,10 @@ class OutOfStockError extends Error {
 
 };
 
+class PaymentError extends Error {
+
+};
+
 class InvalidOperationError extends Error {
 
 }
@@ -24,3 +28,4 @@ exports.EmailAlreadyExistsError = EmailAlreadyExistsError;
 exports.UserDoesNotExistError = UserDoesNotExistError;
 exports.InvalidOperationError = InvalidOperationError;
 exports.UnauthorizedError = UnauthorizedError;
+exports.PaymentError = PaymentError;
