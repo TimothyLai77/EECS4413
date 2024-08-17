@@ -12,12 +12,20 @@ import { addToCart } from '../../features/shoppingCart';
 const SORT_MODES = [
 
 
-  { name:"price" , 
+  { name:"Price" , 
     key: "PRICE",
     comparator : (a, b) => {
       const priceA = a.price;
       const priceB = b.price;
       return priceB - priceA;
+    }
+  },
+    { name:"Price Reverse" , 
+    key: "PRICE_r",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceA - priceB;
     }
   }
   ,
@@ -26,7 +34,6 @@ const SORT_MODES = [
     comparator : (a, b) => {
       const nameA = a.name;
       const nameB = b.name;
-      console.log(nameA);
       if(nameA > nameB){
         return 1;
       }else if(nameA < nameB){
@@ -35,7 +42,22 @@ const SORT_MODES = [
         return 0;
       }
     }
-  }
+  },
+    { name:"Name Reverse" , 
+    key: "NAME_R",
+    comparator : (a, b) => {
+      const nameA = a.name;
+      const nameB = b.name;
+      if(nameA < nameB){
+        return 1;
+      }else if(nameA > nameB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+
 ]
 
 
@@ -53,26 +75,16 @@ function CatalogPage() {
   const [sortMode, setSortMode] = useState(SORT_MODES[0].key);
 
   const sortModeObject = SORT_MODES.find(e => e.key === sortMode); 
-  console.log(sortModeObject)
-
-let sortedProducts = products;
-let sortDropDownString = "Sorted By: "
 
 
-if (sortModeObject.comparator && typeof sortModeObject.comparator === 'function'){
-  sortedProducts = sortedProducts.toSorted(sortModeObject.comparator); 
-  sortDropDownString += sortModeObject.name; 
-}
+  let sortedProducts = products;
+  let sortDropDownString = "Sorted By: "
 
 
-
-
-  //console.log(shoppingCart);
-
-  
-  // State to hold the list of the products
- 
-
+  if (sortModeObject.comparator && typeof sortModeObject.comparator === 'function'){
+    sortedProducts = sortedProducts.toSorted(sortModeObject.comparator); 
+    sortDropDownString += sortModeObject.name; 
+  }
 
   const handleSearch = async (e) => {
     e.preventDefault();
