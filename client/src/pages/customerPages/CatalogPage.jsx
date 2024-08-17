@@ -1,11 +1,92 @@
 import React,{useState,useEffect} from 'react';
-import { Container, Row, Form } from 'react-bootstrap';
+import { Container, Row, Form, Dropdown } from 'react-bootstrap';
 import getProductCatalog from '../../services/catalogProducts';
 import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
 import { fetchInventory, inventoryAddStock, inventoryDeductStock, searchInventory } from '../../features/catalog';
 import { useDispatch,useSelector } from 'react-redux';
 import { addToCart } from '../../features/shoppingCart';
+
+
+
+const SORT_MODES = [
+  { name:"Name" , 
+    key: "NAME",
+    comparator : (a, b) => {
+      const nameA = a.name;
+      const nameB = b.name;
+      if(nameA > nameB){
+        return 1;
+      }else if(nameA < nameB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+    { name:"Name Reverse" , 
+    key: "NAME_R",
+    comparator : (a, b) => {
+      const nameA = a.name;
+      const nameB = b.name;
+      if(nameA < nameB){
+        return 1;
+      }else if(nameA > nameB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+
+  { name:"Price" , 
+    key: "PRICE",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceB - priceA;
+    }
+  },
+    { name:"Price Reverse" , 
+    key: "PRICE_r",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceA - priceB;
+    }
+  }
+  ,
+    { name:"Brand" , 
+    key: "BRAND",
+    comparator : (a, b) => {
+      const brandA = a.brand;
+      const brandB = b.brand;
+      if(brandA > brandB){
+        return 1;
+      }else if(brandA < brandB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+    { name:"Brand Reverse" , 
+    key: "BRAND_R",
+    comparator : (a, b) => {
+      const brandA = a.brand;
+      const brandB = b.brand;
+      if(brandA < brandB){
+        return 1;
+      }else if(brandA > brandB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+
+
+]
 
 
 function CatalogPage() {
@@ -18,12 +99,20 @@ function CatalogPage() {
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
-  //console.log(shoppingCart);
 
-  
-  // State to hold the list of the products
- 
+  const [sortMode, setSortMode] = useState(SORT_MODES[0].key);
 
+  const sortModeObject = SORT_MODES.find(e => e.key === sortMode); 
+
+
+  let sortedProducts = products;
+  let sortDropDownString = "Sorted By: "
+
+
+  if (sortModeObject.comparator && typeof sortModeObject.comparator === 'function'){
+    sortedProducts = sortedProducts.toSorted(sortModeObject.comparator); 
+    sortDropDownString += sortModeObject.name; 
+  }
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -38,7 +127,6 @@ function CatalogPage() {
     }
   }
 
-  console.log(products);
   return (
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
@@ -46,7 +134,7 @@ function CatalogPage() {
       <h1 className="my-4">Product Catalogue</h1>
 
 
-      <Container>
+      <Row>
       <Form onSubmit={handleSearch}>
         <Form.Group controlId="searchProduct">
           <Form.Control
@@ -57,12 +145,26 @@ function CatalogPage() {
           />
         </Form.Group>
       </Form>
-      </Container>
+      </Row>
 
+    <Row>
+    <Dropdown onSelect={e => {setSortMode(e)}} style={{marginTop: 15, marginBottom: 15}}>
+        <Dropdown.Toggle>
+        {sortDropDownString}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu >
+
+          {SORT_MODES.map(o => (
+            <Dropdown.Item eventKey={o.key}>{o.name}</Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    </Row>
 
 
       <Row>
-        {products.map(product => {
+        {sortedProducts.map(product => {
           const handleAddStock = () => {
             dispatch(inventoryAddStock({
               itemID: product.id,
