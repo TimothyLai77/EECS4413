@@ -1,11 +1,42 @@
 import React,{useState,useEffect} from 'react';
-import { Container, Row, Form } from 'react-bootstrap';
+import { Container, Row, Form, Dropdown } from 'react-bootstrap';
 import getProductCatalog from '../../services/catalogProducts';
 import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
 import { fetchInventory, inventoryAddStock, inventoryDeductStock, searchInventory } from '../../features/catalog';
 import { useDispatch,useSelector } from 'react-redux';
 import { addToCart } from '../../features/shoppingCart';
+
+
+
+const SORT_MODES = [
+
+
+  { name:"price" , 
+    key: "PRICE",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceB - priceA;
+    }
+  }
+  ,
+  { name:"Name" , 
+    key: "NAME",
+    comparator : (a, b) => {
+      const nameA = a.name;
+      const nameB = b.name;
+      console.log(nameA);
+      if(nameA > nameB){
+        return 1;
+      }else if(nameA < nameB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  }
+]
 
 
 function CatalogPage() {
@@ -19,28 +50,22 @@ function CatalogPage() {
     return store.shoppingCart.cart;
   });
 
+  const [sortMode, setSortMode] = useState(SORT_MODES[0].key);
 
-  const sortByPrice = (a, b) => {
-    const priceA = a.price;
-    const priceB = b.price;
-    return priceB - priceA;
-  }
+  const sortModeObject = SORT_MODES.find(e => e.key === sortMode); 
+  console.log(sortModeObject)
+
+let sortedProducts = products;
+let sortDropDownString = "Sorted By: "
 
 
-  const sortByName = (a, b) => {
-    const nameA = a.name;
-    const nameB = b.name;
-    console.log(nameA);
-    if(nameA > nameB){
-      return 1;
-    }else if(nameA < nameB){
-      return -1;
-    }else{
-      return 0;
-    }
-  }
+if (sortModeObject.comparator && typeof sortModeObject.comparator === 'function'){
+  sortedProducts = sortedProducts.toSorted(sortModeObject.comparator); 
+  sortDropDownString += sortModeObject.name; 
+}
 
-  const sortedProducts = products.toSorted(sortByName);
+
+
 
   //console.log(shoppingCart);
 
@@ -62,7 +87,6 @@ function CatalogPage() {
     }
   }
 
-  console.log(products);
   return (
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
@@ -83,7 +107,18 @@ function CatalogPage() {
       </Form>
       </Container>
 
+      <Dropdown onSelect={e => {setSortMode(e)}}>
+      <Dropdown.Toggle>
+       {sortDropDownString}
+      </Dropdown.Toggle>
 
+      <Dropdown.Menu >
+
+        {SORT_MODES.map(o => (
+          <Dropdown.Item eventKey={o.key}>{o.name}</Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
 
       <Row>
         {sortedProducts.map(product => {
