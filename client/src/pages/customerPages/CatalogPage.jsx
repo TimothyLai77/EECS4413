@@ -18,6 +18,30 @@ function CatalogPage() {
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
+
+
+  const sortByPrice = (a, b) => {
+    const priceA = a.price;
+    const priceB = b.price;
+    return priceB - priceA;
+  }
+
+
+  const sortByName = (a, b) => {
+    const nameA = a.name;
+    const nameB = b.name;
+    console.log(nameA);
+    if(nameA > nameB){
+      return 1;
+    }else if(nameA < nameB){
+      return -1;
+    }else{
+      return 0;
+    }
+  }
+
+  const sortedProducts = products.toSorted(sortByName);
+
   //console.log(shoppingCart);
 
   
@@ -62,7 +86,7 @@ function CatalogPage() {
 
 
       <Row>
-        {products.map(product => {
+        {sortedProducts.map(product => {
           const handleAddStock = () => {
             dispatch(inventoryAddStock({
               itemID: product.id,
