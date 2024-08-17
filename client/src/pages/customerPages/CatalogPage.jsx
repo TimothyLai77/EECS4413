@@ -134,7 +134,7 @@ function CatalogPage() {
       <h1 className="my-4">Product Catalogue</h1>
 
 
-      <Container>
+      <Row>
       <Form onSubmit={handleSearch}>
         <Form.Group controlId="searchProduct">
           <Form.Control
@@ -145,20 +145,23 @@ function CatalogPage() {
           />
         </Form.Group>
       </Form>
-      </Container>
+      </Row>
 
-      <Dropdown onSelect={e => {setSortMode(e)}}>
-      <Dropdown.Toggle>
-       {sortDropDownString}
-      </Dropdown.Toggle>
+    <Row>
+    <Dropdown onSelect={e => {setSortMode(e)}} style={{marginTop: 15, marginBottom: 15}}>
+        <Dropdown.Toggle>
+        {sortDropDownString}
+        </Dropdown.Toggle>
 
-      <Dropdown.Menu >
+        <Dropdown.Menu >
 
-        {SORT_MODES.map(o => (
-          <Dropdown.Item eventKey={o.key}>{o.name}</Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
+          {SORT_MODES.map(o => (
+            <Dropdown.Item eventKey={o.key}>{o.name}</Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    </Row>
+
 
       <Row>
         {sortedProducts.map(product => {
