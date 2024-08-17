@@ -10,25 +10,6 @@ import { addToCart } from '../../features/shoppingCart';
 
 
 const SORT_MODES = [
-
-
-  { name:"Price" , 
-    key: "PRICE",
-    comparator : (a, b) => {
-      const priceA = a.price;
-      const priceB = b.price;
-      return priceB - priceA;
-    }
-  },
-    { name:"Price Reverse" , 
-    key: "PRICE_r",
-    comparator : (a, b) => {
-      const priceA = a.price;
-      const priceB = b.price;
-      return priceA - priceB;
-    }
-  }
-  ,
   { name:"Name" , 
     key: "NAME",
     comparator : (a, b) => {
@@ -57,6 +38,53 @@ const SORT_MODES = [
       }
     }
   },
+
+  { name:"Price" , 
+    key: "PRICE",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceB - priceA;
+    }
+  },
+    { name:"Price Reverse" , 
+    key: "PRICE_r",
+    comparator : (a, b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceA - priceB;
+    }
+  }
+  ,
+    { name:"Brand" , 
+    key: "BRAND",
+    comparator : (a, b) => {
+      const brandA = a.brand;
+      const brandB = b.brand;
+      if(brandA > brandB){
+        return 1;
+      }else if(brandA < brandB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+    { name:"Brand Reverse" , 
+    key: "BRAND_R",
+    comparator : (a, b) => {
+      const brandA = a.brand;
+      const brandB = b.brand;
+      if(brandA < brandB){
+        return 1;
+      }else if(brandA > brandB){
+        return -1;
+      }else{
+        return 0;
+      }
+    }
+  },
+
 
 ]
 
