@@ -8,7 +8,6 @@ import CheckoutPaymentInfoEdit from './pages/customerPages/CheckoutPaymentInfoEd
 import TempLoginPage from "./pages/customerPages/LoginCreatePageTemp";
 import AdminPage from './pages/adminPages/AdminPage';
 import AddProduct from './pages/adminPages/AddProduct';
-import TempCartPage from './pages/customerPages/CartPageTemp';
 import TempTransactionPage from './pages/customerPages/TempTransactionPage';
 import { useDispatch } from 'react-redux';
 import { testSession } from './features/userManagement'
@@ -30,7 +29,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/cart" element={<TempCartPage />} />
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/addProduct" element={<AddProduct />} />
