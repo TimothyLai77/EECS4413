@@ -64,17 +64,17 @@ const updateUserCreditCard = async (userId, ccNumber, ccExpiry, cvv) => {
     }
 };
 
-const updateUserBillingInfo = async (User, newShippingAddress) => {
-    const userToUpdate = await User.findByPk(User.userId);
+const updateUserInfo = async (userId, firstName, lastName, billingAddress, shippingAddress) => {
+    const userToUpdate = await User.findByPk(userId);
     if (!userToUpdate) {
-        // if user does exist, delete and save changes
-        await userToUpdate.set({
-            shippingAddress: newShippingAddress,
-        });
-        userToUpdate.save();
-    } else {
         // user does not exist
-        throw new UserDoesNotExistError;
+        throw new UserDoesNotExistError("user does not exist");
+    } else {
+        userToUpdate.firstName = firstName;
+        userToUpdate.lastName = lastName;
+        userToUpdate.billingAddress = billingAddress;
+        userToUpdate.shippingAddress = shippingAddress;
+        await userToUpdate.save();
     }
 };
 
@@ -132,6 +132,6 @@ exports.touchAdminUser = touchAdminUser;
 exports.createNewUser = createNewUser;
 exports.deleteUser = deleteUser;
 exports.updateUserCreditCard = updateUserCreditCard;
-exports.updateUserBillingInfo = updateUserBillingInfo;
+exports.updateUserInfo = updateUserInfo;
 exports.promoteUserToAdmin = promoteUserToAdmin;
 exports.authenticateUserLogin = authenticateUserLogin;

@@ -40,7 +40,7 @@ const checkout = async (userInfo, itemList) => {
         throw new PaymentError("Invalid formatting");
     }
     creditCardString = creditCardString.replaceAll(" ", "");
-    const ccRegex = /[0-9]{16}/gmi;
+    const ccRegex = /[0-9]{16}/mi;
     if (!ccRegex.test(creditCardString)) throw new PaymentError("Invalid Formatting");
     if (userInfo.cvv > 999 || userInfo.cvv < 0) throw new PaymentError("invalid cvv format");
 

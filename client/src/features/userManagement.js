@@ -47,7 +47,7 @@ const userManagementSlice = createSlice({
             //     billingAddress: payload.billingAddress,
             //     shippingAddress: payload.billingAddress
             // }
-            await axios.post("/api/users/create", payload)
+            await axios.put("/api/users/update/information", payload)
         }, {
             fulfilled: () => {
                 //alert("Account created");

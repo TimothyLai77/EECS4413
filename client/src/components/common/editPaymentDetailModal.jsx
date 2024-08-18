@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { updateCreditCard } from '../../features/userManagement';
+import { testSession, updateCreditCard } from '../../features/userManagement';
 import {useDispatch, useSelector} from 'react-redux'
 
 
@@ -37,8 +37,9 @@ useEffect(() => {
         }));
     };
 
-    const handleSubmit =()=>{
-        dispatch(updateCreditCard(formData));
+    const handleSubmit = async ()=>{
+        await dispatch(updateCreditCard(formData));
+        await dispatch(testSession());
         handleClose();
     }
 

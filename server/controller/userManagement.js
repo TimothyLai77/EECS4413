@@ -1,4 +1,4 @@
-const { createNewUser, authenticateUserLogin, updateUserCreditCard } = require('../modules/UserManager');
+const { createNewUser, authenticateUserLogin, updateUserCreditCard, updateUserInfo } = require('../modules/UserManager');
 const { User } = require('../data/sequelizeModels/User');
 const { UnauthorizedError } = require('../modules/errors')
 module.exports = (app) => {
@@ -41,9 +41,16 @@ module.exports = (app) => {
 
     app.put("/api/users/update/information", async (req, res) => {
         try {
-
+            const request = req.body;
+            const userId = req.session.user;
+            const firstName = request.firstName;
+            const lastName = request.lastName;
+            const billingAddress = request.billingAddress;
+            const shippingAddress = request.shippingAddress;
+            await updateUserInfo(userId, firstName, lastName, billingAddress, shippingAddress);
+            res.status(200).end("info updated")
         } catch (error) {
-
+            res.status(500).end("could not update");
         }
     });
     app.get("/api/users/info", async (req, res) => {
