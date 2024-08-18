@@ -2,12 +2,14 @@ import React,{useEffect} from 'react';
 import NavigationBar from '../../components/common/NavigationBar';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileCard from '../../components/common/profileCard';
+import PaymentDetailCard from '../../components/common/paymentDetailCard';
 import OrderCard from '../../components/common/orderCard';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, testSession } from '../../features/userManagement';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../assets/styles/profile.css';
 import img from '../../assets/images/dummyProduct.jpeg';
+import Stack from 'react-bootstrap/Stack';
 
 
  
@@ -44,7 +46,10 @@ const ProfilePage = () =>{
         <Container className="my-4">
             <Row>
                 <Col md={3}>
+                <Stack gap={3}>
                 <ProfileCard user={userInfo} />
+                <PaymentDetailCard user={userInfo} />
+                </Stack>
                 </Col>
                 <Col md={9}>
                     <div className="shadow-sm bg-white p-4 h-100">

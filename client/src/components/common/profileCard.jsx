@@ -12,7 +12,7 @@ const ProfileCard = ({ user }) => {
   const handleCloseModal = () => setShowModal(false);
 
   const handleSave = (updatedUserInfo) => {
-    // Logic to update user info, making an API call or dispatching an action to updaet the Redux store
+    // Logic to update user info, making an API call or dispatching an action to update the Redux store
     console.log("Updated User Info:", updatedUserInfo);
   };
 
