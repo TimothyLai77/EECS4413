@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { updateCreditCard } from '../../features/userManagement';
+import {useDispatch, useSelector} from 'react-redux'
 
-const EditPaymentDetailModal = ({ show, handleClose, userInfo, handleSave }) =>  {
+
+
+
+
+const EditPaymentDetailModal = ({ show, handleClose, userInfo }) =>  {
+  const dispatch = useDispatch();
+  const user = useSelector((store) => {
+    return store.user.loggedInUser;
+  });
 
   const [formData, setFormData] = useState({
-    creditCard: '',
-    expiry: '' ,
-    cvv: '',
+    creditCard: user.creditCard,
+    expiry: user.expiry,
+    cvv: user.cvv,
 });
 
 // Use useEffect to update formData whenever userInfo changes
@@ -28,7 +38,7 @@ useEffect(() => {
     };
 
     const handleSubmit =()=>{
-        handleSave(formData);
+        dispatch(updateCreditCard(formData));
         handleClose();
     }
 
@@ -42,7 +52,6 @@ useEffect(() => {
             <Form.Group controlId="formCreditCard">
                 <Form.Label>Credit Card Number</Form.Label>
                 <Form.Control
-                  type="number"
                   name="creditCard"
                   value={formData.creditCard}
                   onChange={handleChange}
@@ -52,7 +61,6 @@ useEffect(() => {
               <Form.Group controlId="formExpiry">
                 <Form.Label>Expiry Date (mm/yy)</Form.Label>
                 <Form.Control
-                  type="number"
                   name="expiry"
                   value={formData.expiry}
                   onChange={handleChange}

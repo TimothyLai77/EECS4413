@@ -26,10 +26,10 @@ const createNewUser = async (firstName, lastName, email, password, sAddr, bAddr,
             lastName: lastName,
             email: email,
             password: User.generateHash(password),
-            shippingAddress : sAddr,
-            billingAddress : bAddr,
+            shippingAddress: sAddr,
+            billingAddress: bAddr,
             creditCardNumber: cc,
-            creditCardExpiry: exp, 
+            creditCardExpiry: exp,
             cvv: cvv,
         });
         return newUser;
@@ -50,20 +50,17 @@ const deleteUser = async (User) => {
     }
 };
 
-const updateUserAddress = async (User, ccNumber, ccExpiry, cvv, billingAddress) => {
-    const userToUpdate = await User.findByPk(User.userId);
+const updateUserCreditCard = async (userId, ccNumber, ccExpiry, cvv) => {
+    const userToUpdate = await User.findByPk(userId);
     if (!userToUpdate) {
-        // if user does exist, delete and save changes
-        await userToUpdate.set({
-            creditCardNumber: ccNumber,
-            creditCardExpiry: ccExpiry,
-            cvv: cvv,
-            billingAddress: billingAddress
-        });
-        userToUpdate.save();
-    } else {
         // user does not exist
-        throw new UserDoesNotExistError;
+        throw new UserDoesNotExistError("user does not exist");
+
+    } else {
+        userToUpdate.creditCardNumber = ccNumber;
+        userToUpdate.creditCardExpiry = ccExpiry;
+        userToUpdate.cvv = cvv;
+        await userToUpdate.save();
     }
 };
 
@@ -134,7 +131,7 @@ const touchAdminUser = async () => {
 exports.touchAdminUser = touchAdminUser;
 exports.createNewUser = createNewUser;
 exports.deleteUser = deleteUser;
-exports.updateUserAddress = updateUserAddress;
+exports.updateUserCreditCard = updateUserCreditCard;
 exports.updateUserBillingInfo = updateUserBillingInfo;
 exports.promoteUserToAdmin = promoteUserToAdmin;
 exports.authenticateUserLogin = authenticateUserLogin;

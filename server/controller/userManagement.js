@@ -1,6 +1,6 @@
-const { createNewUser, authenticateUserLogin } = require('../modules/UserManager');
-const {User} = require('../data/sequelizeModels/User');
-const {UnauthorizedError} = require('../modules/errors')
+const { createNewUser, authenticateUserLogin, updateUserCreditCard } = require('../modules/UserManager');
+const { User } = require('../data/sequelizeModels/User');
+const { UnauthorizedError } = require('../modules/errors')
 module.exports = (app) => {
     app.post("/api/users/create", async (req, res) => {
         try {
@@ -23,10 +23,33 @@ module.exports = (app) => {
 
     });
 
+
+    app.put("/api/users/update/creditcard", async (req, res) => {
+        try {
+            const request = req.body;
+            const userId = req.session.user;
+            const creditCard = request.creditCard;
+            const expiry = request.expiry;
+            const cvv = request.cvv;
+            await updateUserCreditCard(userId, creditCard, expiry, cvv);
+            res.status(200).end("info updated");
+        } catch (error) {
+            res.status(500).end("could not update");
+        }
+    });
+
+
+    app.put("/api/users/update/information", async (req, res) => {
+        try {
+
+        } catch (error) {
+
+        }
+    });
     app.get("/api/users/info", async (req, res) => {
         try {
             const userId = req.session.user;
-            if(!userId) throw new UnauthorizedError("no user detected in cookie");
+            if (!userId) throw new UnauthorizedError("no user detected in cookie");
 
 
             const user = await User.findByPk(userId);
@@ -36,22 +59,22 @@ module.exports = (app) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 isAdmin: user.isAdmin,
-                shippingAddress : user.shippingAddress ,
-                billingAddress: user.billingAddress  ,
+                shippingAddress: user.shippingAddress,
+                billingAddress: user.billingAddress,
                 creditCard: user.creditCardNumber,
                 expiry: user.creditCardExpiry,
                 cvv: user.cvv,
 
             }
             res.send(userData);
-            
+
         } catch (error) {
-            if(error instanceof UnauthorizedError) {
+            if (error instanceof UnauthorizedError) {
                 res.status(403).end("no user cookie found");
-            }else{
+            } else {
                 res.status(500).end("err")
             }
-            
+
         }
     });
 
