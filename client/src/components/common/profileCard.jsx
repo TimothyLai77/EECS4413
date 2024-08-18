@@ -29,7 +29,7 @@ const ProfileCard = ({ user }) => {
             <strong>Name:</strong> {user.firstName +" "+user.lastName}
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong>Email:</strong> {user.email}
+            <strong>Billing Address:</strong> {user.billingAddress}
           </ListGroup.Item>
           <ListGroup.Item>
             <strong>Shipping Address:</strong> {user.shippingAddress}
