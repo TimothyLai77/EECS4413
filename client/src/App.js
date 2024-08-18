@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { testSession } from './features/userManagement'
 import AdminTransactionPage from './pages/adminPages/AdminTransactionPage';
 import { fetchInventory } from './features/catalog';
+import ProfilePage from './pages/customerPages/ProfilePage';
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const App = () => {
           <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit />} />
           <Route path="/temptransactions" element={<TempTransactionPage />} />
           <Route path="/admin/transactions" element={<AdminTransactionPage />} />
-          {/* <Route path="/admin/updateProduct" element={<UpdateProduct />} /> */}
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Suspense>
     </Router>

@@ -1,0 +1,57 @@
+body {
+    margin-top: 20px;
+    background: #eee;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.text-gray {
+    color: #6c757d;
+}
+
+.text-black {
+    color: #000;
+}
+
+.font-weight-bold {
+    font-weight: 700;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.float-end {
+    float: right;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.p-3 {
+    padding: 1rem !important;
+}
+
+.p-4 {
+    padding: 1.5rem !important;
+}
