@@ -12,20 +12,19 @@ module.exports = (app) => {
             res.send(t);
         } catch (error) {
             res.status(500).end("server error");
-        }    
+        }
     });
 
 
     // get all user transactions
-    app.post("/api/user/transactions/", async (req, res) => {
+    app.get("/api/user/transactions/", async (req, res) => {
         try {
-            const request = req.body;
-            const userId = request.userId;
+            const userId = req.session.user;
             const t = await getUserTransactions(userId);
             res.send(t);
         } catch (error) {
             res.status(500).end("server error");
-        }    
+        }
     });
 
     // get the ledger or the details of a transaction
@@ -37,6 +36,6 @@ module.exports = (app) => {
             res.send(l);
         } catch (error) {
             res.status(500).end("server error");
-        }    
+        }
     });
 }

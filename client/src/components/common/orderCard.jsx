@@ -5,7 +5,6 @@ import { FaClock } from 'react-icons/fa';
 const OrderCard = ({ order }) => {
   return (
     <Card className="mb-4 shadow-sm bg-white h-100">
-      <Card.Img variant="top" src={order.image} />
       <Card.Header>{order.brand}</Card.Header>
       <Card.Body>
         <Card.Title>{order.productName}</Card.Title>
@@ -14,16 +13,8 @@ const OrderCard = ({ order }) => {
         </Card.Subtitle>
         <Card.Text>Quantity: {order.qty}</Card.Text>
         <Card.Text>
-          <FaClock /> Order date/time: {order.datetime}<br></br>
-          <span className="float-right text-black-50">Total amount: ${order.total}</span>
+          <span className="float-right text-black-50">Item Subtotal: ${order.subTotal}</span>
         </Card.Text>
-      
-        <Button className="mt-2" variant="outline-secondary">
-          View Details
-        </Button>{' '}
-        <Button className="mt-2" variant="outline-success">
-          View Recipt
-        </Button>
       </Card.Body>
     </Card>
   );
