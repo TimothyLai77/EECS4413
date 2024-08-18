@@ -11,10 +11,10 @@ const PaymentDetailCard = ({ user }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  const handleSave = (updatedUserPaymentInfo) => {
-    // Logic to update user payemnt info, making an API call or dispatching an action to update the Redux store
-    console.log("Updated User Info:", updatedUserPaymentInfo);
-  };
+  // const handleSave = (updatedUserPaymentInfo) => {
+  //   // Logic to update user payemnt info, making an API call or dispatching an action to update the Redux store
+  //   console.log("Updated User Info:", updatedUserPaymentInfo);
+  // };
 
   if (!user) {
     return <div>Loading...</div>; // or handle null user appropriately
@@ -41,7 +41,6 @@ const PaymentDetailCard = ({ user }) => {
         show={showModal}
         handleClose={handleCloseModal}
         userInfo={user}
-        handleSave={handleSave}
       />
       </Card.Body>
     </Card>

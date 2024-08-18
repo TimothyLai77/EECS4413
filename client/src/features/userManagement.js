@@ -18,9 +18,9 @@ const userManagementSlice = createSlice({
             expiry: null,
             cvv: null
         },
-        isLoggedIn : false,
-        isAdmin : false, 
-        
+        isLoggedIn: false,
+        isAdmin: false,
+
     },
     reducers: (create) => ({
         createAccount: create.asyncThunk(async (payload) => {
@@ -40,20 +40,53 @@ const userManagementSlice = createSlice({
                 throw new Error("Account creation failed");
             }
         }),
+        updateAccountDetails: create.asyncThunk(async (payload) => {
+            // const reqBody = {
+            //     firstName: payload.firstName,
+            //     lastName: payload.lastName,
+            //     billingAddress: payload.billingAddress,
+            //     shippingAddress: payload.billingAddress
+            // }
+            await axios.put("/api/users/update/information", payload)
+        }, {
+            fulfilled: () => {
+                //alert("Account created");
+            },
+            rejected: () => {
+                //alert("account creation failed");
+                throw new Error("Account creation failed");
+            }
+        }),
+        updateCreditCard: create.asyncThunk(async (payload) => {
+            // const reqBody = {
+            //      creditCard: payload.creditCard
+            //      expiry: payload.expiry
+            //      cvv: payload.cvv
+            // }
+            await axios.put("/api/users/update/creditcard", payload)
+        }, {
+            fulfilled: () => {
+                //alert("Account created");
+            },
+            rejected: () => {
+                //alert("account creation failed");
+                throw new Error("CC update failed");
+            }
+        }),
 
         testSession: create.asyncThunk(async (payload) => {
             return ((await axios.get("/api/users/info")).data);
         },
-        {
-            fulfilled: (state, action) => {
-                const userData = action.payload;
-                state.loggedInUser = userData;
-                state.isLoggedIn = true;
-            },
-            rejected: () => {
-                // user session was not stored, don't do anything, user either logins or use guest mode
-            }
-        }),
+            {
+                fulfilled: (state, action) => {
+                    const userData = action.payload;
+                    state.loggedInUser = userData;
+                    state.isLoggedIn = true;
+                },
+                rejected: () => {
+                    // user session was not stored, don't do anything, user either logins or use guest mode
+                }
+            }),
 
         login: create.asyncThunk(async (payload) => {
             const reqBody = {
@@ -67,8 +100,8 @@ const userManagementSlice = createSlice({
                 const userData = action.payload;
                 state.loggedInUser = userData;
                 state.isLoggedIn = true;
-                if (userData.isAdmin && typeof userData.isAdmin === "boolean"){
-                    state.isAdmin = userData.isAdmin; 
+                if (userData.isAdmin && typeof userData.isAdmin === "boolean") {
+                    state.isAdmin = userData.isAdmin;
                 }
             },
             rejected: (state, action) => {
@@ -79,7 +112,7 @@ const userManagementSlice = createSlice({
 
 
         logout: create.asyncThunk(async () => {
-            await axios.delete("/api/user/logout"); 
+            await axios.delete("/api/user/logout");
         }, {
             fulfilled: (state, action) => {
                 const newState = {
@@ -103,5 +136,5 @@ const userManagementSlice = createSlice({
 
 });
 
-export const { createAccount, login, logout, testSession } = userManagementSlice.actions;
+export const { createAccount, login, logout, testSession, updateAccountDetails, updateCreditCard } = userManagementSlice.actions;
 export default userManagementSlice.reducer;

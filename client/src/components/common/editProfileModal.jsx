@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { testSession, updateAccountDetails } from '../../features/userManagement';
+
+
 
 const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
-
+  const dispatch = useDispatch();
+  const user = useSelector((store) => {
+    return store.user.loggedInUser;
+  })
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -29,8 +36,9 @@ useEffect(() => {
         }));
     };
 
-    const handleSubmit =()=>{
-        handleSave(formData);
+    const handleSubmit = async ()=>{
+        await dispatch(updateAccountDetails(formData));
+        await dispatch(testSession());
         handleClose();
     }
 
