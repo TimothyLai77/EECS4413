@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../assets/styles/profile.css';
 import img from '../../assets/images/dummyProduct.jpeg';
 import Stack from 'react-bootstrap/Stack';
+import { getUserTransactions } from '../../features/transactionFetcher';
+import dayjs from "dayjs"
 
 
  
@@ -31,11 +33,50 @@ const ProfilePage = () =>{
   const isLoggedIn = useSelector(store => store.user.isLoggedIn);
   const userInfo = useSelector(store => store.user.loggedInUser);
   const isAdmin = useSelector(store => store.user.isAdmin); 
-  console.log(userInfo)
+
+  const userOrders = useSelector(store => store.transactions.transactions); 
+
+
+  const orderContent = userOrders.map((order, index) => {
+    console.log(order); 
+    const orderName = `Order #${order.transactionId.replace("transaction-", "")}`
+    const pruchasedDate = `Purchased ${dayjs(order.date).format("YYYY-MM-DD")}`; 
+    const total = `Total: $${order.total}`;
+
+    const itemsBought = order.itemsBought.map(item => ({
+      brand: item.itemBrand,
+      productName: item.itemName,
+      qty: item.quantity,
+      subTotal: item.priceSold,
+      price: item.priceSold/item.quantity,
+    }));
+
+    return (
+      <div id="order-history" key={index} style={{marginBottom: 30}}>
+          <h4 className="font-weight-bold mt-0 mb-1">{orderName}</h4>
+          <h5 className="font-weight-bold mt-0 mb-1">{pruchasedDate}</h5>
+          <h5 className="font-weight-bold mt-0 mb-1">{total}</h5>
+            <Row>
+            {itemsBought.map((order, index) => (
+              <Col md={4} sm={6} key={index}>
+                <OrderCard order={order} />
+              </Col>
+            ))}
+            </Row>
+
+        <hr/>
+      </div>
+    );
+  })
+
+
+
   
   useEffect(() => {
     if (!isLoggedIn) {
       dispatch(testSession());
+    } else {
+      dispatch(getUserTransactions());
     }
   }, [dispatch, isLoggedIn]);
 
@@ -53,7 +94,11 @@ const ProfilePage = () =>{
                 </Col>
                 <Col md={9}>
                     <div className="shadow-sm bg-white p-4 h-100">
-                        <div id="order-history">
+
+                      {orderContent}
+
+
+                        {/* <div id="order-history">
                             <h4 className="font-weight-bold mt-0 mb-4">Order History</h4>
                               <Row>
                               {orders.map((order, index) => (
@@ -63,7 +108,28 @@ const ProfilePage = () =>{
                               ))}
                               </Row>
                         </div>
+
+
+
+                        <div id="order-history">
+                            <h4 className="font-weight-bold mt-0 mb-4">Order History</h4>
+                              <Row>
+                              {orders.map((order, index) => (
+                                <Col md={4} sm={6} key={index}>
+                                  <OrderCard order={order} />
+                                </Col>
+                              ))}
+                              </Row>
+                        </div> */}
+
+
                     </div>
+
+
+
+
+
+   
                 </Col>
             </Row>
         </Container>
