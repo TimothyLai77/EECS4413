@@ -10,21 +10,37 @@ const getUserTransactions = async (userId) => {
     const userModel = await User.findByPk(userId);
     if (!userModel) throw new Error("user does not eixst");
 
-    const userTransactionList = await Transaction.findAll({
+    const allTransactionModels = await Transaction.findAll({
+        include: [
+            { model: LedgerEntry, include: Item },
+            { model: User }
+        ],
         where: {
             userId: userId
         }
-    })
-
-    // make new transaction list for client
-    const returnList = userTransactionList.map((t) => {
+    });
+    let returnList = allTransactionModels.map((t) => {
         return {
             transactionId: t.transactionId,
             total: t.total,
             date: t.date,
-            userId: t.userId
+            userId: t.userId,
+            userEmail: t.User.email,
+            userFirstName: t.User.firstName,
+            userLastName: t.User.lastName,
+            itemsBought: t.LedgerEntries.map((itemBought) => ({
+                itemName: itemBought.Item.name,
+                itemBrand: itemBought.Item.brand,
+                priceSold: itemBought.priceSold,
+                quantity: itemBought.quantity
+            }))
         }
     });
+    returnList = returnList.sort((transactionA, transactionB) => {
+        const dateA = dayjs(transactionA.date).unix();
+        const dateB = dayjs(transactionB.date).unix();
+        return dateB - dateA;
+    })
     return returnList;
 }
 
