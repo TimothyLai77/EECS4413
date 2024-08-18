@@ -47,14 +47,17 @@ const NavigationBar = () => {
                     (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
                     null 
                 }
-              </Nav>
-              {/* render the logout button only if the user is logged in */}
-              {isLoggedIn? (
+                {isLoggedIn? (
                 <Container>
                   <p style={{color: "white"}}>{`Hello ${userInfo.firstName} ${userInfo.lastName}`}</p>
-                  <Button onClick={handleLogout}>Logout</Button>
+                  <Button onClick={handleLogout}>Logout</Button> {' '}
+                <Button onClick={() => {navigate("/profile")}}>Profile</Button>
                 </Container>
+                
                 ): null }
+              </Nav>
+              {/* render the logout button only if the user is logged in */}
+              
 
             </Container>
             <Form inline>
