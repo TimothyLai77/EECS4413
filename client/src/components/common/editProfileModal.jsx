@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
 
-    const [formData, setFormData] = useState({
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        email: userInfo.email,
-        shippingAddress: userInfo.shippingAddress,
-    });
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    billingAddress: '',
+    shippingAddress: '',
+});
 
+// Use useEffect to update formData whenever userInfo changes
+useEffect(() => {
+    if (userInfo) {
+        setFormData({
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            billingAddress: userInfo.billingAddress,
+            shippingAddress: userInfo.shippingAddress,
+        });
+    }
+}, [userInfo]);
     const handleChange= (e) => {
         const {name,value} = e.target;
         setFormData((prevdata)=>({
@@ -48,12 +59,13 @@ const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Email</Form.Label>
+
+              <Form.Group controlId="formBillingAddress">
+                <Form.Label>Billing Address</Form.Label>
                 <Form.Control
-                  type="email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  name="billingAddress"
+                  value={formData.billingAddress}
                   onChange={handleChange}
                 />
               </Form.Group>

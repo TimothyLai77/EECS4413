@@ -12,7 +12,7 @@ const ProfileCard = ({ user }) => {
   const handleCloseModal = () => setShowModal(false);
 
   const handleSave = (updatedUserInfo) => {
-    // Logic to update user info, making an API call or dispatching an action to updaet the Redux store
+    // Logic to update user info, making an API call or dispatching an action to update the Redux store
     console.log("Updated User Info:", updatedUserInfo);
   };
 
@@ -29,7 +29,7 @@ const ProfileCard = ({ user }) => {
             <strong>Name:</strong> {user.firstName +" "+user.lastName}
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong>Email:</strong> {user.email}
+            <strong>Billing Address:</strong> {user.billingAddress}
           </ListGroup.Item>
           <ListGroup.Item>
             <strong>Shipping Address:</strong> {user.shippingAddress}
