@@ -1,4 +1,4 @@
-const { createNewUser, authenticateUserLogin, updateUserCreditCard, updateUserInfo } = require('../modules/UserManager');
+const { createNewUser, authenticateUserLogin, updateUserCreditCard, updateUserInfo, getAllUsers } = require('../modules/UserManager');
 const { User } = require('../data/sequelizeModels/User');
 const { UnauthorizedError } = require('../modules/errors')
 module.exports = (app) => {
@@ -33,6 +33,62 @@ module.exports = (app) => {
             const cvv = request.cvv;
             await updateUserCreditCard(userId, creditCard, expiry, cvv);
             res.status(200).end("info updated");
+        } catch (error) {
+            res.status(500).end("could not update");
+        }
+    });
+
+
+    app.get("/api/admin/users", async (req, res) => {
+        try {
+            let users = await getAllUsers();
+            users = users.map((user) => {
+                return {
+                    userId: user.userId,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    isAdmin: user.isAdmin,
+                    shippingAddress: user.shippingAddress,
+                    billingAddress: user.billingAddress,
+                    creditCard: user.creditCardNumber,
+                    expiry: user.creditCardExpiry,
+                    cvv: user.cvv,
+                }
+            })
+            console.log(users);
+            res.send(users);
+        } catch (error) {
+            console.log(error)
+            res.status(500).end("could not fetch users");
+        }
+    });
+
+
+    app.put("/api/admin/update/user/creditcard", async (req, res) => {
+        try {
+            const request = req.body;
+            const userId = request.userId;
+            const creditCard = request.creditCard;
+            const expiry = request.expiry;
+            const cvv = request.cvv;
+            await updateUserCreditCard(userId, creditCard, expiry, cvv);
+            res.status(200).end("info updated");
+        } catch (error) {
+            res.status(500).end("could not update");
+        }
+    });
+
+    app.put("/api/admin/update/user/information", async (req, res) => {
+        try {
+            const request = req.body;
+            const userId = req.userId;
+            const firstName = request.firstName;
+            const lastName = request.lastName;
+            const billingAddress = request.billingAddress;
+            const shippingAddress = request.shippingAddress;
+            await updateUserInfo(userId, firstName, lastName, billingAddress, shippingAddress);
+            res.status(200).end("info updated")
         } catch (error) {
             res.status(500).end("could not update");
         }

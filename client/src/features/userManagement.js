@@ -20,6 +20,7 @@ const userManagementSlice = createSlice({
         },
         isLoggedIn: false,
         isAdmin: false,
+        allUsersList: [],
 
     },
     reducers: (create) => ({
@@ -131,10 +132,23 @@ const userManagementSlice = createSlice({
                 state.isLoggedIn = false;
                 state.isAdmin = false;
             }
-        })
-    })
+        }),
+        getAllUsers: create.asyncThunk(async (payload) => {
+            return ((await axios.get("/api/admin/users")).data);
+        }, {
+            fulfilled: (state, action) => {
+                const userList = action.payload;
+                state.allUsersList = userList;
+            },
+            rejected: (state, action) => {
+                //alert("account login failed");
+                throw new Error("user fetch failed");
+            }
+        }),
+    }),
+
 
 });
 
-export const { createAccount, login, logout, testSession, updateAccountDetails, updateCreditCard } = userManagementSlice.actions;
+export const { createAccount, login, logout, testSession, updateAccountDetails, updateCreditCard, getAllUsers } = userManagementSlice.actions;
 export default userManagementSlice.reducer;
