@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { testSession, updateAccountDetails } from '../../features/userManagement';
+import { testSession, updateAccountDetails, getAllUsers } from '../../features/userManagement';
 
 
 
@@ -41,6 +41,8 @@ useEffect(() => {
     const handleSubmit = async ()=>{
         await dispatch(updateAccountDetails(formData));
         await dispatch(testSession());
+        //TODO: really hacky way to re-render for admin side
+        await dispatch(getAllUsers());
         handleClose();
     }
 
