@@ -150,5 +150,15 @@ const userManagementSlice = createSlice({
 
 });
 
-export const { createAccount, login, logout, testSession, updateAccountDetails, updateCreditCard, getAllUsers } = userManagementSlice.actions;
+export const {
+    createAccount,
+    login,
+    logout,
+    testSession,
+    updateAccountDetails,
+    updateCreditCard,
+    getAllUsers,
+    adminUpdateUserCreditCard,
+    adminUpdateUserInfo
+} = userManagementSlice.actions;
 export default userManagementSlice.reducer;

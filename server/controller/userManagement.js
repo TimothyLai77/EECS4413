@@ -27,7 +27,7 @@ module.exports = (app) => {
     app.put("/api/users/update/creditcard", async (req, res) => {
         try {
             const request = req.body;
-            const userId = req.session.user;
+            const userId = request.userId;
             const creditCard = request.creditCard;
             const expiry = request.expiry;
             const cvv = request.cvv;
@@ -65,40 +65,12 @@ module.exports = (app) => {
     });
 
 
-    app.put("/api/admin/update/user/creditcard", async (req, res) => {
-        try {
-            const request = req.body;
-            const userId = request.userId;
-            const creditCard = request.creditCard;
-            const expiry = request.expiry;
-            const cvv = request.cvv;
-            await updateUserCreditCard(userId, creditCard, expiry, cvv);
-            res.status(200).end("info updated");
-        } catch (error) {
-            res.status(500).end("could not update");
-        }
-    });
-
-    app.put("/api/admin/update/user/information", async (req, res) => {
-        try {
-            const request = req.body;
-            const userId = req.userId;
-            const firstName = request.firstName;
-            const lastName = request.lastName;
-            const billingAddress = request.billingAddress;
-            const shippingAddress = request.shippingAddress;
-            await updateUserInfo(userId, firstName, lastName, billingAddress, shippingAddress);
-            res.status(200).end("info updated")
-        } catch (error) {
-            res.status(500).end("could not update");
-        }
-    });
 
 
     app.put("/api/users/update/information", async (req, res) => {
         try {
             const request = req.body;
-            const userId = req.session.user;
+            const userId = request.userId;
             const firstName = request.firstName;
             const lastName = request.lastName;
             const billingAddress = request.billingAddress;

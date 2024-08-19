@@ -27,7 +27,7 @@ function AdminManageUsers() {
   return (
     <div>
       <Container>
-        <h1 className="my-4">All Users</h1>
+        <h1 className="my-4">User Management</h1>
         <Row>
           {usersList.map((u) => {
             return (

@@ -11,6 +11,7 @@ const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
     return store.user.loggedInUser;
   })
   const [formData, setFormData] = useState({
+    userId: '',
     firstName: '',
     lastName: '',
     billingAddress: '',
@@ -21,6 +22,7 @@ const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
 useEffect(() => {
     if (userInfo) {
         setFormData({
+            userId: userInfo.userId,
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
             billingAddress: userInfo.billingAddress,

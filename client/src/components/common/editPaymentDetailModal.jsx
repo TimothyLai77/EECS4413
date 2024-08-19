@@ -14,6 +14,7 @@ const EditPaymentDetailModal = ({ show, handleClose, userInfo }) =>  {
   });
 
   const [formData, setFormData] = useState({
+    userId: userInfo.userId,
     creditCard: user.creditCard,
     expiry: user.expiry,
     cvv: user.cvv,
@@ -23,6 +24,7 @@ const EditPaymentDetailModal = ({ show, handleClose, userInfo }) =>  {
 useEffect(() => {
     if (userInfo) {
         setFormData({
+          userId: userInfo.userId,
           creditCard: userInfo.creditCard,
           expiry: userInfo.expiry,
           cvv: userInfo.cvv,
