@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { testSession } from './features/userManagement'
 import AdminTransactionPage from './pages/adminPages/AdminTransactionPage';
 import { fetchInventory } from './features/catalog';
+import AdminManageUsers from './pages/adminPages/AdminManageUsers';
 import ProfilePage from './pages/customerPages/ProfilePage';
 import CheckoutSummary from './pages/customerPages/CheckoutSummary';
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/temptransactions" element={<TempTransactionPage />} />
           <Route path="/admin/transactions" element={<AdminTransactionPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/admin/management/users" element={<AdminManageUsers />} />
         </Routes>
       </Suspense>
     </Router>

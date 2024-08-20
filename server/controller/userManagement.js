@@ -1,4 +1,4 @@
-const { createNewUser, authenticateUserLogin, updateUserCreditCard, updateUserInfo } = require('../modules/UserManager');
+const { createNewUser, authenticateUserLogin, updateUserCreditCard, updateUserInfo, getAllUsers } = require('../modules/UserManager');
 const { User } = require('../data/sequelizeModels/User');
 const { UnauthorizedError } = require('../modules/errors')
 module.exports = (app) => {
@@ -27,7 +27,7 @@ module.exports = (app) => {
     app.put("/api/users/update/creditcard", async (req, res) => {
         try {
             const request = req.body;
-            const userId = req.session.user;
+            const userId = request.userId;
             const creditCard = request.creditCard;
             const expiry = request.expiry;
             const cvv = request.cvv;
@@ -39,10 +39,38 @@ module.exports = (app) => {
     });
 
 
+    app.get("/api/admin/users", async (req, res) => {
+        try {
+            let users = await getAllUsers();
+            users = users.map((user) => {
+                return {
+                    userId: user.userId,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    isAdmin: user.isAdmin,
+                    shippingAddress: user.shippingAddress,
+                    billingAddress: user.billingAddress,
+                    creditCard: user.creditCardNumber,
+                    expiry: user.creditCardExpiry,
+                    cvv: user.cvv,
+                }
+            })
+            console.log(users);
+            res.send(users);
+        } catch (error) {
+            console.log(error)
+            res.status(500).end("could not fetch users");
+        }
+    });
+
+
+
+
     app.put("/api/users/update/information", async (req, res) => {
         try {
             const request = req.body;
-            const userId = req.session.user;
+            const userId = request.userId;
             const firstName = request.firstName;
             const lastName = request.lastName;
             const billingAddress = request.billingAddress;

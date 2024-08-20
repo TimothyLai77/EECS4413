@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { testSession, updateCreditCard } from '../../features/userManagement';
+import { testSession, updateCreditCard, getAllUsers } from '../../features/userManagement';
 import {useDispatch, useSelector} from 'react-redux'
 
 
@@ -14,6 +14,7 @@ const EditPaymentDetailModal = ({ show, handleClose, userInfo }) =>  {
   });
 
   const [formData, setFormData] = useState({
+    userId: userInfo.userId,
     creditCard: user.creditCard,
     expiry: user.expiry,
     cvv: user.cvv,
@@ -23,6 +24,7 @@ const EditPaymentDetailModal = ({ show, handleClose, userInfo }) =>  {
 useEffect(() => {
     if (userInfo) {
         setFormData({
+          userId: userInfo.userId,
           creditCard: userInfo.creditCard,
           expiry: userInfo.expiry,
           cvv: userInfo.cvv,
@@ -40,6 +42,8 @@ useEffect(() => {
     const handleSubmit = async ()=>{
         await dispatch(updateCreditCard(formData));
         await dispatch(testSession());
+        //TODO: really hacky way to re-render for admin side
+        await dispatch(getAllUsers());
         handleClose();
     }
 

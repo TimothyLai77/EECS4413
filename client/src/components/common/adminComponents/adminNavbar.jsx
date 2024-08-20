@@ -29,10 +29,11 @@ function adminNavbar() {
                     <Nav className="justify-content-end flex-grow-1 pe-3">
                       <Nav.Link href="/">Go back to Home</Nav.Link>
                       <Nav.Link href="/admin/transactions">Store Transactions</Nav.Link>
-                      <Nav.Link href="/analytics">Analytics</Nav.Link>
+                      {/* <Nav.Link href="/analytics">Analytics</Nav.Link> */}
                       <Nav.Link href="/admin/addProduct">Add new product</Nav.Link>
+                      <Nav.Link href="/admin/management/users">Manage Customer Details</Nav.Link>
                     </Nav>
-                    <Form className="d-flex">
+                    {/* <Form className="d-flex">
                       <Form.Control
                         type="search"
                         placeholder="Search"
@@ -40,7 +41,7 @@ function adminNavbar() {
                         aria-label="Search"
                       />
                       <Button variant="outline-success">Search</Button>
-                    </Form>
+                    </Form> */}
                   </Offcanvas.Body>
                 </Navbar.Offcanvas>
               </Container>
