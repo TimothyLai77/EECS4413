@@ -3,7 +3,7 @@ import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
-import logo from '../../assets/images/logo.jpeg';
+import logo from '../../assets/images/logo.png';
 import '../../assets/styles/Navbar.css';
 import { FaSearch } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,10 +30,11 @@ const NavigationBar = () => {
           <Navbar bg="dark" data-bs-theme="dark" sticky="top">
             <Container>
               <Navbar.Brand href="/">
-              <Image 
+              <img  
                   src={logo} 
-                  rounded 
-                  className="navbar-logo" 
+                  width="30"
+                  heght="30"
+                  className="d-inline-block align-top" 
                   alt="Company Logo"
                 />
               </Navbar.Brand>
