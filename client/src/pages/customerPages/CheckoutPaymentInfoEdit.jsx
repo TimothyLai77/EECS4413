@@ -6,13 +6,13 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { login, createAccount } from "../../features/userManagement"
 import { useNavigate } from "react-router-dom";
-import { purchase } from "../../features/shoppingCart";
+import { clearCart, purchase } from "../../features/shoppingCart";
 
 
 const CheckoutPaymentInfoEdit = () => {
     const user = useSelector(store => store.user.loggedInUser);
     const shoppingCart = useSelector(store => store.shoppingCart.cart);
-    console.log(user);
+    const orderSummary = useSelector(store => store.shoppingCart.orderSummary);
     const dispatch = useDispatch(); 
     const navigate = useNavigate();
     const [ccNumber, setCCNumber] = useState(user.creditCard);
@@ -21,7 +21,7 @@ const CheckoutPaymentInfoEdit = () => {
     const [shippingAddress, setShippingAddress] = useState(user.shippingAddress);
     const [billingAddress, setBillingAddress] = useState(user.billingAddress);
     const loggedIn = useSelector(store => store.user.isLoggedIn);
-    console.log(user);
+
     const payload = {
         userId: user.userId,
         creditCard : ccNumber,
@@ -36,9 +36,17 @@ const CheckoutPaymentInfoEdit = () => {
         if (!loggedIn) navigate("/login");
     }, [loggedIn])
 
-    const handlePurchase = () => {
-        dispatch(purchase(payload));
-    }
+    const handlePurchase = async () => {
+        try {
+            await dispatch(purchase(payload));
+            navigate("/checkout/summary");
+        } catch (error) {
+            alert(error.message);
+        }
+
+
+    }   
+
 
     return (
         <Container>
@@ -90,7 +98,6 @@ const CheckoutPaymentInfoEdit = () => {
                 </Form.Group>
                 <Button onClick={() => {
                     handlePurchase()
-                    navigate("/checkout/summary")
                     }}>Complete Purchase</Button>
             </Form>
 

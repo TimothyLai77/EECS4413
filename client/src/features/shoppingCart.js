@@ -25,6 +25,7 @@ const shoppingCartSlice = createSlice({
                 newState.push(newCartItem);
             }
             state.cart = newState;
+            state.orderSummary = [];
         }),
         reduceFromCart: create.reducer((state, action) => {
             const newState = [...state.cart];
@@ -40,6 +41,7 @@ const shoppingCartSlice = createSlice({
                 duplicateItemInCart.amount -= 1;
             }
             state.cart = newState;
+            state.orderSummary = [];
         }),
         removeFromCart: create.reducer((state, action) => {
             const newState = [...state.cart];
@@ -57,10 +59,12 @@ const shoppingCartSlice = createSlice({
                 newState.splice(index, 1);
                 state.cart = newState;
             }
+            state.orderSummary = [];
         }),
 
         clearCart: create.reducer((state) => {
             state.cart = [];
+            state.orderSummary = [];
         }),
         purchase: create.asyncThunk(
             // actual async function 
@@ -75,14 +79,15 @@ const shoppingCartSlice = createSlice({
             {
                 // runs after asyncThunk is fulfilled, modify the state as needed
                 fulfilled: (state, action) => {
-                    state.orderSummary = state.cart;
+                    state.orderSummary = [...state.cart];
                     state.cart = [];
                     //alert("checkout complete");
                 },
                 // err handling if async thunk fails
                 rejected: (state, action) => {
                     const errorMsg = action.error.message;
-                    alert(errorMsg);
+                    throw new Error(errorMsg);
+
                     //alert("failed to checkout");
                 }
             }
