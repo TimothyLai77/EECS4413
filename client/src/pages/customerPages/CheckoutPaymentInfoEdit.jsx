@@ -88,7 +88,10 @@ const CheckoutPaymentInfoEdit = () => {
                         <Form.Control value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)}/>
                     </Col>
                 </Form.Group>
-                <Button onClick={handlePurchase}>Complete Purchase</Button>
+                <Button onClick={() => {
+                    handlePurchase()
+                    navigate("/checkout/summary")
+                    }}>Complete Purchase</Button>
             </Form>
 
         </Container>

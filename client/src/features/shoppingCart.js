@@ -4,7 +4,8 @@ import axios from "axios";
 const shoppingCartSlice = createSlice({
     name: "shoppingCart",
     initialState: {
-        cart: []
+        cart: [],
+        orderSummary: []
     },
     reducers: (create) => ({
         addToCart: create.reducer((state, action) => {
@@ -74,8 +75,9 @@ const shoppingCartSlice = createSlice({
             {
                 // runs after asyncThunk is fulfilled, modify the state as needed
                 fulfilled: (state, action) => {
+                    state.orderSummary = state.cart;
                     state.cart = [];
-                    alert("checkout complete");
+                    //alert("checkout complete");
                 },
                 // err handling if async thunk fails
                 rejected: (state, action) => {

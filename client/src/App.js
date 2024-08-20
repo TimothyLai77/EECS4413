@@ -14,6 +14,7 @@ import { testSession } from './features/userManagement'
 import AdminTransactionPage from './pages/adminPages/AdminTransactionPage';
 import { fetchInventory } from './features/catalog';
 import ProfilePage from './pages/customerPages/ProfilePage';
+import CheckoutSummary from './pages/customerPages/CheckoutSummary';
 //import UpdateProduct from '../src/pages/adminPages/UpdateProduct';
 const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/addProduct" element={<AddProduct />} />
           <Route path="/checkout/payment" element={<CheckoutPaymentInfoEdit />} />
+          <Route path="/checkout/summary" element={<CheckoutSummary />} />
           <Route path="/temptransactions" element={<TempTransactionPage />} />
           <Route path="/admin/transactions" element={<AdminTransactionPage />} />
           <Route path="/profile" element={<ProfilePage />} />
