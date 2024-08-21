@@ -37,17 +37,7 @@ module.exports = (app) => {
         }
     });
 
-    // remove item from the catalogue completely
-    // app.post("/api/items/remove", async (req, res) => {
-    //     try {
-    //         // DEBUG/SAMPLE CODE: 
-    //         // const i = await Item.findByPk("item-14allk1tvslyoz0gqs");
-    //         await removeItemFromCatalogue(i);
-    //         res.status(200).end();
-    //     } catch (err) {
-    //         res.status(500).end("Internal Server Error");
-    //     }
-    // });
+
 
     app.get("/api/item", async (req, res) => {
         try {
