@@ -8,7 +8,7 @@ const { InvalidOperationError } = require('../modules/errors');
 const { parse } = require('dotenv');
 const dayjs = require('dayjs');
 var customParseFormat = require("dayjs/plugin/customParseFormat");
-const { PaymentError, OutOfStockError } = require('../modules/errors');
+const { PaymentError, OutOfStockError, InvalidCartError } = require('../modules/errors');
 
 
 dayjs.extend(customParseFormat);
@@ -20,7 +20,7 @@ dayjs.extend(customParseFormat);
 const checkout = async (userInfo, itemList) => {
     // Fetch the inventory items that match the itemList requested, joined with Item info
 
-
+    if (itemList.length < 1) throw new InvalidCartError("no items in cart");
 
     /**
      * FROM EXPRESS:

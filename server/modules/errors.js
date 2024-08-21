@@ -6,6 +6,12 @@ class PaymentError extends Error {
 
 };
 
+
+class InvalidCartError extends Error {
+
+}
+
+
 class InvalidOperationError extends Error {
 
 }
@@ -29,3 +35,4 @@ exports.UserDoesNotExistError = UserDoesNotExistError;
 exports.InvalidOperationError = InvalidOperationError;
 exports.UnauthorizedError = UnauthorizedError;
 exports.PaymentError = PaymentError;
+exports.InvalidCartError = InvalidCartError;
