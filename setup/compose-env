@@ -1,0 +1,10 @@
+#In a real production environment, this file should NEVER be commited to the repository. Rather,
+#the person deploying the app would create this file with all the credentials just prior to deploying.
+
+#This is only being done for to make the convenience of the grader.
+#this value is hardcoded to match what is provided via compose file
+DATABASE_SERVER = "db"
+DATABASE_PORT = "3306"
+DATABASE_NAME = "app"
+DATABASE_USER = "appWorker"
+DATABASE_PASSWORD = "password"
