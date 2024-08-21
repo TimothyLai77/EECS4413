@@ -1,10 +1,12 @@
 import { createSlice } from "../store/reduxUtils";
 import axios from "axios";
+import { fetchInventory } from "./catalog";
 
 const shoppingCartSlice = createSlice({
     name: "shoppingCart",
     initialState: {
-        cart: []
+        cart: [],
+        orderSummary: []
     },
     reducers: (create) => ({
         addToCart: create.reducer((state, action) => {
@@ -24,6 +26,7 @@ const shoppingCartSlice = createSlice({
                 newState.push(newCartItem);
             }
             state.cart = newState;
+            state.orderSummary = [];
         }),
         reduceFromCart: create.reducer((state, action) => {
             const newState = [...state.cart];
@@ -39,6 +42,7 @@ const shoppingCartSlice = createSlice({
                 duplicateItemInCart.amount -= 1;
             }
             state.cart = newState;
+            state.orderSummary = [];
         }),
         removeFromCart: create.reducer((state, action) => {
             const newState = [...state.cart];
@@ -56,16 +60,19 @@ const shoppingCartSlice = createSlice({
                 newState.splice(index, 1);
                 state.cart = newState;
             }
+            state.orderSummary = [];
         }),
 
         clearCart: create.reducer((state) => {
             state.cart = [];
+            state.orderSummary = [];
         }),
         purchase: create.asyncThunk(
             // actual async function 
-            async (payload, { rejectWithValue }) => {
+            async (payload, { rejectWithValue, dispatch }) => {
                 try {
                     await axios.post("/api/inventory/checkout", payload);
+                    dispatch(fetchInventory());
                 } catch (error) {
                     rejectWithValue(error.response.data);
                     throw new Error(error.response.data);
@@ -74,13 +81,15 @@ const shoppingCartSlice = createSlice({
             {
                 // runs after asyncThunk is fulfilled, modify the state as needed
                 fulfilled: (state, action) => {
+                    state.orderSummary = [...state.cart];
                     state.cart = [];
-                    alert("checkout complete");
+                    //alert("checkout complete");
                 },
                 // err handling if async thunk fails
                 rejected: (state, action) => {
                     const errorMsg = action.error.message;
-                    alert(errorMsg);
+                    throw new Error(errorMsg);
+
                     //alert("failed to checkout");
                 }
             }

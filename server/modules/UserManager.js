@@ -38,6 +38,13 @@ const createNewUser = async (firstName, lastName, email, password, sAddr, bAddr,
     }
 };
 
+
+const getAllUsers = async () => {
+    const users = await User.findAll();
+    if (!users) throw new Error("no users");
+    return users;
+}
+
 const deleteUser = async (User) => {
     const userToDelete = await User.findByPk(User.userId);
     if (!userToDelete) {
@@ -135,3 +142,4 @@ exports.updateUserCreditCard = updateUserCreditCard;
 exports.updateUserInfo = updateUserInfo;
 exports.promoteUserToAdmin = promoteUserToAdmin;
 exports.authenticateUserLogin = authenticateUserLogin;
+exports.getAllUsers = getAllUsers;

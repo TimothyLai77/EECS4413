@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import NavigationBar from '../../components/common/NavigationBar';
 import { getUserTransactions, getAllTransactions, getTransactionDetails } from '../../features/transactionFetcher';
 import { useDispatch,useSelector } from 'react-redux';
+import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
 
 
 function AdminTransactionPage() {
@@ -36,6 +37,9 @@ function AdminTransactionPage() {
 
   return (
     <div>
+      <div className='adminNavbar'>
+        <AdminNavBar />
+      </div>
       <Container>
       <h1 className="my-4">ALL TRANSACTIONS</h1>
       <Row>

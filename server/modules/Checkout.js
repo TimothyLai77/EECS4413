@@ -8,7 +8,7 @@ const { InvalidOperationError } = require('../modules/errors');
 const { parse } = require('dotenv');
 const dayjs = require('dayjs');
 var customParseFormat = require("dayjs/plugin/customParseFormat");
-const { PaymentError, OutOfStockError } = require('../modules/errors');
+const { PaymentError, OutOfStockError, InvalidCartError } = require('../modules/errors');
 
 
 dayjs.extend(customParseFormat);
@@ -20,7 +20,7 @@ dayjs.extend(customParseFormat);
 const checkout = async (userInfo, itemList) => {
     // Fetch the inventory items that match the itemList requested, joined with Item info
 
-
+    if (itemList.length < 1) throw new InvalidCartError("no items in cart");
 
     /**
      * FROM EXPRESS:
@@ -40,7 +40,7 @@ const checkout = async (userInfo, itemList) => {
         throw new PaymentError("Invalid formatting");
     }
     creditCardString = creditCardString.replaceAll(" ", "");
-    const ccRegex = /[0-9]{16}/mi;
+    const ccRegex = /^[0-9]{16}$/mi;
     if (!ccRegex.test(creditCardString)) throw new PaymentError("Invalid Formatting");
     if (userInfo.cvv > 999 || userInfo.cvv < 0) throw new PaymentError("invalid cvv format");
 

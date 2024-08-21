@@ -24,7 +24,7 @@ const NavigationBar = () => {
     await dispatch(logout()); 
     navigate("/");
   }
-
+  console.log(isAdmin);
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark" sticky="top">
@@ -42,7 +42,16 @@ const NavigationBar = () => {
                 <Nav.Link onClick={() => {navigate("/")}}>Home</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>
+                {
+                  (!isLoggedIn)? 
+                    (<Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>):
+                    (<Nav.Link onClick={handleLogout}>Logout</Nav.Link>)
+                }
+                {
+                  (isLoggedIn)? 
+                    (<Nav.Link onClick={() => {navigate("/profile")}}>Profile</Nav.Link>):
+                    null
+                }
                 {
                   (isLoggedIn && isAdmin)? 
                     (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
@@ -51,8 +60,6 @@ const NavigationBar = () => {
                 {isLoggedIn? (
                 <Container>
                   <p style={{color: "white"}}>{`Hello ${userInfo.firstName} ${userInfo.lastName}`}</p>
-                  <Button onClick={handleLogout}>Logout</Button> {' '}
-                <Button onClick={() => {navigate("/profile")}}>Profile</Button>
                 </Container>
                 
                 ): null }
@@ -61,20 +68,7 @@ const NavigationBar = () => {
               
 
             </Container>
-            <Form inline>
-        <Row>
-          <Col xs="auto">
-            <Form.Control
-              type="text"
-              placeholder="Search"
-              className=" mr-sm-2"
-            />
-          </Col>
-          <Col xs="auto">
-            <Button type="submit"><FaSearch /></Button>
-          </Col>
-        </Row>
-      </Form>
+
           </Navbar>
           <br />
      

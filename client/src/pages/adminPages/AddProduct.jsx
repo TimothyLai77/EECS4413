@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {createProduct} from '../../features/productManagement';
 import { fetchInventory } from '../../features/catalog';
 import {useDispatch} from 'react-redux'
+import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
 
 function AddProduct() {
   const dispatch = useDispatch();
@@ -65,6 +66,9 @@ function AddProduct() {
 
   return (
     <div>
+      <div>
+        <AdminNavBar/>
+      </div>
       <h2>Add New Product</h2>
       <Container>
       <Form onSubmit={handleSubmit}>

@@ -3,8 +3,6 @@ import {
   Button,
   Container,
   ListGroup,
-  ListGroupItem,
-  ButtonGroup,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../../components/common/NavigationBar";
@@ -14,9 +12,9 @@ import {
   reduceFromCart,
   removeFromCart,
 } from "../../features/shoppingCart";
-function CartPage() {
+function CheckoutSummary() {
   const cart = useSelector((store) => {
-    return store.shoppingCart.cart;
+    return store.shoppingCart.orderSummary;
   });
   const dispatch = useDispatch();
 
@@ -52,30 +50,6 @@ function CartPage() {
     const quantityLine = `QTY: ${item.amount}`;
     const subTotalLine = `Subtotal $${subTotal}`;
 
-    // +- handlers
-    const handleAdd = () => {
-      dispatch(
-        addToCart({
-          itemId: item.itemId,
-        })
-      );
-    };
-
-    const handleMinus = () => {
-      dispatch(
-        reduceFromCart({
-          itemId: item.itemId,
-        })
-      );
-    };
-
-    const handleRemove = () => {
-      dispatch(
-        removeFromCart({
-          itemId: item.itemId,
-        })
-      );
-    };
 
     return (
       <ListGroup.Item>
@@ -84,21 +58,14 @@ function CartPage() {
         {productPriceLine} <br />
         {quantityLine} <br />
         {subTotalLine} <br />
-        <ButtonGroup>
-          <Button onClick={handleMinus}>-</Button>
-          <Button onClick={handleAdd}>+</Button>
-        </ButtonGroup>
-        <Button onClick={handleRemove}>Remove from Cart</Button>
       </ListGroup.Item>
     );
   });
 
   return (
     <div>
-      <NavigationBar isLoggedIn={false} onLogout={() => {}} />
-
       <Container>
-        <h1 className="my-4">Your Shopping Cart</h1>
+        <h1 className="my-4">Checkout Complete</h1>
         <ListGroup>{cartContents}</ListGroup>
         <br />
         <ListGroup>
@@ -107,10 +74,10 @@ function CartPage() {
         <br />
         <Button
           onClick={() => {
-            navigate("/checkout/payment");
+            navigate("/");
           }}
         >
-          Payment
+          Return to Store
         </Button>
       </Container>
     </div>
@@ -119,4 +86,4 @@ function CartPage() {
 
 }
 
-export default CartPage;
+export default CheckoutSummary;

@@ -7,50 +7,25 @@ import HomePageSlider from '../../components/HomePageSlider';
 
 
 
-//REMOVE THIS BLOCK WHEN DONE TESTING
-import {  useSelector } from 'react-redux';
-import {checkout} from '../../features/shoppingCart';
+
+import {  useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../features/shoppingCart';
 
 const HomePage = () => {
-    const [topPicks, setTopPicks] = useState([]);
+  const dispatch = useDispatch();
+  const catalog = useSelector(store => store.catalog.products);
 
+  let sortedCatalog = catalog.toSorted((a,b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceA - priceB;
+  })
 
-  //REMOVE THIS BLOCK WHEN DONE TESTING
-  const shoppingCart = useSelector(store => {
-    return store.shoppingCart.cart;
-  });
-
-  console.log(shoppingCart);
-  useEffect(() => {
-    const fetchTopPicks = async () => {
-      const products = await getTopPicks();
-      setTopPicks(products);
-    };
-
-    fetchTopPicks();
-  }, []);
-
+  sortedCatalog = sortedCatalog.slice(0,3);
 
   return (
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
-
-      {/* REMOVE THIS BLOCK WHEN DONE TESTING */}
-      {/* <Button onClick={()=> {
-        dispatch(login({
-            email: "root@app.com",
-            password: "root"
-        }));
-      }}>LOGIN AS ROOT TEMP</Button>
-      
-      <Button onClick={()=> {
-        dispatch(logout());
-      }}>LOGOUT TEMP</Button>
-
-    <Button onClick={()=> {
-        dispatch(checkout(shoppingCart));
-      }}>CHECKOUT TEMP</Button>
- */}
 
 
       <Container fluid className='customContainer'>
@@ -63,11 +38,17 @@ const HomePage = () => {
 
         </Container>
         <Container fluid className='customContainer'>
-        <h2 className="my-4">Top Picks by Owner</h2>
+        <h2 className="my-4">Current Lowest Price Items!</h2>
         <Row>
-          {topPicks.map((product) => (
-            <ItemCard key={product.id} isAdmin={false} product={product} />
-          ))}
+          {sortedCatalog.map((product) => {
+            const handleAddToCart = () => {
+              dispatch(addToCart({
+                itemId: product.id,
+                amount: 1
+              }))
+            }
+            return (<ItemCard key={product.id} handleAddToCart={handleAddToCart} isAdmin={false} product={product} />);
+          })}
         </Row>
         </Container>
      

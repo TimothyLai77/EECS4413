@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { testSession, updateAccountDetails } from '../../features/userManagement';
+import { testSession, updateAccountDetails, getAllUsers } from '../../features/userManagement';
 
 
 
@@ -11,6 +11,7 @@ const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
     return store.user.loggedInUser;
   })
   const [formData, setFormData] = useState({
+    userId: '',
     firstName: '',
     lastName: '',
     billingAddress: '',
@@ -21,6 +22,7 @@ const EditProfileModal = ({ show, handleClose, userInfo, handleSave }) =>  {
 useEffect(() => {
     if (userInfo) {
         setFormData({
+            userId: userInfo.userId,
             firstName: userInfo.firstName,
             lastName: userInfo.lastName,
             billingAddress: userInfo.billingAddress,
@@ -39,6 +41,8 @@ useEffect(() => {
     const handleSubmit = async ()=>{
         await dispatch(updateAccountDetails(formData));
         await dispatch(testSession());
+        //TODO: really hacky way to re-render for admin side
+        await dispatch(getAllUsers());
         handleClose();
     }
 
