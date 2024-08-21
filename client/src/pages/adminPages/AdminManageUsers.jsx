@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Stack } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import NavigationBar from "../../components/common/NavigationBar";
+import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../../features/userManagement";
 import PaymentDetailCard from "../../components/common/paymentDetailCard";
@@ -26,6 +27,9 @@ function AdminManageUsers() {
 
   return (
     <div>
+      <div className='adminNavbar'>
+        <AdminNavBar />
+      </div>
       <Container>
         <h1 className="my-4">User Management</h1>
         <Row>
