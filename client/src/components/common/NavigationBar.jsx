@@ -26,10 +26,6 @@ const NavigationBar = () => {
     return (
         <>
           <Navbar  className="bg-body-tertiary"  bg="dark" data-bs-theme="dark" sticky="top">
-           
-            
-           
-             
 
               <Container className='justify-content-center'>
               <Nav fill variant="tabs" defaultActiveKey="/home">
