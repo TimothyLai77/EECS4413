@@ -24,7 +24,7 @@ const NavigationBar = () => {
     await dispatch(logout()); 
     navigate("/");
   }
-
+  console.log(isAdmin);
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark" sticky="top">
