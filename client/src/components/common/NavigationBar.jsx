@@ -41,7 +41,12 @@ const NavigationBar = () => {
                 <Nav.Link onClick={() => {navigate("/")}}>Home</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
                 <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>
+                {
+                  (!isLoggedIn)? 
+                    (<Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>):
+                    null 
+                }
+              
                 {
                   (isLoggedIn && isAdmin)? 
                     (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
