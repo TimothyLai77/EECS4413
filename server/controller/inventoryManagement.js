@@ -9,7 +9,7 @@ const {
 const { Item } = require('../data/sequelizeModels/Item');
 const { Inventory } = require('../data/sequelizeModels/Inventory');
 const { checkout } = require('../modules/Checkout');
-const { OutOfStockError, PaymentError } = require('../modules/errors');
+const { OutOfStockError, PaymentError, InvalidCartError } = require('../modules/errors');
 module.exports = (app) => {
 
     // ADD ITEM TO CATALOGUE
@@ -161,6 +161,8 @@ module.exports = (app) => {
                 res.status(400).end("Item(s) out of stock");
             } else if (e instanceof PaymentError) {
                 res.status(400).end("Credit Card Authorization Failed");
+            } else if (e instanceof InvalidCartError) {
+                res.status(400).end("No items in cart");
             } else {
                 res.status(500).end("checkout failed");
             }
