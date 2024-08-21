@@ -3,9 +3,8 @@ import {Container, Row, Col, Button, Form} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
-import logo from '../../assets/images/logo.jpeg';
+import logo from '../../assets/images/logo.png';
 import '../../assets/styles/Navbar.css';
-import { FaSearch } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../features/userManagement';
 
@@ -19,7 +18,6 @@ const NavigationBar = () => {
   const isAdmin = useSelector(store => store.user.isAdmin); 
 
   const handleLogout = async () => {
-    //short circuit no-op if the user is not even logged in and this function is called
     if (!isLoggedIn) return;
     await dispatch(logout()); 
     navigate("/");
@@ -27,47 +25,44 @@ const NavigationBar = () => {
   console.log(isAdmin);
     return (
         <>
-          <Navbar bg="dark" data-bs-theme="dark" sticky="top">
-            <Container>
-              <Navbar.Brand href="/">
-              <Image 
-                  src={logo} 
-                  rounded 
-                  className="navbar-logo" 
-                  alt="Company Logo"
-                />
-              </Navbar.Brand>
-              <Nav className="me-auto">
-                <Nav.Link onClick={() => {navigate("/")}}>Home</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link>
-                <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link>
+          <Navbar  className="bg-body-tertiary"  bg="dark" data-bs-theme="dark" sticky="top">
+
+              <Container className='justify-content-center'>
+              <Nav fill variant="tabs" defaultActiveKey="/home">
+              <Nav.Item> <Nav.Link onClick={() => {navigate("/")}}>Home</Nav.Link></Nav.Item>
+              <Nav.Item> <Nav.Link onClick={() => {navigate("/catalog")}}>Product Cataloge</Nav.Link></Nav.Item>
+              <Nav.Item> <Nav.Link onClick={() => {navigate("/cart")}}>Cart</Nav.Link></Nav.Item>
                 {
                   (!isLoggedIn)? 
-                    (<Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link>):
-                    (<Nav.Link onClick={handleLogout}>Logout</Nav.Link>)
+                   (<Nav.Item><Nav.Link onClick={() => {navigate("/login")}}>Login/Register</Nav.Link></Nav.Item>):
+                    (<Nav.Item><Nav.Link onClick={handleLogout}>Logout</Nav.Link></Nav.Item>)
                 }
                 {
                   (isLoggedIn)? 
-                    (<Nav.Link onClick={() => {navigate("/profile")}}>Profile</Nav.Link>):
+                    (<Nav.Item><Nav.Link onClick={() => {navigate("/profile")}}>Profile</Nav.Link></Nav.Item>):
                     null
                 }
                 {
                   (isLoggedIn && isAdmin)? 
-                    (<Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link>):
+                    (<Nav.Item><Nav.Link onClick={() => {navigate("/admin")}}>Admin</Nav.Link></Nav.Item>):
                     null 
                 }
+                
+                </Nav>
+                </Container>
                 {isLoggedIn? (
                 <Container>
-                  <p style={{color: "white"}}>{`Hello ${userInfo.firstName} ${userInfo.lastName}`}</p>
+                  <Navbar.Collapse className="justify-content-end">
+                  <Navbar.Text>Hello, {userInfo.firstName} {userInfo.lastName}</Navbar.Text>
+                  </Navbar.Collapse>
                 </Container>
                 
                 ): null }
-              </Nav>
+             
               {/* render the logout button only if the user is logged in */}
               
 
-            </Container>
-
+          
           </Navbar>
           <br />
      

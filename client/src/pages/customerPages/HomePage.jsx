@@ -30,7 +30,7 @@ const HomePage = () => {
 
       <Container fluid className='customContainer'>
         <div className="my-3 text-center">
-          <h1>Company Name</h1>
+          <h1>Byte Market</h1>
         </div>
         <div class='carousels'>
             <HomePageSlider/>
