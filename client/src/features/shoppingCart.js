@@ -1,5 +1,6 @@
 import { createSlice } from "../store/reduxUtils";
 import axios from "axios";
+import { fetchInventory } from "./catalog";
 
 const shoppingCartSlice = createSlice({
     name: "shoppingCart",
@@ -68,9 +69,10 @@ const shoppingCartSlice = createSlice({
         }),
         purchase: create.asyncThunk(
             // actual async function 
-            async (payload, { rejectWithValue }) => {
+            async (payload, { rejectWithValue, dispatch }) => {
                 try {
                     await axios.post("/api/inventory/checkout", payload);
+                    dispatch(fetchInventory());
                 } catch (error) {
                     rejectWithValue(error.response.data);
                     throw new Error(error.response.data);
