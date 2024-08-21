@@ -45,16 +45,10 @@ const ItemCard = ({
               <Card.Text>Stock: {product.stock}</Card.Text>
             </>
           )}
-          <Button
-            className="m-1"
-            variant="primary"
-            onClick={() => console.log("view")}
-          >
-            View Details
-          </Button>
+
 
           {!isAdmin && (
-            <Button onClick={handleAddToCart} variant="secondary">
+            <Button onClick={handleAddToCart} variant="primary">
               Add to Cart
             </Button>
           )}
