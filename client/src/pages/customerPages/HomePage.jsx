@@ -19,6 +19,7 @@ const HomePage = () => {
   const shoppingCart = useSelector(store => {
     return store.shoppingCart.cart;
   });
+  const catalog = useSelector(store => store.catalog.products);
 
   console.log(shoppingCart);
   useEffect(() => {
@@ -30,6 +31,13 @@ const HomePage = () => {
     fetchTopPicks();
   }, []);
 
+  let sortedCatalog = catalog.toSorted((a,b) => {
+      const priceA = a.price;
+      const priceB = b.price;
+      return priceA - priceB;
+  })
+
+  sortedCatalog = sortedCatalog.slice(0,3);
 
   return (
     <div>
@@ -63,9 +71,9 @@ const HomePage = () => {
 
         </Container>
         <Container fluid className='customContainer'>
-        <h2 className="my-4">Top Picks by Owner</h2>
+        <h2 className="my-4">Current Lowest Price Items!</h2>
         <Row>
-          {topPicks.map((product) => (
+          {sortedCatalog.map((product) => (
             <ItemCard key={product.id} isAdmin={false} product={product} />
           ))}
         </Row>
