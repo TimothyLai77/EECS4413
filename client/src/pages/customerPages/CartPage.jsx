@@ -116,15 +116,7 @@ function CartPage() {
     </div>
   );
 
-  // return(
-  // <div>
 
-  //     <div>TEMP CART PAGE</div>
-  //     <Button onClick={() => {
-  //         navigate("/checkout/payment");
-  //     }}>Payment</Button>
-
-  // </div>);
 }
 
 export default CartPage;
