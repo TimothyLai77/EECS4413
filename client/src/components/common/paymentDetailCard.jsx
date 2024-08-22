@@ -2,8 +2,8 @@ import React,{useState} from "react";
 import { Card, ListGroup, Button } from "react-bootstrap";
 import { BsFillCreditCardFill } from "react-icons/bs";
 import EditPaymentDetailModal from "./editPaymentDetailModal";
-
-
+import { IoEyeSharp } from "react-icons/io5";
+import { HiMiniEyeSlash } from "react-icons/hi2";
 const PaymentDetailCard = ({ user }) => {
  
   const [showModal, setShowModal] = useState(false);
@@ -11,10 +11,28 @@ const PaymentDetailCard = ({ user }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  // const handleSave = (updatedUserPaymentInfo) => {
-  //   // Logic to update user payemnt info, making an API call or dispatching an action to update the Redux store
-  //   console.log("Updated User Info:", updatedUserPaymentInfo);
-  // };
+ 
+// hides the credit card info on the UI side 
+const [isHidden, setIsHidden] = useState(true);
+const toggleVisibility = () => setIsHidden(!isHidden);
+
+  const hideCreditCard = (cardNumber) =>{
+    let lastFourNumber = '' ;
+    if (cardNumber!== null){
+
+     lastFourNumber = cardNumber.substring(15);
+    
+    return "XXXX XXXX XXXX "+lastFourNumber;
+  }
+    return lastFourNumber;
+  }
+  const hideCVV = (cvv) => {
+    if (cvv !== null){
+      return 'XXX';
+    }
+    return '';
+  }
+  
 
   if (!user) {
     return <div>Loading...</div>; // or handle null user appropriately
@@ -27,13 +45,13 @@ const PaymentDetailCard = ({ user }) => {
         <ListGroup variant="flush">
           <ListGroup.Item>
             {/** These all fields are null because we are not taking the card info at registration*/}
-            <strong>Card Number:</strong> {user.creditCard}
+            <strong>Card Number:</strong> {isHidden ? hideCreditCard(user.creditCard) : user.creditCard}
           </ListGroup.Item>
           <ListGroup.Item>
             <strong>Card Expiry Date (mm/yy):</strong> {user.expiry}
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong>CVV:</strong> {user.cvv}
+            <strong>CVV:</strong>  {isHidden ? hideCVV(user.cvv) : user.cvv}
           </ListGroup.Item>
         </ListGroup>
         <Button size="sm" onClick={handleShowModal}>Edit <BsFillCreditCardFill /></Button>
@@ -41,7 +59,10 @@ const PaymentDetailCard = ({ user }) => {
         show={showModal}
         handleClose={handleCloseModal}
         userInfo={user}
-      />
+      />{" "}
+       <Button size="sm" onClick={toggleVisibility}>
+          {isHidden ? <IoEyeSharp /> : <HiMiniEyeSlash />}
+        </Button>
       </Card.Body>
     </Card>
   );

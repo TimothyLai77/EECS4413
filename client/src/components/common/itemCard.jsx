@@ -42,7 +42,11 @@ const ItemCard = ({
             ${product.price.toFixed(2)}
           </Card.Subtitle>
           <Card.Text>{product.info}</Card.Text>
-          <Card.Text>Remaining Stock: {product.stock}</Card.Text>
+          {!isAdmin && (
+            <>
+            <Card.Text>Remaining Stock: {product.stock}</Card.Text>
+            </>
+            )}
           {isAdmin && (
             <>
               <Card.Text>Stock: {product.stock}</Card.Text>
