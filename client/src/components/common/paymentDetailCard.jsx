@@ -11,10 +11,19 @@ const PaymentDetailCard = ({ user }) => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  // const handleSave = (updatedUserPaymentInfo) => {
-  //   // Logic to update user payemnt info, making an API call or dispatching an action to update the Redux store
-  //   console.log("Updated User Info:", updatedUserPaymentInfo);
-  // };
+ 
+// hides the credit card info on the UI side 
+  const hideCreditCard = (cardNumber) =>{
+    let lastFourNumber = '' ;
+    if (cardNumber!== null){
+     lastFourNumber = cardNumber.substring(15);
+    
+    return "XXXX XXXX XXXX "+lastFourNumber;
+  }
+    return lastFourNumber;
+  }
+
+  
 
   if (!user) {
     return <div>Loading...</div>; // or handle null user appropriately
@@ -27,7 +36,7 @@ const PaymentDetailCard = ({ user }) => {
         <ListGroup variant="flush">
           <ListGroup.Item>
             {/** These all fields are null because we are not taking the card info at registration*/}
-            <strong>Card Number:</strong> {user.creditCard}
+            <strong>Card Number:</strong> {hideCreditCard(user.creditCard)}
           </ListGroup.Item>
           <ListGroup.Item>
             <strong>Card Expiry Date (mm/yy):</strong> {user.expiry}
