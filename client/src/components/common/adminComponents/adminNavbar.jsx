@@ -31,6 +31,7 @@ function AdminNavbar() {
                   <Offcanvas.Body>
                     <Nav className="justify-content-end flex-grow-1 pe-3">
                       <Nav.Link onClick={() => navigate("/")}>Go back to Home</Nav.Link>
+                      <Nav.Link onClick={() => navigate("/admin")}>Inventory</Nav.Link>
                       <Nav.Link onClick={() => navigate("/admin/transactions")}>Store Transactions</Nav.Link>
                       <Nav.Link onClick={() => navigate("/admin/addProduct")}>Add new product</Nav.Link>
                       <Nav.Link onClick={() => navigate("/admin/management/users")}>Manage Customer Details</Nav.Link>
