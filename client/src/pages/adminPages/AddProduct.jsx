@@ -104,6 +104,7 @@ function AddProduct() {
             value={product.price}
             onChange={handleChange}
             min={0}
+            step = "0.01"
             required
           />
         </Form.Group>
