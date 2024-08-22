@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 # app directory
 WORKDIR /app
 # copy the package json file
@@ -9,12 +9,9 @@ COPY ./setup/compose-env ./.env
 #install deps for backend
 RUN npm install --silent --no-optional
 
-#copy backend source
-COPY ./server ./server
-COPY ./server.js ./server.js
-
-COPY ./client/package*.json ./client
 WORKDIR /app/client
+COPY ./client/package*.json ./
+
 RUN npm install --silent --no-optional
 
 # copy and build the react-ui
@@ -25,7 +22,9 @@ RUN ./node_modules/.bin/react-scripts build
 
 
 WORKDIR /app
-
+#copy backend source
+COPY ./server ./server
+COPY ./server.js ./server.js
 
 #start the app
 CMD ["node", "/app/server.js"]
