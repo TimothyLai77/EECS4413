@@ -138,7 +138,7 @@ function CatalogPage() {
         <Form.Group controlId="searchProduct">
           <Form.Control
               type="text"
-              placeholder="Search Inventory"
+              placeholder="Search Inventory 🔍"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
           />
