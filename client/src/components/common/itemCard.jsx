@@ -4,6 +4,9 @@ import "../../assets/styles/app.css";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import EditProductModal from "./adminComponents/editProductModal";
+import "../../assets/styles/itemCard.css"
+
+
 
 const ItemCard = ({
   product,
@@ -21,7 +24,7 @@ const ItemCard = ({
   return (
     <Col md={4} key={product.id}>
       <Card className="mb-4">
-        <Card.Img variant="top" src={product.image} />
+        <Card.Img variant="top" src={product.image} className="card-img"/>
 
         {isAdmin && (
           <>
