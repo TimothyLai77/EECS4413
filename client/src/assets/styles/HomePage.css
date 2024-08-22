@@ -4,10 +4,7 @@
 img { 
     width: 100%;
     height: auto;
-
-  
   }
-
   .customContainer{
     padding: 0 !important;
   }
@@ -15,8 +12,9 @@ img {
     height: 100%;
   }
   .carousels{
-    height: 500px;
+    height: 600px;
   }
   .slide, .carousel-inner,.carousel-item,.img-fluid{
     height: 100% !important; 
-  }
+  } 
+
