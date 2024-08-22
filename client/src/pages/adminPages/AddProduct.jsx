@@ -104,6 +104,7 @@ function AddProduct() {
             name="price"
             value={product.price}
             onChange={handleChange}
+            min={0}
             required
           />
         </Form.Group>
@@ -129,6 +130,7 @@ function AddProduct() {
             name="stock"
             value={product.stock}
             onChange={handleChange}
+            min={0}
             required
           />
         </Form.Group>
