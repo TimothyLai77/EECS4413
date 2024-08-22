@@ -155,7 +155,7 @@ function CatalogPage() {
       </Row>
 
     <Row>
-    <Col md={2}>
+    <Col md={3}>
             <Dropdown onSelect={e => setSortMode(e)} style={{ marginTop: 15, marginBottom: 15 }}>
               <Dropdown.Toggle>
                 {sortDropDownString}
@@ -169,7 +169,7 @@ function CatalogPage() {
           </Col>
 
           {/* Brand Filter Dropdown */}
-          <Col md={2}>
+          <Col md={3}>
             <Dropdown onSelect={e => setSelectedBrand(e)} style={{ marginTop: 15, marginBottom: 15 }}>
               <Dropdown.Toggle>
                 Filter by Brand: {selectedBrand}
