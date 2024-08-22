@@ -64,6 +64,13 @@ const updateUserCreditCard = async (userId, ccNumber, ccExpiry, cvv) => {
         throw new UserDoesNotExistError("user does not exist");
 
     } else {
+        // hot fix: I guess if the user wants to delete their CVV, the form only allows them to enter in a blank string
+        // Just assume a blank string is null then I guess. Since the other values are stored as Strings in the DB, but CVVs are Ints
+        if(cvv.length == 0){
+            cvv = null;
+        }else{
+            cvv = parseInt(cvv);
+        }
         userToUpdate.creditCardNumber = ccNumber;
         userToUpdate.creditCardExpiry = ccExpiry;
         userToUpdate.cvv = cvv;
