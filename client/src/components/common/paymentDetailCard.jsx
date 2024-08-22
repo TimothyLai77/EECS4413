@@ -26,7 +26,12 @@ const toggleVisibility = () => setIsHidden(!isHidden);
   }
     return lastFourNumber;
   }
-
+  const hideCVV = (cvv) => {
+    if (cvv !== null){
+      return 'XXX';
+    }
+    return '';
+  }
   
 
   if (!user) {
@@ -46,7 +51,7 @@ const toggleVisibility = () => setIsHidden(!isHidden);
             <strong>Card Expiry Date (mm/yy):</strong> {user.expiry}
           </ListGroup.Item>
           <ListGroup.Item>
-            <strong>CVV:</strong>  {isHidden ? 'XXX' : user.cvv}
+            <strong>CVV:</strong>  {isHidden ? hideCVV(user.cvv) : user.cvv}
           </ListGroup.Item>
         </ListGroup>
         <Button size="sm" onClick={handleShowModal}>Edit <BsFillCreditCardFill /></Button>
