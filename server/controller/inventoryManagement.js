@@ -25,7 +25,7 @@ module.exports = (app) => {
             const image = request.image;
             const stock = request.stock;
             // check data is valid
-            if (!name || !price || !brand || !description || !image || !stock) throw new Error("Missing information");
+            if (!name || !brand || !description || !image) throw new Error("Missing information");
             if (typeof price !== 'number') throw new Error("price is not a number");
             if (typeof stock !== 'number') throw new Error("stock is not a number");
             // insert into database

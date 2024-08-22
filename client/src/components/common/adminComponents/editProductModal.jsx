@@ -10,6 +10,11 @@ const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) =
 
 
   const handleSave = async () => {
+    if(updatedProduct.stock < 0 || updatedProduct.price < 0){
+      alert("invalid inputs");
+      return;
+    }
+
     const payload = {
       itemId: updatedProduct.id,
       name: updatedProduct.name,
@@ -75,6 +80,7 @@ const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) =
               type="number"
               step="0.01"
               name="price"
+              min={0}
               value={updatedProduct.price}
               onChange={handleChange}
             />
@@ -93,6 +99,7 @@ const EditProductModal = ({ show, handleClose, product, handleUpdateProduct }) =
             <Form.Control
               type="number"
               name="stock"
+              min={0}
               value={updatedProduct.stock}
               onChange={handleChange}
             />
