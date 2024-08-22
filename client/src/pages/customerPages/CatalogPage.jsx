@@ -9,7 +9,7 @@ import { addToCart } from '../../features/shoppingCart';
 
 
 const SORT_MODES = [
-  { name:"Name" , 
+  { name:"Name: A-Z" , 
     key: "NAME",
     comparator : (a, b) => {
       const nameA = a.name;
@@ -23,7 +23,7 @@ const SORT_MODES = [
       }
     }
   },
-    { name:"Name Reverse" , 
+    { name:"Name: Z-A" , 
     key: "NAME_R",
     comparator : (a, b) => {
       const nameA = a.name;
@@ -38,7 +38,7 @@ const SORT_MODES = [
     }
   },
 
-  { name:"Price" , 
+  { name:"Price: High to Low" , 
     key: "PRICE",
     comparator : (a, b) => {
       const priceA = a.price;
@@ -46,7 +46,7 @@ const SORT_MODES = [
       return priceB - priceA;
     }
   },
-    { name:"Price Reverse" , 
+    { name:"Price: Low to High" , 
     key: "PRICE_r",
     comparator : (a, b) => {
       const priceA = a.price;
@@ -55,7 +55,7 @@ const SORT_MODES = [
     }
   }
   ,
-    { name:"Brand" , 
+    { name:"Brand: A-Z" , 
     key: "BRAND",
     comparator : (a, b) => {
       const brandA = a.brand;
@@ -69,7 +69,7 @@ const SORT_MODES = [
       }
     }
   },
-    { name:"Brand Reverse" , 
+    { name:"Brand: Z-A" , 
     key: "BRAND_R",
     comparator : (a, b) => {
       const brandA = a.brand;
