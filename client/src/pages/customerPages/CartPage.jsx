@@ -3,8 +3,9 @@ import {
   Button,
   Container,
   ListGroup,
-  ListGroupItem,
   ButtonGroup,
+  Row,
+  Col,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../../components/common/NavigationBar";
@@ -14,29 +15,26 @@ import {
   reduceFromCart,
   removeFromCart,
 } from "../../features/shoppingCart";
+
 function CartPage() {
-  const cart = useSelector((store) => {
-    return store.shoppingCart.cart;
-  });
+  const cart = useSelector((store) => store.shoppingCart.cart);
   const dispatch = useDispatch();
 
-  const storeProducts = useSelector((store) => {
-    return store.catalog.products;
-  });
-  console.log(storeProducts);
+  const storeProducts = useSelector((store) => store.catalog.products);
 
   const navigate = useNavigate();
-  console.log(cart);
 
   let total = 0;
-  const cartContents = cart.map((item) => {
+  let totalItems = 0;
+  
+  const cartContents = cart.map((item, index) => {
     let productName = "null";
     let productBrand = "null";
     let productPrice = -1.0;
 
-    const productInfo = storeProducts.find((itemFromCatalog) => {
-      return item.itemId === itemFromCatalog.id;
-    });
+    const productInfo = storeProducts.find(
+      (itemFromCatalog) => item.itemId === itemFromCatalog.id
+    );
 
     if (productInfo) {
       productName = productInfo.name;
@@ -44,79 +42,97 @@ function CartPage() {
       productPrice = productInfo.price;
     }
 
-    //console.log(productInfo);
     const subTotal = item.amount * productPrice;
     total += subTotal;
+    totalItems += item.amount; // Accumulate total items
+
     const headerLine = `${productBrand}: ${productName}`;
     const productPriceLine = `$${productPrice}`;
     const quantityLine = `QTY: ${item.amount}`;
-    const subTotalLine = `Subtotal $${subTotal}`;
+    const subTotalLine = `Subtotal $${subTotal.toFixed(2)}`;
 
     // +- handlers
     const handleAdd = () => {
-      dispatch(
-        addToCart({
-          itemId: item.itemId,
-        })
-      );
+      dispatch(addToCart({ itemId: item.itemId }));
     };
 
     const handleMinus = () => {
-      dispatch(
-        reduceFromCart({
-          itemId: item.itemId,
-        })
-      );
+      dispatch(reduceFromCart({ itemId: item.itemId }));
     };
 
     const handleRemove = () => {
-      dispatch(
-        removeFromCart({
-          itemId: item.itemId,
-        })
-      );
+      dispatch(removeFromCart({ itemId: item.itemId }));
     };
 
     return (
-      <ListGroup.Item>
-        <b>{headerLine} </b>
-        <br />
-        {productPriceLine} <br />
-        {quantityLine} <br />
-        {subTotalLine} <br />
-        <ButtonGroup>
-          <Button onClick={handleMinus}>-</Button>
-          <Button onClick={handleAdd}>+</Button>
-        </ButtonGroup>
-        <Button onClick={handleRemove}>Remove from Cart</Button>
+      <ListGroup.Item key={index} className="my-3 p-3 border rounded">
+        <Row>
+          <Col xs={8}>
+            <b>{headerLine}</b>
+            <br />
+            {productPriceLine}
+            <br />
+            {quantityLine}
+            <br />
+            {subTotalLine}
+          </Col>
+          <Col xs={4} className="text-end">
+            <ButtonGroup className="mb-2">
+              <Button variant="outline-secondary" onClick={handleMinus}>
+                -
+              </Button>
+              <Button variant="outline-secondary" onClick={handleAdd}>
+                +
+              </Button>
+            </ButtonGroup>
+            <br />
+            <Button variant="danger" onClick={handleRemove}>
+              Remove from Cart
+            </Button>
+          </Col>
+        </Row>
       </ListGroup.Item>
     );
   });
 
+  // Get current date and time
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
+
   return (
     <div>
       <NavigationBar isLoggedIn={false} onLogout={() => {}} />
-
       <Container>
         <h1 className="my-4">Your Shopping Cart</h1>
         <ListGroup>{cartContents}</ListGroup>
-        <br />
-        <ListGroup>
-          <ListGroup.Item>Total: ${total}</ListGroup.Item>
+
+        {/* Total items and current date/time */}
+        <div className="mt-4">
+          <h5>Total Items: {totalItems}</h5>
+          <p>
+            Date: {currentDate} <br />
+            Time: {currentTime}
+          </p>
+        </div>
+
+        {/* Total cost */}
+        <ListGroup className="my-4">
+          <ListGroup.Item className="text-end">
+            <h4>Total: ${total.toFixed(2)}</h4>
+          </ListGroup.Item>
         </ListGroup>
-        <br />
+
         <Button
-          onClick={() => {
-            navigate("/checkout/payment");
-          }}
+          variant="success"
+          size="lg"
+          onClick={() => navigate("/checkout/payment")}
+          className="w-100"
         >
-          Payment
+          Proceed to Payment
         </Button>
       </Container>
     </div>
   );
-
-
 }
 
 export default CartPage;
