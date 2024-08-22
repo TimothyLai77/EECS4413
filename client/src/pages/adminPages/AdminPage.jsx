@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import {  Container, Row, Button } from 'react-bootstrap';
-import {inventoryProducts} from '../../services/inventoryProducts';
 import AdminNavBar from '../../components/common/adminComponents/adminNavbar';
 import ItemCard from '../../components/common/itemCard.jsx';
 import { useDispatch,useSelector } from 'react-redux';

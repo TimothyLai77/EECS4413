@@ -37,7 +37,7 @@ const shoppingCartSlice = createSlice({
              */
             const newCartItem = action.payload;
 
-            const duplicateItemInCart = newState.find(e => e.itemId === newCartItem.itemId);
+            const duplicateItemInCart = newState.find(e => e.iteImd === newCartItem.itemId);
             if (duplicateItemInCart && duplicateItemInCart.amount > 1) {
                 duplicateItemInCart.amount -= 1;
             }

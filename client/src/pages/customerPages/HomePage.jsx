@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import NavigationBar from '../../components/common/NavigationBar';
-import { getTopPicks } from '../../services/topPickProduct';
 import ItemCard from '../../components/common/itemCard';
 import HomePageSlider from '../../components/HomePageSlider';
 

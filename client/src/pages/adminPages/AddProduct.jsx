@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
-import {addProduct,inventoryProducts} from '../../services/inventoryProducts';
 import { useNavigate } from 'react-router-dom';
 import {createProduct} from '../../features/productManagement';
 import { fetchInventory } from '../../features/catalog';

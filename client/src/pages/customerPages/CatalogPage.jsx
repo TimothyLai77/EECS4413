@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import { Container, Row, Form, Dropdown } from 'react-bootstrap';
-import getProductCatalog from '../../services/catalogProducts';
 import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
 import { fetchInventory, inventoryAddStock, inventoryDeductStock, searchInventory } from '../../features/catalog';
