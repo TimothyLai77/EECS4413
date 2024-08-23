@@ -23,7 +23,8 @@ const ItemCard = ({
   //console.log(product);
   return (
     <Col md={4} key={product.id}>
-      <Card className="mb-4">
+      
+      <Card className="mb-4 BGcard">
         <Card.Img variant="top" src={product.image} className="card-img"/>
 
         {isAdmin && (
@@ -81,7 +82,7 @@ const ItemCard = ({
           )}
         </Card.Body>
       </Card>
-
+      
       {/**This is the modal comppnent*/}
       <EditProductModal
         show={showModal}
