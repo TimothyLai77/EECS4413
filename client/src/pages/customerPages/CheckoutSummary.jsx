@@ -34,7 +34,7 @@ function CheckoutSummary() {
         <br />
         {`QTY: ${item.amount}`}
         <br />
-        {`Subtotal: $${subTotal}`}
+        {`Subtotal: $${subTotal.toFixed(2)}`}
         <br />
       </ListGroup.Item>
     );
@@ -57,7 +57,7 @@ function CheckoutSummary() {
                 {cartContents}
               </ListGroup.Item>
               <ListGroup.Item className="total-amount">
-                Total: ${total}
+                Total: ${total.toFixed(2)}
               </ListGroup.Item>
             </ListGroup>
           </Card.Body>

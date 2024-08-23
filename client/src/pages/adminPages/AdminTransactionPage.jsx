@@ -73,7 +73,7 @@ function AdminTransactionPage() {
                       <b>Item Name: </b> {item.itemName} <br/>
                       <b>Item Brand: </b> {item.itemBrand} <br/>
                       <b>Quantity Bought: </b> {item.quantity} <br/>
-                      <b>Item Subtotal: $</b> {item.priceSold} <br/> <hr/>
+                      <b>Item Subtotal: $</b> {item.priceSold.toFixed(2)} <br/> <hr/>
                     </div>
                   ))}
 
