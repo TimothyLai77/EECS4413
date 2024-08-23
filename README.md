@@ -1,32 +1,36 @@
-# First Time Setup Instructions
 
-1. Install MariaDB for your operating system
-2. fill in `.env` file (see sample below)
-3. run the `db_init.sql` script in `/setup` to setup database and users
-4. run `npm ci`
 
-# Starting Backend
+# Installation/Setup (Docker Compose)
+* Create a `docker-compose.yml` file, and copy the following: 
+* Make changes as desired (updating passwords, ports, etc. (recommended to move passwords to an .env), posted here as an example and for simplicity)
+* Run `docker compose pull`
+* Run `docker compose up`
+```yml
+version: '3.1'
 
-1. run `npm run start`
+services:
+  app:
+    image: notnottimothy77/ecommerce-app
+    command: "bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; node /app/server.js'"
+    ports:
+      - 80:8080
+    depends_on:
+      - db
 
-# Start Production Frontend
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: appWorker
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: app
+    ports:
+      - 3306:3306
 
-1. `cd` into `/client`
-2. run `npm ci`
-3. run `npm run build`
-4. cd `../`
-5. run `npm run start`
-
-# Sample .env configuration (server is configured to use these values)
-
-```.env
-DATABASE_SERVER = "localhost"
-DATABASE_PORT = "3306"
-DATABASE_NAME = "app"
-DATABASE_USER = "appWorker"
-DATABASE_PASSWORD = <<ASK FOR PASSWORD>>
 ```
+* This was tested on Ubuntu 24.04 LTS and Debian 12
+* Also tested on a Microsoft Azure Ubuntu VM. 
 
-# Admin account details:
-
-The admin login is `root@app.com` and the password is `root`.
+## Application Admin Account Details:
+* In the application the administrator email and password is `root@app.com` and `root` respectively. 
