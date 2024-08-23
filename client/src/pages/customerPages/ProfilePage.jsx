@@ -41,7 +41,7 @@ const ProfilePage = () =>{
     console.log(order); 
     const orderName = `Order #${order.transactionId.replace("transaction-", "")}`
     const pruchasedDate = `Purchased ${dayjs(order.date).format("YYYY-MM-DD")}`; 
-    const total = `Total: $${order.total}`;
+    const total = `Total: $${order.total.toFixed(2)}`;
 
     const itemsBought = order.itemsBought.map(item => ({
       brand: item.itemBrand,

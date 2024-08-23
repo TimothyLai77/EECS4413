@@ -13,7 +13,7 @@ const OrderCard = ({ order }) => {
         </Card.Subtitle>
         <Card.Text>Quantity: {order.qty}</Card.Text>
         <Card.Text>
-          <span className="float-right text-black-50">Item Subtotal: ${order.subTotal}</span>
+          <span className="float-right text-black-50">Item Subtotal: ${order.subTotal.toFixed(2)}</span>
         </Card.Text>
       </Card.Body>
     </Card>
