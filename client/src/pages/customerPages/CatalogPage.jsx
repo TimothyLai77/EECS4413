@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Container, Row, Form, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col,Form, Dropdown } from 'react-bootstrap';
 import NavigationBar from '../../components/common/NavigationBar';
 import ItemCard from '../../components/common/itemCard';
 import { fetchInventory, inventoryAddStock, inventoryDeductStock, searchInventory } from '../../features/catalog';
@@ -90,6 +90,7 @@ const SORT_MODES = [
 
 function CatalogPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('All Brands');
   const dispatch = useDispatch();
   const products = useSelector(store => {
     return store.catalog.products
@@ -103,15 +104,22 @@ function CatalogPage() {
 
   const sortModeObject = SORT_MODES.find(e => e.key === sortMode); 
 
+  const allBrands = ['All Brands', ...new Set(products.map(product => product.brand))];
+  let filteredProducts = products;
+  if (selectedBrand !== 'All Brands') {
+    filteredProducts = filteredProducts.filter(product => product.brand === selectedBrand);
+  }
 
-  let sortedProducts = products;
+  let sortedProducts = filteredProducts;
   let sortDropDownString = "Sorted By: "
-
 
   if (sortModeObject.comparator && typeof sortModeObject.comparator === 'function'){
     sortedProducts = sortedProducts.toSorted(sortModeObject.comparator); 
     sortDropDownString += sortModeObject.name; 
   }
+
+ 
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -138,27 +146,41 @@ function CatalogPage() {
         <Form.Group controlId="searchProduct">
           <Form.Control
               type="text"
-              placeholder="Search Inventory 🔍"
+              placeholder="Search Products by Name, Brand, ... 🔍"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
           />
         </Form.Group>
-      </Form>
+      </Form> 
       </Row>
 
     <Row>
-    <Dropdown onSelect={e => {setSortMode(e)}} style={{marginTop: 15, marginBottom: 15}}>
-        <Dropdown.Toggle>
-        {sortDropDownString}
-        </Dropdown.Toggle>
+    <Col md={3}>
+            <Dropdown onSelect={e => setSortMode(e)} style={{ marginTop: 15, marginBottom: 15 }}>
+              <Dropdown.Toggle>
+                {sortDropDownString}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {SORT_MODES.map(o => (
+                  <Dropdown.Item eventKey={o.key} key={o.key}>{o.name}</Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
 
-        <Dropdown.Menu >
-
-          {SORT_MODES.map(o => (
-            <Dropdown.Item eventKey={o.key}>{o.name}</Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+          {/* Brand Filter Dropdown */}
+          <Col md={3}>
+            <Dropdown onSelect={e => setSelectedBrand(e)} style={{ marginTop: 15, marginBottom: 15 }}>
+              <Dropdown.Toggle>
+                Filter by Brand: {selectedBrand}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {allBrands.map(brand => (
+                  <Dropdown.Item eventKey={brand} key={brand}>{brand}</Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
     </Row>
 
 

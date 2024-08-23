@@ -30,7 +30,7 @@ const AdminPage = () => {
         <div className="d-flex justify-content-center mb-3">
           <InputGroup style={{ maxWidth: '300px' }}>
             <FormControl
-              placeholder="Search products 🔍"
+              placeholder="Search Products by Name 🔍"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
