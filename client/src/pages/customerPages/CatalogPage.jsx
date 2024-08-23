@@ -148,6 +148,7 @@ function CatalogPage() {
               type="text"
               placeholder="Search Products by Name, Brand, ... 🔍"
               value={searchTerm}
+              style={{  boxShadow: '7px 7px 10px grey'}}
               onChange={(e) => setSearchTerm(e.target.value)}
           />
         </Form.Group>
