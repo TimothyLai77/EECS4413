@@ -1,4 +1,6 @@
-
+Deployed Instance at: http://eecs4413-app.canadacentral.cloudapp.azure.com/
+* Not sure how long this will last before my Azure credits run out, but it should be at least a few months (as of August 2024).
+* the VM only has a single thread and about 800MB of memory so try not to abuse the app. 
 
 # Installation/Setup (Docker Compose)
 * Create a `docker-compose.yml` file, and copy the following below
