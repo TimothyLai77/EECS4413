@@ -35,7 +35,7 @@ services:
 # Installation/Setup on local machine (no docker):
 * have MariaDB installed on your system. 
 * clone this repository, and navigate inside
-* run `npm install`
+* run `npm install` on the root directory
 * create a `.env` file and populate it with (the app is configured to use these values): 
 ```env
 DATABASE_SERVER = "localhost"
@@ -44,8 +44,8 @@ DATABASE_NAME = "app"
 DATABASE_USER = "appWorker"
 DATABASE_PASSWORD = "password"
 ```
-* Build the front end by: navigating to `client/` and run `npm run build` 
-* Init the database by running `setup/db_init.sql` 
+* Build the front end by: navigating to `client/` and run `npm install` followed by `npm run build`
+* Navigate back to the project root and init the database by running `setup/db_init.sql`
 * navigate back to the project root, and run `npm run start`. Project is on `localhost:8080`
 
 ## Application Admin Account Details:
