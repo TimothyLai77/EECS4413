@@ -35,7 +35,7 @@ services:
 # Installation/Setup on local machine (no docker):
 * have MariaDB installed on your system. 
 * clone this repository, and navigate inside
-* run `npm install` on the root directory
+* run `npm install` on the project root directory
 * create a `.env` file and populate it with (the app is configured to use these values): 
 ```env
 DATABASE_SERVER = "localhost"
