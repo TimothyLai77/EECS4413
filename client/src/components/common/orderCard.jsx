@@ -28,6 +28,10 @@ const OrderCard = ({ order }) => {
             </Card.Text>
           </Col>
         </Row>
+        <Card.Text>Quantity: {order.qty}</Card.Text>
+        <Card.Text>
+          <span className="float-right text-black-50">Item Subtotal: ${order.subTotal.toFixed(2)}</span>
+        </Card.Text>
       </Card.Body>
       <Card.Footer className="text-muted d-flex justify-content-between align-items-center">
         <FaClock className="mr-1" />
