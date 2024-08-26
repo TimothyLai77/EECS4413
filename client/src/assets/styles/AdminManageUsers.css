@@ -1,0 +1,56 @@
+/* Container for the Admin Management Page */
+.adminNavbar {
+    margin-bottom: 20px;
+  }
+  
+  /* Header styling with user icon and title */
+  .user-management-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .user-icon {
+    color: #1679AB;
+    margin-right: 10px;
+  }
+  
+  .user-title {
+    margin-bottom: 0;
+  }
+  
+  /* Search bar styling */
+  .search-bar-container {
+    margin-bottom: 40px;
+  }
+  
+  .search-bar {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* Card styling for user and payment information */
+  .user-info-card,
+  .payment-info-card,
+  .profile-info-card {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header-custom {
+    background-color: #1679AB;
+    color: white;
+  }
+  
+  /* No users found message */
+  .no-users-found {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+  }
