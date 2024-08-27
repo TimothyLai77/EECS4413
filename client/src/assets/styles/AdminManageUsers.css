@@ -43,7 +43,7 @@
   }
   
   .card-header-custom {
-    background-color: #1679AB;
+    background-color: #1679AB !important;
     color: white;
   }
   
