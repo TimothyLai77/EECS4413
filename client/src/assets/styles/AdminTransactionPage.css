@@ -1,4 +1,8 @@
-
+.card .card-header.card-header-custom {
+    background-color: #1679AB;
+    color: white;
+  }
+  
 .adminNavbar {
     margin-bottom: 20px;
   }
@@ -15,6 +19,7 @@
     color: #1679AB;
     margin-right: 10px;
   }
+  
   
   .header-title {
     margin-bottom: 0;
@@ -38,7 +43,7 @@
   }
   
   .order-details-card {
-    background-color: #1679AB;
+    background-color: #1679AB !important;
     color: white;
     padding: 15px;
     margin-bottom: 15px;
