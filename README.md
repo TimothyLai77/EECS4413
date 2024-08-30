@@ -41,7 +41,8 @@ services:
 * have MariaDB installed on your system. 
 * clone this repository, and navigate inside
 * run `npm install` on the project root directory
-* create a `.env` file in the project root directory and populate it with (the app is configured to use these values): 
+* create a `.env` file in the project root directory and populate it with (the app is configured to use these values):
+* [More information about Docker-Compose](https://docs.docker.com/compose/gettingstarted/#step-2-define-services-in-a-compose-file)
 ```env
 DATABASE_SERVER = "localhost"
 DATABASE_PORT = "3306"
