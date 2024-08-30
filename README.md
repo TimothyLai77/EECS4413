@@ -35,14 +35,15 @@ services:
 ```
 * Project should be on `localhost:80`
 * This was tested on Ubuntu 24.04 LTS and Debian 12
-* Also tested on a Microsoft Azure Ubuntu VM. 
+* Also tested on a Microsoft Azure Ubuntu VM.
+* [More information about Docker-Compose](https://docs.docker.com/compose/gettingstarted/#step-2-define-services-in-a-compose-file)
 
 # Installation/Setup on local machine (no docker):
 * have MariaDB installed on your system. 
 * clone this repository, and navigate inside
 * run `npm install` on the project root directory
 * create a `.env` file in the project root directory and populate it with (the app is configured to use these values):
-* [More information about Docker-Compose](https://docs.docker.com/compose/gettingstarted/#step-2-define-services-in-a-compose-file)
+
 ```env
 DATABASE_SERVER = "localhost"
 DATABASE_PORT = "3306"
