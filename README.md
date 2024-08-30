@@ -3,9 +3,12 @@ Deployed Instance at: http://eecs4413-app.canadacentral.cloudapp.azure.com/
 * the VM only has a single thread and about 800MB of memory so try not to abuse the app. 
 
 # Installation/Setup (Docker Compose)
-* Create a `docker-compose.yml` file, and copy the following below
-* Run `docker compose pull`
-* Run `docker compose up`
+1. `mkdir ./eecs4413-app` (or whatever you want)
+2. `cd ./eecs4413-app`
+3. Create a `docker-compose.yml` file, and copy the following below
+4. Run `docker compose pull`
+5. Run `docker compose up` 
+
 ```yml
 version: '3.1'
 
